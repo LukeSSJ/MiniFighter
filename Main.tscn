@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://HealthBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Top.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 512, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 300 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 512, 600 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 0, 300 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 1024, 300 )
+shape = SubResource( 2 )
+
+[node name="TimerRoundStart" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="TimerNextRound" type="Timer" parent="."]
+one_shot = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Top" type="MarginContainer" parent="UI"]
+anchor_right = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bars" type="HBoxContainer" parent="UI/Top"]
+margin_right = 1024.0
+margin_bottom = 45.0
+
+[node name="HealthBar" parent="UI/Top/Bars" instance=ExtResource( 2 )]
+margin_right = 500.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+
+[node name="Timer" type="MarginContainer" parent="UI/Top/Bars"]
+margin_left = 504.0
+margin_right = 520.0
+margin_bottom = 45.0
+
+[node name="Number" type="Label" parent="UI/Top/Bars/Timer"]
+margin_top = 15.0
+margin_right = 16.0
+margin_bottom = 29.0
+text = "99"
+
+[node name="HealthBar2" parent="UI/Top/Bars" instance=ExtResource( 2 )]
+margin_left = 524.0
+margin_right = 1024.0
+margin_bottom = 45.0
+rect_pivot_offset = Vector2( 250, 0 )
+size_flags_horizontal = 3
+[connection signal="timeout" from="TimerRoundStart" to="." method="fight"]
+[connection signal="timeout" from="TimerNextRound" to="." method="next_round"]
