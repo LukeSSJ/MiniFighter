@@ -5,6 +5,7 @@ export var chip_mod = 0.2
 export var pushback = 50
 export var hitstun = 0.4
 export (Global.Guard) var guard = Global.Guard.MID
+export var on_hit_action = ""
 
 var player
 

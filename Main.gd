@@ -28,6 +28,7 @@ func round_start():
 		p[i].connect("knocked_out", self, "round_over")
 		add_child(p[i])
 		$UI/Top.update_hp(i, 100)
+		$UI/Top.set_wins(i, wins[i])
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]
 	$TimerRoundStart.start()

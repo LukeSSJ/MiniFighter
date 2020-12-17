@@ -45,28 +45,28 @@ __meta__ = {
 
 [node name="Bars" type="HBoxContainer" parent="UI/Top"]
 margin_right = 1024.0
-margin_bottom = 45.0
+margin_bottom = 49.0
 
 [node name="HealthBar" parent="UI/Top/Bars" instance=ExtResource( 2 )]
 margin_right = 500.0
-margin_bottom = 45.0
+margin_bottom = 49.0
 size_flags_horizontal = 3
 
 [node name="Timer" type="MarginContainer" parent="UI/Top/Bars"]
 margin_left = 504.0
 margin_right = 520.0
-margin_bottom = 45.0
+margin_bottom = 49.0
 
 [node name="Number" type="Label" parent="UI/Top/Bars/Timer"]
-margin_top = 15.0
+margin_top = 17.0
 margin_right = 16.0
-margin_bottom = 29.0
+margin_bottom = 31.0
 text = "99"
 
 [node name="HealthBar2" parent="UI/Top/Bars" instance=ExtResource( 2 )]
 margin_left = 524.0
 margin_right = 1024.0
-margin_bottom = 45.0
+margin_bottom = 49.0
 rect_pivot_offset = Vector2( 250, 0 )
 size_flags_horizontal = 3
 [connection signal="timeout" from="TimerRoundStart" to="." method="fight"]

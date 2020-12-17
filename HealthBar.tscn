@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://HealthBar.gd" type="Script" id=1]
+[ext_resource path="res://icons/win.png" type="Texture" id=2]
 
 [node name="HealthBar" type="MarginContainer"]
 margin_right = 4.0
@@ -15,11 +16,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="Bars" type="VBoxContainer" parent="."]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 50.0
-margin_bottom = 35.0
+margin_bottom = 39.0
+
+[node name="HealthBar" type="ProgressBar" parent="Bars"]
+margin_right = 40.0
+margin_bottom = 25.0
 rect_min_size = Vector2( 40, 25 )
 value = 100.0
 percent_visible = false
+
+[node name="Wins" type="HBoxContainer" parent="Bars"]
+margin_top = 29.0
+margin_right = 40.0
+margin_bottom = 29.0
+
+[node name="Win" type="TextureRect" parent="Bars/Wins"]
+visible = false
+margin_right = 7.0
+margin_bottom = 7.0
+texture = ExtResource( 2 )
+
+[node name="Win2" type="TextureRect" parent="Bars/Wins"]
+visible = false
+margin_right = 7.0
+margin_bottom = 7.0
+texture = ExtResource( 2 )

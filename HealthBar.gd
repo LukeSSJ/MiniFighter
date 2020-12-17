@@ -1,4 +1,12 @@
 extends MarginContainer
 
 func update_hp(amount):
-	$ProgressBar.value = amount
+	$Bars/HealthBar.value = amount
+
+func set_wins(wins):
+	var Wins = $Bars/Wins
+	for i in range(Wins.get_child_count()):
+		if wins > i:
+			Wins.get_child(i).show()
+		else:
+			Wins.get_child(i).hide()
