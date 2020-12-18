@@ -10,11 +10,13 @@ var input = {
 	"a": "",
 	"b": "",
 	"c": "",
+	"d": "",
 }
 var button = {
 	"a": false,
 	"b": false,
 	"c": false,
+	"d": false,
 }
 
 func set_index(index):
@@ -39,3 +41,4 @@ func update():
 	button.a = Input.is_action_just_pressed(input.a)
 	button.b = Input.is_action_just_pressed(input.b)
 	button.c = Input.is_action_just_pressed(input.c)
+	button.d = Input.is_action_just_pressed(input.d)

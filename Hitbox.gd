@@ -10,7 +10,8 @@ export var on_hit_action = ""
 var player
 
 func _ready():
-	player = get_parent().owner
+	if !player:
+		player = get_parent().owner
 	if player.index == 0:
 		set_collision_mask_bit(1, true)
 	else:

@@ -26,6 +26,7 @@ var on_ground = true
 var gravity_enabled = true
 var hp = 100
 var vel = Vector2.ZERO
+var half_width
 var action = "Stand"
 var facing
 var state = State.FREE
@@ -42,7 +43,8 @@ var normal = {
 }
 
 func _ready():
-	position.y -= $Collision.shape.extents.y / 2 - 1
+	half_width = $Collision.shape.extents.x
+	position.y -= $Collision.shape.extents.y
 	move_and_slide(Vector2(1,0), Vector2.UP)
 	perform_action("Stand")
 
@@ -68,13 +70,23 @@ func _process(_delta):
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
 	move_and_slide(vel, Vector2.UP)
-	on_ground = is_on_floor()
+	for i in get_slide_count():
+		var col = get_slide_collision(i).collider
+		if col is KinematicBody2D and !on_ground:
+			if position.x < other_player.position.x:
+				position.x = other_player.position.x - half_width - other_player.half_width - 1
+			else:
+				position.x = other_player.position.x + half_width + other_player.half_width + 1
+	
+	on_ground = is_on_floor() and position.y > 447
 	if air_action and on_ground:
 		perform_action("Stand")
 
 func attempt_all_actions():
 	if controller.button.a and controller.button.b:
 		attempt_action("Grab")
+	if controller.button.d:
+		attempt_action("Fireball")
 	if controller.button.c:
 		attempt_normal("C")
 	if controller.button.b:
@@ -84,25 +96,24 @@ func attempt_all_actions():
 	if state != State.FREE:
 		return
 	if on_ground: # Ground actions
-		if controller.dir.y == 1:
+		if controller.dir.y == -1:
+				perform_action("Jump")
+		elif controller.dir.y == 1:
 			pose = Pose.CROUCH
 			if action != "Crouch":
 				perform_action("Crouch")
 		else:
 			pose = Pose.STAND
-			if controller.dir.y == -1:
-				perform_action("Jump")
-			else:
-				if action != "Stand":
-					perform_action("Stand")
-				vel.x = controller.dir.x * facing * WALK_SPEED
-				if facing == 1:
-					if other_player.position.x < position.x:
-						facing = -1
-						$Pivot.scale.x = -1
-				elif other_player.position.x > position.x:
-						facing = 1
-						$Pivot.scale.x = 1
+			if action != "Stand":
+				perform_action("Stand")
+			vel.x = controller.dir.x * facing * WALK_SPEED
+		if facing == 1:
+			if other_player.position.x < position.x:
+				facing = -1
+				$Pivot.scale.x = -1
+		elif other_player.position.x > position.x:
+				facing = 1
+				$Pivot.scale.x = 1
 	else: # Air actions
 		if action != "Air":
 			perform_action("Air")
@@ -173,8 +184,11 @@ func on_hit(hitbox):
 	if hp <= 0:
 		emit_signal("knocked_out")
 	add_hitstop(0.1)
-	hitbox.owner.add_hitstop(0.1)
-	hitbox.owner.attack_hit = true
+	if hitbox.owner:
+		hitbox.owner.add_hitstop(0.1)
+		hitbox.owner.attack_hit = true
+	else:
+		hitbox.queue_free()
 	if hitbox.on_hit_action:
 		hitbox.owner.perform_action(hitbox.on_hit_action)
 
