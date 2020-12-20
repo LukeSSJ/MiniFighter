@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player/stand.png" type="Texture" id=2]
@@ -24,6 +24,10 @@
 [ext_resource path="res://player/throw_fireball.png" type="Texture" id=22]
 [ext_resource path="res://ThrowFireball.gd" type="Script" id=23]
 [ext_resource path="res://Fireball.tscn" type="PackedScene" id=24]
+[ext_resource path="res://player/uppercut.png" type="Texture" id=25]
+[ext_resource path="res://Mover.gd" type="Script" id=26]
+[ext_resource path="res://player/spin_kick.png" type="Texture" id=27]
+[ext_resource path="res://player/knockdown.png" type="Texture" id=28]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 22, 100 )
@@ -61,7 +65,16 @@ extents = Vector2( 44, 73 )
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 72, 55 )
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 29, 46 )
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 40, 70 )
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 91, 37 )
+
+[sub_resource type="Animation" id=16]
 length = 0.4
 step = 0.02
 tracks/0/type = "value"
@@ -89,8 +102,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "2B"
+[sub_resource type="Animation" id=17]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/2B/Sprite:frame")
 tracks/0/interp = 1
@@ -116,8 +128,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "2C"
+[sub_resource type="Animation" id=18]
 length = 0.65
 step = 0.05
 tracks/0/type = "value"
@@ -145,7 +156,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=19]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/5A/Sprite:frame")
@@ -172,8 +183,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=17]
-resource_name = "5B"
+[sub_resource type="Animation" id=20]
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
@@ -201,8 +211,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=18]
-resource_name = "5C"
+[sub_resource type="Animation" id=21]
 length = 0.85
 step = 0.05
 tracks/0/type = "value"
@@ -230,7 +239,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=22]
 loop = true
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -244,11 +253,11 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=23]
 length = 99999.0
 loop = true
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=24]
 length = 99999.0
 loop = true
 step = 0.02
@@ -265,11 +274,10 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=25]
 loop = true
 
-[sub_resource type="Animation" id=23]
-resource_name = "Fireball"
+[sub_resource type="Animation" id=26]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Fireball/Sprite:frame")
@@ -298,7 +306,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=27]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Grab/Sprite:frame")
@@ -325,11 +333,11 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=28]
 length = 99999.0
 loop = true
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=29]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JA/Sprite:frame")
@@ -356,7 +364,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=30]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JB/Hitbox/CollisionShape2D:disabled")
 tracks/0/interp = 1
@@ -370,7 +378,7 @@ tracks/0/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=31]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JC/Sprite:frame")
 tracks/0/interp = 1
@@ -396,7 +404,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=32]
 length = 0.06
 step = 0.02
 tracks/0/type = "method"
@@ -414,10 +422,92 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=37]
+resource_name = "Knockdown"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_on"
+} ]
+}
+
+[sub_resource type="Animation" id=33]
+resource_name = "SpinKick"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/SpinKick/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/SpinKick/Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Pivot/SpinKick")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "run_friction_off"
+}, {
+"args": [  ],
+"method": "friction_on"
+}, {
+"args": [  ],
+"method": "stop"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_projectile_on"
+}, {
+"args": [  ],
+"method": "invul_off"
+} ]
+}
+
+[sub_resource type="Animation" id=34]
 loop = true
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=35]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Throw/Sprite:frame")
 tracks/0/interp = 1
@@ -472,11 +562,86 @@ tracks/3/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=36]
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Uppercut/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/Uppercut/Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/Uppercut/Hitbox2/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("Pivot/Uppercut")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "run"
+}, {
+"args": [  ],
+"method": "jump"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_on"
+}, {
+"args": [  ],
+"method": "invul_off"
+} ]
+}
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 GRAVITY = 80
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 20 )
 shape = SubResource( 1 )
 
@@ -537,6 +702,14 @@ visible = false
 [node name="Sprite" type="Sprite" parent="Pivot/Hitstun"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 9 )
+
+[node name="Knockdown" type="Node2D" parent="Pivot"]
+visible = false
+
+[node name="Sprite" type="Sprite" parent="Pivot/Knockdown"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 28 )
+offset = Vector2( 0, 32 )
 
 [node name="5A" type="Node2D" parent="Pivot"]
 visible = false
@@ -602,7 +775,6 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 7 )
 offset = Vector2( 16, 0 )
 hframes = 3
-frame = 2
 
 [node name="Hitbox" parent="Pivot/2A" instance=ExtResource( 4 )]
 chip_mod = 0.1
@@ -624,6 +796,8 @@ hframes = 3
 
 [node name="Hitbox" parent="Pivot/2B" instance=ExtResource( 4 )]
 chip_mod = 0.1
+launch = Vector2( 200, -900 )
+hitstun = 0.6
 guard = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2B/Hitbox"]
@@ -752,32 +926,88 @@ frame = 1
 [node name="Point" type="Node2D" parent="Pivot/Fireball"]
 position = Vector2( 72, -32 )
 
+[node name="Uppercut" type="Node2D" parent="Pivot"]
+visible = false
+script = ExtResource( 26 )
+
+[node name="Sprite" type="Sprite" parent="Pivot/Uppercut"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 25 )
+hframes = 4
+frame = 1
+
+[node name="Hitbox" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
+launch = Vector2( 500, -1800 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox"]
+position = Vector2( 29, -1 )
+shape = SubResource( 13 )
+disabled = true
+
+[node name="Hitbox2" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox2"]
+position = Vector2( 20, -67 )
+shape = SubResource( 14 )
+disabled = true
+
+[node name="SpinKick" type="Node2D" parent="Pivot"]
+visible = false
+script = ExtResource( 26 )
+run_speed = 600
+jump_speed = 0
+
+[node name="Sprite" type="Sprite" parent="Pivot/SpinKick"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 27 )
+hframes = 4
+frame = 2
+
+[node name="Hitbox" parent="Pivot/SpinKick" instance=ExtResource( 4 )]
+launch = Vector2( 300, -1000 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SpinKick/Hitbox"]
+position = Vector2( 2, 31 )
+shape = SubResource( 15 )
+disabled = true
+
 [node name="Actions" type="AnimationPlayer" parent="."]
-anims/2A = SubResource( 13 )
-anims/2B = SubResource( 14 )
-anims/2C = SubResource( 15 )
-anims/5A = SubResource( 16 )
-anims/5B = SubResource( 17 )
-anims/5C = SubResource( 18 )
-anims/Air = SubResource( 19 )
-anims/Block = SubResource( 20 )
-anims/Crouch = SubResource( 21 )
-anims/CrouchBlock = SubResource( 22 )
-anims/Fireball = SubResource( 23 )
-anims/Grab = SubResource( 24 )
-anims/Hitstun = SubResource( 25 )
-anims/JA = SubResource( 26 )
-anims/JB = SubResource( 27 )
-anims/JC = SubResource( 28 )
-anims/Jump = SubResource( 29 )
-anims/Stand = SubResource( 30 )
-anims/Throw = SubResource( 31 )
+anims/2A = SubResource( 16 )
+anims/2B = SubResource( 17 )
+anims/2C = SubResource( 18 )
+anims/5A = SubResource( 19 )
+anims/5B = SubResource( 20 )
+anims/5C = SubResource( 21 )
+anims/Air = SubResource( 22 )
+anims/Block = SubResource( 23 )
+anims/Crouch = SubResource( 24 )
+anims/CrouchBlock = SubResource( 25 )
+anims/Fireball = SubResource( 26 )
+anims/Grab = SubResource( 27 )
+anims/Hitstun = SubResource( 28 )
+anims/JA = SubResource( 29 )
+anims/JB = SubResource( 30 )
+anims/JC = SubResource( 31 )
+anims/Jump = SubResource( 32 )
+anims/Knockdown = SubResource( 37 )
+anims/SpinKick = SubResource( 33 )
+anims/Stand = SubResource( 34 )
+anims/Throw = SubResource( 35 )
+anims/Uppercut = SubResource( 36 )
 
 [node name="TimerStun" type="Timer" parent="."]
 one_shot = true
 
 [node name="TimerHitstop" type="Timer" parent="."]
 one_shot = true
+
+[node name="ComboCount" type="Label" parent="."]
+margin_top = -200.0
+margin_right = 40.0
+margin_bottom = -186.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="animation_finished" from="Actions" to="." method="action_end"]
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

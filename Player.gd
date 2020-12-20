@@ -14,6 +14,9 @@ enum Pose {
 	AIR,
 }
 
+const WALL_LEFT_X = 20
+const WALL_RIGHT_X = 1024 - 20
+
 export var WALK_SPEED = 400
 export var JUMP_VEL = Vector2(300, -1600)
 export var GRAVITY = 20
@@ -24,7 +27,10 @@ var controller
 var other_player
 var on_ground = true
 var gravity_enabled = true
+var friction_enabled = true
 var hp = 100
+var invul_hit = false
+var invul_projectile = false
 var vel = Vector2.ZERO
 var half_width
 var action = "Stand"
@@ -33,6 +39,7 @@ var state = State.FREE
 var pose = Pose.STAND
 var hitstop = false
 var in_blockstun = false
+var knockdown = false
 var air_action = false
 var attack_hit = false
 var grab_point = false
@@ -41,6 +48,7 @@ var normal = {
 	"B": ["JB", "5B", "2B"],
 	"C": ["JC", "5C", "2C"],
 }
+var combo_count = 0
 
 func _ready():
 	half_width = $Collision.shape.extents.x
@@ -58,6 +66,7 @@ func set_index(set_index):
 		$Pivot.scale.x = -1
 
 func _process(_delta):
+	$ComboCount.text = str(combo_count)
 	controller.update()
 	controller.dir.x *= facing
 	if hitstop:
@@ -69,24 +78,43 @@ func _process(_delta):
 		other_player.position = grab_point.global_position
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
+	var on_ground_before = on_ground
 	move_and_slide(vel, Vector2.UP)
 	for i in get_slide_count():
 		var col = get_slide_collision(i).collider
 		if col is KinematicBody2D and !on_ground:
 			if position.x < other_player.position.x:
 				position.x = other_player.position.x - half_width - other_player.half_width - 1
+				if position.x < WALL_LEFT_X:
+					other_player.position.x += WALL_LEFT_X - position.x
+					position.x = WALL_LEFT_X
 			else:
 				position.x = other_player.position.x + half_width + other_player.half_width + 1
+				if position.x > WALL_RIGHT_X:
+					other_player.position.x -= position.x - WALL_RIGHT_X
+					position.x = WALL_RIGHT_X
+	position.x = clamp(position.x, WALL_LEFT_X, WALL_RIGHT_X)
 	
 	on_ground = is_on_floor() and position.y > 447
-	if air_action and on_ground:
-		perform_action("Stand")
+	if on_ground:
+		if friction_enabled:
+			vel.x = lerp(vel.x, 0, 0.3)
+		if on_ground_before:
+			if state == State.HITSTUN and knockdown:
+				perform_action("Knockdown")
+			elif air_action:
+				perform_action("Stand")
 
 func attempt_all_actions():
 	if controller.button.a and controller.button.b:
 		attempt_action("Grab")
 	if controller.button.d:
-		attempt_action("Fireball")
+		if controller.dir.y == 1:
+			attempt_action("SpinKick")
+		elif controller.dir == Vector2.RIGHT:
+			attempt_action("Uppercut")
+		else:
+			attempt_action("Fireball")
 	if controller.button.c:
 		attempt_normal("C")
 	if controller.button.b:
@@ -106,7 +134,8 @@ func attempt_all_actions():
 			pose = Pose.STAND
 			if action != "Stand":
 				perform_action("Stand")
-			vel.x = controller.dir.x * facing * WALK_SPEED
+			if controller.dir.x != 0:
+				vel.x = controller.dir.x * facing * WALK_SPEED
 		if facing == 1:
 			if other_player.position.x < position.x:
 				facing = -1
@@ -133,6 +162,9 @@ func attempt_action(attack):
 		perform_action(attack)
 
 func perform_action(new_action):
+	gravity_enabled = true
+	friction_enabled = true
+	knockdown = false
 	attack_hit = false
 	if on_ground:
 		vel.x = 0
@@ -149,13 +181,16 @@ func perform_action(new_action):
 		if child is Area2D:
 			for col in child.get_children():
 				col.set_deferred("disabled", true)
+	invul_off()
+	action = new_action
 	$Pivot.get_node(new_action).show()
 	$Actions.stop()
 	$Actions.play(new_action)
-	action = new_action
 
 func on_hit(hitbox):
 	if !active:
+		return
+	if (invul_hit and !hitbox.is_projectile) or (invul_projectile and hitbox.is_projectile):
 		return
 	var blocked = false
 	if (state == State.FREE or in_blockstun) and controller.dir.x == -1:
@@ -166,20 +201,37 @@ func on_hit(hitbox):
 				blocked = (controller.dir.y == 1)
 			Global.Guard.HIGH:
 				blocked = (controller.dir.y == 0)
+			Global.Guard.UNBLOCKABLE:
+				if !on_ground:
+					return
+	var damage = hitbox.damage 
 	if blocked:
 		if controller.dir.y == 1:
 			perform_action("CrouchBlock")
 		else:
 			perform_action("Block")
 		in_blockstun = true
-		hp -= hitbox.damage * hitbox.chip_mod
+		damage *= hitbox.chip_mod
+		vel.x = hitbox.pushback * hitbox.player.facing
 	else:
 		perform_action("Hitstun")
-		hp -= hitbox.damage
+		if !on_ground:
+			vel = hitbox.juggle
+			vel.x *= hitbox.owner.facing
+			knockdown = true
+		if hitbox.launch:
+			vel = hitbox.launch
+			vel.x *= hitbox.owner.facing
+			knockdown = true
+		else:
+			vel.x = hitbox.pushback * hitbox.player.facing
+	if combo_count > 0:
+		damage *= 0.5
+	combo_count += 1
+	hp -= damage
 	state = State.HITSTUN
 	$TimerStun.wait_time = hitbox.hitstun
 	$TimerStun.start()
-	vel = Vector2(hitbox.pushback * hitbox.player.facing, 0)
 	emit_signal("take_damage", index, hp)
 	if hp <= 0:
 		emit_signal("knocked_out")
@@ -206,6 +258,7 @@ func hitstop_end():
 
 func stun_end():
 	in_blockstun = false
+	combo_count = 0
 	perform_action("Stand")
 
 func action_end(_anim_name):
@@ -214,6 +267,17 @@ func action_end(_anim_name):
 func jump():
 	vel = JUMP_VEL
 	vel.x *= controller.dir.x * facing
+
+func invul_on():
+	invul_hit = true
+	invul_projectile = true
+
+func invul_projectile_on():
+	invul_projectile = true
+
+func invul_off():
+	invul_hit = false
+	invul_projectile = false
 
 func set_grabbed(grabbed):
 	$Collision.disabled = grabbed

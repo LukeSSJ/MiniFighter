@@ -5,6 +5,7 @@ export var speed = 600
 var vel
 
 func _ready():
+	is_projectile = true
 	vel = speed * scale.x
 
 func _process(delta):
