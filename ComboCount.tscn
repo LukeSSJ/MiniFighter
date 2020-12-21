@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ComboCount.gd" type="Script" id=1]
+
+[node name="ComboCount" type="MarginContainer"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Numbers" type="VBoxContainer" parent="."]
+margin_right = 24.0
+margin_bottom = 49.0
+
+[node name="Count" type="Label" parent="Numbers"]
+margin_right = 24.0
+margin_bottom = 14.0
+text = "5"
+align = 1
+
+[node name="Damage" type="Label" parent="Numbers"]
+margin_top = 18.0
+margin_right = 24.0
+margin_bottom = 32.0
+text = "100"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -7,6 +7,7 @@ var round_count
 
 onready var Player = preload("res://Player.tscn")
 onready var Controller = preload("res://Controller.tscn")
+onready var UI = $UI
 
 func _ready():
 	game_start()
@@ -21,18 +22,19 @@ func round_start():
 		p[i] = Player.instance()
 		p[i].controller = Controller.instance()
 		p[i].set_index(i)
-		p[i].position = Vector2(400, 600 - 32)
+		p[i].position = Vector2(400, 0)
 		if i == 1:
 			p[i].position.x = 1024 - 400
-		p[i].connect("take_damage", $UI/Top, "update_hp")
+		p[i].connect("take_damage", UI, "update_hp")
 		p[i].connect("knocked_out", self, "round_over")
-		add_child(p[i])
-		$UI/Top.update_hp(i, 100)
-		$UI/Top.set_wins(i, wins[i])
+		p[i].connect("set_combo_count", UI, "set_combo_count")
+		$Floor.add_child(p[i])
+		UI.update_hp(i, 100)
+		UI.set_wins(i, wins[i])
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]
 	$TimerRoundStart.start()
-	
+
 func fight():
 	p[0].active = true
 	p[1].active = true

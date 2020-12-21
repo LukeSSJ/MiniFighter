@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal knocked_out
 signal take_damage
+signal set_combo_count
 
 enum State {
 	FREE,
@@ -49,10 +50,10 @@ var normal = {
 	"C": ["JC", "5C", "2C"],
 }
 var combo_count = 0
+var combo_damage = 0
 
 func _ready():
 	half_width = $Collision.shape.extents.x
-	position.y -= $Collision.shape.extents.y
 	move_and_slide(Vector2(1,0), Vector2.UP)
 	perform_action("Stand")
 
@@ -66,7 +67,6 @@ func set_index(set_index):
 		$Pivot.scale.x = -1
 
 func _process(_delta):
-	$ComboCount.text = str(combo_count)
 	controller.update()
 	controller.dir.x *= facing
 	if hitstop:
@@ -78,7 +78,6 @@ func _process(_delta):
 		other_player.position = grab_point.global_position
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
-	var on_ground_before = on_ground
 	move_and_slide(vel, Vector2.UP)
 	for i in get_slide_count():
 		var col = get_slide_collision(i).collider
@@ -95,13 +94,16 @@ func _process(_delta):
 					position.x = WALL_RIGHT_X
 	position.x = clamp(position.x, WALL_LEFT_X, WALL_RIGHT_X)
 	
-	on_ground = is_on_floor() and position.y > 447
+	on_ground = position.y >= 0
 	if on_ground:
+		position.y = 0
 		if friction_enabled:
 			vel.x = lerp(vel.x, 0, 0.3)
-		if on_ground_before:
+		if vel.y > 0:
 			if state == State.HITSTUN and knockdown:
 				perform_action("Knockdown")
+				invul_on()
+				$TimerStun.stop()
 			elif air_action:
 				perform_action("Stand")
 
@@ -173,6 +175,10 @@ func perform_action(new_action):
 		air_action = true
 	if new_action in ["Stand", "Crouch", "Air"]:
 		state = State.FREE
+		in_blockstun = false
+		combo_count = 0
+		combo_damage = 0
+		emit_signal("set_combo_count", self)
 	else:
 		state = State.ATTACK
 	var old = $Pivot.get_node(action)
@@ -228,6 +234,8 @@ func on_hit(hitbox):
 	if combo_count > 0:
 		damage *= 0.5
 	combo_count += 1
+	combo_damage += damage
+	emit_signal("set_combo_count", self)
 	hp -= damage
 	state = State.HITSTUN
 	$TimerStun.wait_time = hitbox.hitstun
@@ -257,8 +265,6 @@ func hitstop_end():
 	$TimerStun.paused = false
 
 func stun_end():
-	in_blockstun = false
-	combo_count = 0
 	perform_action("Stand")
 
 func action_end(_anim_name):
