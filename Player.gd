@@ -29,7 +29,8 @@ var other_player
 var on_ground = true
 var gravity_enabled = true
 var friction_enabled = true
-var hp = 100
+var max_hp = 100
+var hp = max_hp
 var invul_hit = false
 var invul_projectile = false
 var vel = Vector2.ZERO
@@ -79,9 +80,8 @@ func _process(_delta):
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
 	move_and_slide(vel, Vector2.UP)
-	for i in get_slide_count():
-		var col = get_slide_collision(i).collider
-		if col is KinematicBody2D and !on_ground:
+	if get_slide_count() > 0:
+		if !on_ground:
 			if position.x < other_player.position.x:
 				position.x = other_player.position.x - half_width - other_player.half_width - 1
 				if position.x < WALL_LEFT_X:
@@ -98,7 +98,7 @@ func _process(_delta):
 	if on_ground:
 		position.y = 0
 		if friction_enabled:
-			vel.x = lerp(vel.x, 0, 0.3)
+			vel.x = lerp(vel.x, 0, 0.25)
 		if vel.y > 0:
 			if state == State.HITSTUN and knockdown:
 				perform_action("Knockdown")
@@ -108,7 +108,7 @@ func _process(_delta):
 				perform_action("Stand")
 
 func attempt_all_actions():
-	if controller.button.a and controller.button.b:
+	if (controller.button.a and controller.button.b) or (controller.button.c and controller.button.d):
 		attempt_action("Grab")
 	if controller.button.d:
 		if controller.dir.y == 1:
@@ -140,11 +140,9 @@ func attempt_all_actions():
 				vel.x = controller.dir.x * facing * WALK_SPEED
 		if facing == 1:
 			if other_player.position.x < position.x:
-				facing = -1
-				$Pivot.scale.x = -1
+				set_facing(-1)
 		elif other_player.position.x > position.x:
-				facing = 1
-				$Pivot.scale.x = 1
+				set_facing(1)
 	else: # Air actions
 		if action != "Air":
 			perform_action("Air")
@@ -232,7 +230,7 @@ func on_hit(hitbox):
 		else:
 			vel.x = hitbox.pushback * hitbox.player.facing
 	if combo_count > 0:
-		damage *= 0.5
+		damage *= 0.3
 	combo_count += 1
 	combo_damage += damage
 	emit_signal("set_combo_count", self)
@@ -265,6 +263,8 @@ func hitstop_end():
 	$TimerStun.paused = false
 
 func stun_end():
+	hp = max_hp
+	emit_signal("take_damage", index, hp)
 	perform_action("Stand")
 
 func action_end(_anim_name):
@@ -284,6 +284,10 @@ func invul_projectile_on():
 func invul_off():
 	invul_hit = false
 	invul_projectile = false
+
+func set_facing(f):
+	facing = f
+	$Pivot.scale.x = f
 
 func set_grabbed(grabbed):
 	$Collision.disabled = grabbed

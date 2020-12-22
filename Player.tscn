@@ -63,7 +63,7 @@ extents = Vector2( 78, 24 )
 extents = Vector2( 44, 73 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 72, 55 )
+extents = Vector2( 45, 55 )
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 29, 46 )
@@ -189,28 +189,40 @@ tracks/1/keys = {
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("Pivot/5C/Sprite:frame")
+tracks/0/path = NodePath("Pivot/5C/Hitbox/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2 ]
+"values": [ false, true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot/5C/Hitbox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Pivot/5B/Sprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.15, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.15, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ 0, 1, 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/5B/Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -639,6 +651,7 @@ script = ExtResource( 1 )
 GRAVITY = 80
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -100 )
 shape = SubResource( 1 )
 
@@ -720,7 +733,7 @@ hframes = 3
 frame = 1
 
 [node name="Hitbox" parent="Pivot/5A" instance=ExtResource( 4 )]
-damage = 14
+damage = 4
 chip_mod = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox"]
@@ -736,10 +749,8 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
 offset = Vector2( 16, 0 )
 hframes = 3
-frame = 1
 
 [node name="Hitbox" parent="Pivot/5B" instance=ExtResource( 4 )]
-damage = 14
 chip_mod = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5B/Hitbox"]
@@ -755,6 +766,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 17 )
 offset = Vector2( 32, 0 )
 hframes = 3
+frame = 2
 
 [node name="Hitbox" parent="Pivot/5C" instance=ExtResource( 4 )]
 damage = 14
@@ -775,11 +787,12 @@ offset = Vector2( 16, 0 )
 hframes = 3
 
 [node name="Hitbox" parent="Pivot/2A" instance=ExtResource( 4 )]
+damage = 3
 chip_mod = 0.1
 guard = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2A/Hitbox"]
-position = Vector2( 36, 97 )
+position = Vector2( 30, 102 )
 shape = SubResource( 6 )
 disabled = true
 
@@ -792,6 +805,7 @@ texture = ExtResource( 18 )
 hframes = 3
 
 [node name="Hitbox" parent="Pivot/2B" instance=ExtResource( 4 )]
+damage = 11
 chip_mod = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2B/Hitbox"]
@@ -809,6 +823,7 @@ offset = Vector2( 32, 0 )
 hframes = 3
 
 [node name="Hitbox" parent="Pivot/2C" instance=ExtResource( 4 )]
+damage = 12
 chip_mod = 0.1
 launch = Vector2( 200, -900 )
 hitstun = 0.6
@@ -829,6 +844,7 @@ offset = Vector2( 8, 0 )
 hframes = 2
 
 [node name="Hitbox" parent="Pivot/JA" instance=ExtResource( 4 )]
+damage = 5
 guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JA/Hitbox"]
@@ -845,6 +861,7 @@ texture = ExtResource( 12 )
 offset = Vector2( 16, 0 )
 
 [node name="Hitbox" parent="Pivot/JB" instance=ExtResource( 4 )]
+damage = 8
 guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JB/Hitbox"]
@@ -861,6 +878,7 @@ texture = ExtResource( 19 )
 hframes = 2
 
 [node name="Hitbox" parent="Pivot/JC" instance=ExtResource( 4 )]
+damage = 9
 guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JC/Hitbox"]
@@ -879,6 +897,7 @@ hframes = 3
 [node name="Hitbox" parent="Pivot/Grab" instance=ExtResource( 4 )]
 damage = 0
 chip_mod = 0.1
+hitstun = 1.0
 guard = 3
 on_hit_action = "Throw"
 
@@ -898,12 +917,13 @@ offset = Vector2( 16, 0 )
 hframes = 3
 
 [node name="Hitbox" parent="Pivot/Throw" instance=ExtResource( 4 )]
-damage = 14
+damage = 16
 chip_mod = 0.1
+launch = Vector2( 1000, -200 )
 guard = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Throw/Hitbox"]
-position = Vector2( 126, 22 )
+position = Vector2( 47, 15 )
 shape = SubResource( 12 )
 disabled = true
 
@@ -935,6 +955,7 @@ hframes = 4
 frame = 1
 
 [node name="Hitbox" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
+damage = 12
 launch = Vector2( 500, -1800 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox"]
@@ -943,6 +964,7 @@ shape = SubResource( 13 )
 disabled = true
 
 [node name="Hitbox2" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
+damage = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox2"]
 position = Vector2( 20, -67 )
@@ -962,6 +984,7 @@ hframes = 4
 frame = 2
 
 [node name="Hitbox" parent="Pivot/SpinKick" instance=ExtResource( 4 )]
+damage = 15
 launch = Vector2( 300, -1000 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SpinKick/Hitbox"]

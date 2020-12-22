@@ -2,7 +2,7 @@ extends Area2D
 
 export var damage = 10
 export var chip_mod = 0.2
-export var pushback = 200
+export var pushback = 300
 export var launch = Vector2.ZERO
 export var juggle = Vector2(100, -800)
 export var hitstun = 0.4

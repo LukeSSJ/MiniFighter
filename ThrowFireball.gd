@@ -7,4 +7,4 @@ func throw_fireball():
 	projectile.player = owner
 	projectile.position = $Point.global_position
 	projectile.scale.x = owner.facing
-	owner.get_parent().add_child(projectile)
+	get_tree().current_scene.add_child(projectile)

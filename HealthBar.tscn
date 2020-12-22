@@ -20,7 +20,7 @@ __meta__ = {
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 50.0
-margin_bottom = 39.0
+margin_bottom = 55.0
 
 [node name="HealthBar" type="ProgressBar" parent="Bars"]
 margin_right = 40.0
@@ -36,12 +36,12 @@ margin_bottom = 29.0
 
 [node name="Win" type="TextureRect" parent="Bars/Wins"]
 visible = false
-margin_right = 7.0
-margin_bottom = 7.0
+margin_right = 16.0
+margin_bottom = 16.0
 texture = ExtResource( 2 )
 
 [node name="Win2" type="TextureRect" parent="Bars/Wins"]
 visible = false
-margin_right = 7.0
-margin_bottom = 7.0
+margin_right = 16.0
+margin_bottom = 16.0
 texture = ExtResource( 2 )

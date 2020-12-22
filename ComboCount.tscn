@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ComboCount.gd" type="Script" id=1]
+[ext_resource path="res://icons/numbers.png" type="Texture" id=2]
 
 [node name="ComboCount" type="MarginContainer"]
 script = ExtResource( 1 )
@@ -9,20 +10,41 @@ __meta__ = {
 }
 
 [node name="Numbers" type="VBoxContainer" parent="."]
-margin_right = 24.0
-margin_bottom = 49.0
+margin_right = 68.0
+margin_bottom = 50.0
 
-[node name="Count" type="Label" parent="Numbers"]
-margin_right = 24.0
-margin_bottom = 14.0
-text = "5"
-align = 1
+[node name="Count" type="HBoxContainer" parent="Numbers"]
+margin_right = 68.0
+margin_bottom = 32.0
+
+[node name="MC" type="MarginContainer" parent="Numbers/Count"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="Number" type="Sprite" parent="Numbers/Count/MC"]
+texture = ExtResource( 2 )
+centered = false
+hframes = 10
+
+[node name="MC2" type="MarginContainer" parent="Numbers/Count"]
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="Number" type="Sprite" parent="Numbers/Count/MC2"]
+position = Vector2( -4, 0 )
+texture = ExtResource( 2 )
+centered = false
+hframes = 10
 
 [node name="Damage" type="Label" parent="Numbers"]
-margin_top = 18.0
-margin_right = 24.0
-margin_bottom = 32.0
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 50.0
 text = "100"
+align = 1
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.8
