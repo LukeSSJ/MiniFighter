@@ -10,6 +10,7 @@ export (Global.Guard) var guard = Global.Guard.MID
 export var on_hit_action = ""
 
 var player
+var facing
 
 var is_projectile = false
 

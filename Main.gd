@@ -22,7 +22,7 @@ func round_start():
 		p[i] = Player.instance()
 		p[i].controller = Controller.instance()
 		p[i].set_index(i)
-		p[i].position = Vector2(400, 0)
+		p[i].position = Vector2(400, 580)
 		if i == 1:
 			p[i].position.x = 1024 - 400
 		p[i].connect("take_damage", UI, "update_hp")

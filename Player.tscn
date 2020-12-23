@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player/stand.png" type="Texture" id=2]
@@ -28,6 +28,8 @@
 [ext_resource path="res://Mover.gd" type="Script" id=26]
 [ext_resource path="res://player/spin_kick.png" type="Texture" id=27]
 [ext_resource path="res://player/knockdown.png" type="Texture" id=28]
+[ext_resource path="res://Knockdown.gd" type="Script" id=29]
+[ext_resource path="res://Recover.gd" type="Script" id=30]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 22, 100 )
@@ -103,7 +105,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=17]
-resource_name = "2B"
 length = 0.65
 step = 0.05
 tracks/0/type = "value"
@@ -132,7 +133,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=18]
-resource_name = "2C"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/2C/Sprite:frame")
 tracks/0/interp = 1
@@ -189,36 +189,24 @@ tracks/1/keys = {
 length = 0.6
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("Pivot/5C/Hitbox/CollisionShape2D:disabled")
+tracks/0/path = NodePath("Pivot/5B/Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.15, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot/5B/Sprite:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
 "times": PoolRealArray( 0, 0.15, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("Pivot/5B/Hitbox/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/5B/Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0, 0.15, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
@@ -437,7 +425,41 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=33]
-resource_name = "Knockdown"
+tracks/0/type = "method"
+tracks/0/path = NodePath("Pivot/Knockdown")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "can_recover"
+}, {
+"args": [  ],
+"method": "recover"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_on"
+} ]
+}
+
+[sub_resource type="Animation" id=38]
+resource_name = "Recover"
+length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -445,9 +467,26 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_on"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Pivot/Recover")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hop"
+} ]
 }
 
 [sub_resource type="Animation" id=34]
@@ -647,6 +686,7 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
+show_behind_parent = true
 script = ExtResource( 1 )
 GRAVITY = 80
 
@@ -716,11 +756,21 @@ texture = ExtResource( 9 )
 
 [node name="Knockdown" type="Node2D" parent="Pivot"]
 visible = false
+script = ExtResource( 29 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/Knockdown"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 28 )
 offset = Vector2( 0, 32 )
+
+[node name="Recover" type="Node2D" parent="Pivot"]
+visible = false
+script = ExtResource( 30 )
+
+[node name="Sprite" type="Sprite" parent="Pivot/Recover"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+flip_v = true
 
 [node name="5A" type="Node2D" parent="Pivot"]
 visible = false
@@ -735,6 +785,7 @@ frame = 1
 [node name="Hitbox" parent="Pivot/5A" instance=ExtResource( 4 )]
 damage = 4
 chip_mod = 0.1
+hitstun = 0.3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox"]
 position = Vector2( 40, -34 )
@@ -752,6 +803,7 @@ hframes = 3
 
 [node name="Hitbox" parent="Pivot/5B" instance=ExtResource( 4 )]
 chip_mod = 0.1
+pushback = 400
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5B/Hitbox"]
 position = Vector2( 54, 41 )
@@ -771,6 +823,9 @@ frame = 2
 [node name="Hitbox" parent="Pivot/5C" instance=ExtResource( 4 )]
 damage = 14
 chip_mod = 0.1
+pushback = 600
+juggle = Vector2( 400, -1300 )
+hitstun = 0.6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5C/Hitbox"]
 position = Vector2( 102, -13 )
@@ -789,6 +844,7 @@ hframes = 3
 [node name="Hitbox" parent="Pivot/2A" instance=ExtResource( 4 )]
 damage = 3
 chip_mod = 0.1
+hitstun = 0.25
 guard = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2A/Hitbox"]
@@ -947,6 +1003,7 @@ position = Vector2( 72, -32 )
 [node name="Uppercut" type="Node2D" parent="Pivot"]
 visible = false
 script = ExtResource( 26 )
+run_speed = 400
 
 [node name="Sprite" type="Sprite" parent="Pivot/Uppercut"]
 scale = Vector2( 2, 2 )
@@ -956,7 +1013,7 @@ frame = 1
 
 [node name="Hitbox" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
 damage = 12
-launch = Vector2( 500, -1800 )
+launch = Vector2( 300, -1800 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox"]
 position = Vector2( 29, -1 )
@@ -965,6 +1022,8 @@ disabled = true
 
 [node name="Hitbox2" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
 damage = 8
+juggle = Vector2( 100, -1400 )
+hitstun = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox2"]
 position = Vector2( 20, -67 )
@@ -992,6 +1051,12 @@ position = Vector2( 2, 31 )
 shape = SubResource( 15 )
 disabled = true
 
+[node name="TimerStun" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerHitstop" type="Timer" parent="."]
+one_shot = true
+
 [node name="Actions" type="AnimationPlayer" parent="."]
 anims/2A = SubResource( 16 )
 anims/2B = SubResource( 17 )
@@ -1011,16 +1076,11 @@ anims/JB = SubResource( 30 )
 anims/JC = SubResource( 31 )
 anims/Jump = SubResource( 32 )
 anims/Knockdown = SubResource( 33 )
+anims/Recover = SubResource( 38 )
 anims/SpinKick = SubResource( 34 )
 anims/Stand = SubResource( 35 )
 anims/Throw = SubResource( 36 )
 anims/Uppercut = SubResource( 37 )
-
-[node name="TimerStun" type="Timer" parent="."]
-one_shot = true
-
-[node name="TimerHitstop" type="Timer" parent="."]
-one_shot = true
-[connection signal="animation_finished" from="Actions" to="." method="action_end"]
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]
+[connection signal="animation_finished" from="Actions" to="." method="action_end"]

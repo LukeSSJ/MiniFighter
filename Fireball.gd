@@ -6,7 +6,8 @@ var vel
 
 func _ready():
 	is_projectile = true
-	vel = speed * scale.x
+	vel = speed * facing
+	scale.x = facing
 
 func _process(delta):
 	position.x += vel * delta

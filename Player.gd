@@ -17,6 +17,7 @@ enum Pose {
 
 const WALL_LEFT_X = 20
 const WALL_RIGHT_X = 1024 - 20
+const FLOOR_Y = 580
 
 export var WALK_SPEED = 400
 export var JUMP_VEL = Vector2(300, -1600)
@@ -42,7 +43,9 @@ var pose = Pose.STAND
 var hitstop = false
 var in_blockstun = false
 var knockdown = false
+var can_recover = false
 var air_action = false
+var can_cancel = false
 var attack_hit = false
 var grab_point = false
 var normal = {
@@ -55,7 +58,6 @@ var combo_damage = 0
 
 func _ready():
 	half_width = $Collision.shape.extents.x
-	move_and_slide(Vector2(1,0), Vector2.UP)
 	perform_action("Stand")
 
 func set_index(set_index):
@@ -75,8 +77,10 @@ func _process(_delta):
 	
 	if (state == State.FREE or state == State.ATTACK) and active:
 		attempt_all_actions()
+	if can_recover and controller.button.a:
+		perform_action("Recover")
 	if grab_point:
-		other_player.position = grab_point.global_position
+		other_player.position = grab_point.global_position - Vector2(0,-120)
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
 	move_and_slide(vel, Vector2.UP)
@@ -94,9 +98,9 @@ func _process(_delta):
 					position.x = WALL_RIGHT_X
 	position.x = clamp(position.x, WALL_LEFT_X, WALL_RIGHT_X)
 	
-	on_ground = position.y >= 0
+	on_ground = position.y >= FLOOR_Y
 	if on_ground:
-		position.y = 0
+		position.y = FLOOR_Y
 		if friction_enabled:
 			vel.x = lerp(vel.x, 0, 0.25)
 		if vel.y > 0:
@@ -148,7 +152,7 @@ func attempt_all_actions():
 			perform_action("Air")
 
 func attempt_normal(attack):
-	if state == State.FREE or (state == State.ATTACK and attack_hit):
+	if state == State.FREE or (can_cancel and attack_hit):
 		if !on_ground:
 			attack = normal[attack][0]
 		elif controller.dir.y == 1:
@@ -156,15 +160,18 @@ func attempt_normal(attack):
 		else:
 			attack = normal[attack][1]
 		perform_action(attack)
+		can_cancel = true
 
 func attempt_action(attack):
-	if state == State.FREE or (state == State.ATTACK and attack_hit):
+	if state == State.FREE or (can_cancel and attack_hit):
 		perform_action(attack)
 
 func perform_action(new_action):
 	gravity_enabled = true
 	friction_enabled = true
 	knockdown = false
+	can_recover = false
+	can_cancel = false
 	attack_hit = false
 	if on_ground:
 		vel.x = 0
@@ -177,6 +184,8 @@ func perform_action(new_action):
 		combo_count = 0
 		combo_damage = 0
 		emit_signal("set_combo_count", self)
+	elif new_action == "Knockdown":
+		state = State.HITSTUN
 	else:
 		state = State.ATTACK
 	var old = $Pivot.get_node(action)
@@ -208,7 +217,11 @@ func on_hit(hitbox):
 			Global.Guard.UNBLOCKABLE:
 				if !on_ground:
 					return
-	var damage = hitbox.damage 
+	var damage = hitbox.damage
+	var x_mod = hitbox.facing
+	if !x_mod:
+		x_mod = hitbox.owner.facing
+	var apply_pushback = false
 	if blocked:
 		if controller.dir.y == 1:
 			perform_action("CrouchBlock")
@@ -216,19 +229,23 @@ func on_hit(hitbox):
 			perform_action("Block")
 		in_blockstun = true
 		damage *= hitbox.chip_mod
-		vel.x = hitbox.pushback * hitbox.player.facing
+		apply_pushback = true
 	else:
 		perform_action("Hitstun")
 		if !on_ground:
 			vel = hitbox.juggle
-			vel.x *= hitbox.owner.facing
+			vel.x *= x_mod
 			knockdown = true
-		if hitbox.launch:
+		elif hitbox.launch:
 			vel = hitbox.launch
-			vel.x *= hitbox.owner.facing
+			vel.x *= x_mod
 			knockdown = true
 		else:
-			vel.x = hitbox.pushback * hitbox.player.facing
+			apply_pushback = true
+	if apply_pushback:
+		vel.x = hitbox.pushback * x_mod
+		if abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5:
+			other_player.vel.x = hitbox.pushback * x_mod * -1
 	if combo_count > 0:
 		damage *= 0.3
 	combo_count += 1
