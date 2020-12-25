@@ -112,8 +112,9 @@ func _process(_delta):
 				perform_action("Stand")
 
 func attempt_all_actions():
-	if (controller.button.a and controller.button.b) or (controller.button.c and controller.button.d):
-		attempt_action("Grab")
+	if on_ground:
+		if (controller.button.a and controller.button.b) or (controller.button.c and controller.button.d):
+			attempt_action("Grab")
 	if controller.button.d:
 		if controller.dir.y == 1:
 			attempt_action("SpinKick")
@@ -173,6 +174,7 @@ func perform_action(new_action):
 	can_recover = false
 	can_cancel = false
 	attack_hit = false
+	grab_point = false
 	if on_ground:
 		vel.x = 0
 		air_action = false
@@ -244,7 +246,7 @@ func on_hit(hitbox):
 			apply_pushback = true
 	if apply_pushback:
 		vel.x = hitbox.pushback * x_mod
-		if abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5:
+		if !hitbox.is_projectile and (abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5):
 			other_player.vel.x = hitbox.pushback * x_mod * -1
 	if combo_count > 0:
 		damage *= 0.3
@@ -258,9 +260,9 @@ func on_hit(hitbox):
 	emit_signal("take_damage", index, hp)
 	if hp <= 0:
 		emit_signal("knocked_out")
-	add_hitstop(0.1)
+	add_hitstop(hitbox.hitstop)
 	if hitbox.owner:
-		hitbox.owner.add_hitstop(0.1)
+		hitbox.owner.add_hitstop(hitbox.hitstop)
 		hitbox.owner.attack_hit = true
 	else:
 		hitbox.queue_free()

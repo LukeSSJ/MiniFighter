@@ -2,6 +2,9 @@ extends CanvasLayer
 
 onready var combo_count
 
+#func _ready():
+#	$Top/Bars/HealthBar.rect_scale.x = -1
+
 func set_combo_count(player):
 	$ComboCounts.get_child(player.index).set_combo_count(player.combo_count, player.combo_damage)
 

@@ -105,8 +105,8 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=17]
-length = 0.65
-step = 0.05
+length = 0.333333
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/2B/Sprite:frame")
 tracks/0/interp = 1
@@ -114,7 +114,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4 ),
+"times": PoolRealArray( 0, 0.0833333, 0.25 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -126,13 +126,15 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=18]
+length = 0.5
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/2C/Sprite:frame")
 tracks/0/interp = 1
@@ -140,7 +142,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6 ),
+"times": PoolRealArray( 0, 0.15, 0.333333 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -152,14 +154,15 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.15 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=19]
-length = 0.4
+length = 0.2
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/5A/Sprite:frame")
 tracks/0/interp = 1
@@ -167,7 +170,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
+"times": PoolRealArray( 0, 0.05, 0.116667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -179,15 +182,15 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.05, 0.116667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=20]
-length = 0.6
-step = 0.05
+length = 0.3
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/5B/Sprite:frame")
 tracks/0/interp = 1
@@ -195,7 +198,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.4 ),
+"times": PoolRealArray( 0, 0.1, 0.216667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -207,15 +210,15 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.15, 0.4 ),
+"times": PoolRealArray( 0, 0.1, 0.216667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=21]
-length = 0.85
-step = 0.05
+length = 0.4
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/5C/Sprite:frame")
 tracks/0/interp = 1
@@ -223,7 +226,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.55 ),
+"times": PoolRealArray( 0, 0.133333, 0.266667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -235,7 +238,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.35 ),
+"times": PoolRealArray( 0, 0.133333, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true ]
@@ -310,6 +313,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=27]
 length = 0.5
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Grab/Sprite:frame")
 tracks/0/interp = 1
@@ -317,7 +321,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2 ]
@@ -329,10 +333,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=28]
@@ -340,7 +344,8 @@ length = 99999.0
 loop = true
 
 [sub_resource type="Animation" id=29]
-length = 0.4
+length = 0.216667
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JA/Sprite:frame")
 tracks/0/interp = 1
@@ -348,7 +353,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
+"times": PoolRealArray( 0, 0.0833333 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
@@ -360,13 +365,14 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.0833333, 0.133333 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=30]
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JB/Hitbox/CollisionShape2D:disabled")
 tracks/0/interp = 1
@@ -381,6 +387,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=31]
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JC/Sprite:frame")
 tracks/0/interp = 1
@@ -457,7 +464,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=34]
 resource_name = "Recover"
 length = 0.3
 tracks/0/type = "method"
@@ -489,8 +496,9 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=35]
 length = 0.6
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/SpinKick/Sprite:frame")
 tracks/0/interp = 1
@@ -553,10 +561,10 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=36]
 loop = true
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=37]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Throw/Sprite:frame")
 tracks/0/interp = 1
@@ -611,7 +619,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=38]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -780,12 +788,11 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 offset = Vector2( 16, 0 )
 hframes = 3
-frame = 1
 
 [node name="Hitbox" parent="Pivot/5A" instance=ExtResource( 4 )]
 damage = 4
 chip_mod = 0.1
-hitstun = 0.3
+hitstun = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox"]
 position = Vector2( 40, -34 )
@@ -804,6 +811,8 @@ hframes = 3
 [node name="Hitbox" parent="Pivot/5B" instance=ExtResource( 4 )]
 chip_mod = 0.1
 pushback = 400
+hitstun = 0.5
+hitstop = 0.15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5B/Hitbox"]
 position = Vector2( 54, 41 )
@@ -818,14 +827,15 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 17 )
 offset = Vector2( 32, 0 )
 hframes = 3
-frame = 2
 
 [node name="Hitbox" parent="Pivot/5C" instance=ExtResource( 4 )]
 damage = 14
 chip_mod = 0.1
 pushback = 600
-juggle = Vector2( 400, -1300 )
-hitstun = 0.6
+launch = Vector2( 400, -1200 )
+juggle = Vector2( 200, -1300 )
+hitstun = 0.7
+hitstop = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5C/Hitbox"]
 position = Vector2( 102, -13 )
@@ -844,7 +854,7 @@ hframes = 3
 [node name="Hitbox" parent="Pivot/2A" instance=ExtResource( 4 )]
 damage = 3
 chip_mod = 0.1
-hitstun = 0.25
+hitstun = 0.3
 guard = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2A/Hitbox"]
@@ -863,6 +873,8 @@ hframes = 3
 [node name="Hitbox" parent="Pivot/2B" instance=ExtResource( 4 )]
 damage = 11
 chip_mod = 0.1
+juggle = Vector2( 100, -1200 )
+hitstop = 0.15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2B/Hitbox"]
 position = Vector2( 42, -61 )
@@ -883,6 +895,7 @@ damage = 12
 chip_mod = 0.1
 launch = Vector2( 200, -900 )
 hitstun = 0.6
+hitstop = 0.2
 guard = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2C/Hitbox"]
@@ -917,7 +930,9 @@ texture = ExtResource( 12 )
 offset = Vector2( 16, 0 )
 
 [node name="Hitbox" parent="Pivot/JB" instance=ExtResource( 4 )]
-damage = 8
+damage = 14
+hitstun = 0.3
+hitstop = 0.2
 guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JB/Hitbox"]
@@ -934,7 +949,9 @@ texture = ExtResource( 19 )
 hframes = 2
 
 [node name="Hitbox" parent="Pivot/JC" instance=ExtResource( 4 )]
-damage = 9
+damage = 15
+hitstun = 0.4
+hitstop = 0.2
 guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JC/Hitbox"]
@@ -1013,6 +1030,7 @@ frame = 1
 
 [node name="Hitbox" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
 damage = 12
+chip_mod = 0.5
 launch = Vector2( 300, -1800 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox"]
@@ -1022,6 +1040,7 @@ disabled = true
 
 [node name="Hitbox2" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
 damage = 8
+chip_mod = 0.5
 juggle = Vector2( 100, -1400 )
 hitstun = 1.0
 
@@ -1040,10 +1059,10 @@ jump_speed = 0
 scale = Vector2( 2, 2 )
 texture = ExtResource( 27 )
 hframes = 4
-frame = 2
 
 [node name="Hitbox" parent="Pivot/SpinKick" instance=ExtResource( 4 )]
 damage = 15
+chip_mod = 0.4
 launch = Vector2( 300, -1000 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SpinKick/Hitbox"]
@@ -1076,11 +1095,11 @@ anims/JB = SubResource( 30 )
 anims/JC = SubResource( 31 )
 anims/Jump = SubResource( 32 )
 anims/Knockdown = SubResource( 33 )
-anims/Recover = SubResource( 38 )
-anims/SpinKick = SubResource( 34 )
-anims/Stand = SubResource( 35 )
-anims/Throw = SubResource( 36 )
-anims/Uppercut = SubResource( 37 )
+anims/Recover = SubResource( 34 )
+anims/SpinKick = SubResource( 35 )
+anims/Stand = SubResource( 36 )
+anims/Throw = SubResource( 37 )
+anims/Uppercut = SubResource( 38 )
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]
 [connection signal="animation_finished" from="Actions" to="." method="action_end"]
