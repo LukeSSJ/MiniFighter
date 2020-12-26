@@ -9,6 +9,7 @@ export var hitstun = 0.4
 export var hitstop = 0.1
 export (Global.Guard) var guard = Global.Guard.MID
 export var on_hit_action = ""
+export var cancel_to = ""
 
 var player
 var facing

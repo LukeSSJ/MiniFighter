@@ -46,6 +46,8 @@ var knockdown = false
 var can_recover = false
 var air_action = false
 var can_cancel = false
+var can_special_cancel = false
+var cancel_array = []
 var attack_hit = false
 var grab_point = false
 var normal = {
@@ -115,7 +117,13 @@ func attempt_all_actions():
 	if on_ground:
 		if (controller.button.a and controller.button.b) or (controller.button.c and controller.button.d):
 			attempt_action("Grab")
-	if controller.button.d:
+		if state == State.FREE:
+			if facing == 1:
+				if other_player.position.x < position.x:
+					set_facing(-1)
+			elif other_player.position.x > position.x:
+					set_facing(1)
+	if controller.button.d and (state == State.FREE or can_special_cancel):
 		if controller.dir.y == 1:
 			attempt_action("SpinKick")
 		elif controller.dir == Vector2.RIGHT:
@@ -134,34 +142,33 @@ func attempt_all_actions():
 		if controller.dir.y == -1:
 				perform_action("Jump")
 		elif controller.dir.y == 1:
-			pose = Pose.CROUCH
 			if action != "Crouch":
 				perform_action("Crouch")
+				set_pose(Pose.CROUCH)
 		else:
 			pose = Pose.STAND
 			if action != "Stand":
 				perform_action("Stand")
+				set_pose(Pose.STAND)
 			if controller.dir.x != 0:
 				vel.x = controller.dir.x * facing * WALK_SPEED
-		if facing == 1:
-			if other_player.position.x < position.x:
-				set_facing(-1)
-		elif other_player.position.x > position.x:
-				set_facing(1)
 	else: # Air actions
 		if action != "Air":
 			perform_action("Air")
 
 func attempt_normal(attack):
-	if state == State.FREE or (can_cancel and attack_hit):
-		if !on_ground:
-			attack = normal[attack][0]
-		elif controller.dir.y == 1:
-			attack = normal[attack][2]
-		else:
-			attack = normal[attack][1]
+	if !on_ground:
+		attack = normal[attack][0]
+	elif controller.dir.y == 1:
+		attack = normal[attack][2]
+	else:
+		attack = normal[attack][1]
+	if state == State.FREE or (can_cancel and attack_hit and attack in cancel_array):
 		perform_action(attack)
+		if controller.dir.y == 1:
+			set_pose(Pose.CROUCH)
 		can_cancel = true
+		can_special_cancel = true
 
 func attempt_action(attack):
 	if state == State.FREE or (can_cancel and attack_hit):
@@ -173,19 +180,26 @@ func perform_action(new_action):
 	knockdown = false
 	can_recover = false
 	can_cancel = false
+	can_special_cancel = false
+	cancel_array = []
 	attack_hit = false
 	grab_point = false
 	if on_ground:
 		vel.x = 0
 		air_action = false
+		set_pose(Pose.STAND)
 	else:
 		air_action = true
+		set_pose(Pose.AIR)
 	if new_action in ["Stand", "Crouch", "Air"]:
 		state = State.FREE
 		in_blockstun = false
 		combo_count = 0
 		combo_damage = 0
 		emit_signal("set_combo_count", self)
+		# Refill health
+		hp = max_hp
+		emit_signal("take_damage", index, hp)
 	elif new_action == "Knockdown":
 		state = State.HITSTUN
 	else:
@@ -227,13 +241,18 @@ func on_hit(hitbox):
 	if blocked:
 		if controller.dir.y == 1:
 			perform_action("CrouchBlock")
+			set_pose(Pose.CROUCH)
 		else:
 			perform_action("Block")
 		in_blockstun = true
 		damage *= hitbox.chip_mod
 		apply_pushback = true
 	else:
-		perform_action("Hitstun")
+		if pose == Pose.CROUCH and apply_pushback:
+			perform_action("CrouchHitstun")
+			set_pose(Pose.CROUCH)
+		else:
+			perform_action("Hitstun")
 		if !on_ground:
 			vel = hitbox.juggle
 			vel.x *= x_mod
@@ -264,10 +283,18 @@ func on_hit(hitbox):
 	if hitbox.owner:
 		hitbox.owner.add_hitstop(hitbox.hitstop)
 		hitbox.owner.attack_hit = true
+		hitbox.owner.cancel_array = hitbox.cancel_to.split(",", false)
 	else:
 		hitbox.queue_free()
 	if hitbox.on_hit_action:
 		hitbox.owner.perform_action(hitbox.on_hit_action)
+
+func set_pose(p):
+	pose = p
+	if pose == Pose.CROUCH:
+		$Pivot/Hurtbox.position.y = 70
+	else:
+		$Pivot/Hurtbox.position.y = 0
 
 func add_hitstop(time):
 	hitstop = true
@@ -282,8 +309,6 @@ func hitstop_end():
 	$TimerStun.paused = false
 
 func stun_end():
-	hp = max_hp
-	emit_signal("take_damage", index, hp)
 	perform_action("Stand")
 
 func action_end(_anim_name):

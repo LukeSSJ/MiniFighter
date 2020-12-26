@@ -1,0 +1,21 @@
+
+
+== Required ==
+
+Flip P1 healthbar
+Make UI look better
+Air hitstun
+Start menu + rematch
+Sound effects
+Music - get from newgrounds
+Character colours
+
+== Luxury ==
+
+Pause
+VS CPU
+Training
+Remap controls
+More stage
+EX moves
+Supers
