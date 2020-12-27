@@ -26,8 +26,9 @@ func round_start():
 		if i == 1:
 			p[i].position.x = 1024 - 400
 		p[i].connect("take_damage", UI, "update_hp")
-		p[i].connect("knocked_out", self, "round_over")
+		p[i].connect("update_special", UI, "update_special")
 		p[i].connect("set_combo_count", UI, "set_combo_count")
+		p[i].connect("knocked_out", self, "round_over")
 		$Floor.add_child(p[i])
 		UI.update_hp(i, 100)
 		UI.set_wins(i, wins[i])

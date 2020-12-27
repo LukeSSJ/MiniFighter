@@ -1,11 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://HealthBar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://stage/beach.png" type="Texture" id=3]
-[ext_resource path="res://ComboCount.tscn" type="PackedScene" id=4]
-[ext_resource path="res://UI.gd" type="Script" id=5]
-[ext_resource path="res://icons/timer.png" type="Texture" id=6]
 
 [node name="Main" type="Node2D"]
 position = Vector2( -1, 0 )
@@ -24,69 +21,6 @@ one_shot = true
 [node name="TimerNextRound" type="Timer" parent="."]
 one_shot = true
 
-[node name="UI" type="CanvasLayer" parent="."]
-script = ExtResource( 5 )
-
-[node name="Top" type="MarginContainer" parent="UI"]
-anchor_right = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Bars" type="HBoxContainer" parent="UI/Top"]
-margin_right = 1024.0
-margin_bottom = 49.0
-
-[node name="HealthBar" parent="UI/Top/Bars" instance=ExtResource( 2 )]
-margin_right = 492.0
-margin_bottom = 49.0
-rect_pivot_offset = Vector2( 246, 0 )
-size_flags_horizontal = 3
-
-[node name="Timer" type="MarginContainer" parent="UI/Top/Bars"]
-margin_left = 496.0
-margin_right = 528.0
-margin_bottom = 49.0
-rect_min_size = Vector2( 32, 32 )
-custom_constants/margin_top = 7
-
-[node name="TextureRect" type="TextureRect" parent="UI/Top/Bars/Timer"]
-margin_top = 7.0
-margin_right = 32.0
-margin_bottom = 49.0
-texture = ExtResource( 6 )
-
-[node name="Number" type="Label" parent="UI/Top/Bars/Timer"]
-margin_top = 21.0
-margin_right = 32.0
-margin_bottom = 35.0
-text = "99"
-align = 1
-valign = 1
-
-[node name="HealthBar2" parent="UI/Top/Bars" instance=ExtResource( 2 )]
-margin_left = 532.0
-margin_right = 1024.0
-margin_bottom = 49.0
-size_flags_horizontal = 3
-
-[node name="ComboCounts" type="Control" parent="UI"]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ComboCount" parent="UI/ComboCounts" instance=ExtResource( 4 )]
-margin_left = 150.0
-margin_top = 120.0
-margin_right = 218.0
-margin_bottom = 170.0
-
-[node name="ComboCount2" parent="UI/ComboCounts" instance=ExtResource( 4 )]
-margin_left = 874.0
-margin_top = 120.0
-margin_right = 942.0
-margin_bottom = 170.0
+[node name="UI" parent="." instance=ExtResource( 2 )]
 [connection signal="timeout" from="TimerRoundStart" to="." method="fight"]
 [connection signal="timeout" from="TimerNextRound" to="." method="next_round"]

@@ -22,4 +22,8 @@ shape = SubResource( 1 )
 visible = false
 position = Vector2( 0, -1.43051e-06 )
 scale = Vector2( 2.2, 2.2 )
+
+[node name="TimerHitstop" type="Timer" parent="."]
+one_shot = true
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="off_screen"]
+[connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

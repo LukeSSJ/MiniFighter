@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal knocked_out
 signal take_damage
+signal update_special
 signal set_combo_count
 
 enum State {
@@ -18,6 +19,7 @@ enum Pose {
 const WALL_LEFT_X = 20
 const WALL_RIGHT_X = 1024 - 20
 const FLOOR_Y = 580
+const DOWN_FORWARD = Vector2(1, 1)
 
 export var WALK_SPEED = 400
 export var JUMP_VEL = Vector2(300, -1600)
@@ -57,6 +59,9 @@ var normal = {
 }
 var combo_count = 0
 var combo_damage = 0
+var special = 100
+var special_regen = false
+var Action
 
 func _ready():
 	half_width = $Collision.shape.extents.x
@@ -71,11 +76,20 @@ func set_index(set_index):
 		facing = -1
 		$Pivot.scale.x = -1
 
-func _process(_delta):
+func _process(delta):
 	controller.update()
 	controller.dir.x *= facing
 	if hitstop:
 		return
+	
+	if special_regen:
+		special = min(special + delta * 40, 100)
+		emit_signal("update_special", index, special)
+		if special == 100:
+			special_regen = false
+			
+	if Action.has_method("performing"):
+		Action.performing(delta)
 	
 	if (state == State.FREE or state == State.ATTACK) and active:
 		attempt_all_actions()
@@ -125,11 +139,13 @@ func attempt_all_actions():
 					set_facing(1)
 	if controller.button.d and (state == State.FREE or can_special_cancel):
 		if controller.dir.y == 1:
-			attempt_action("SpinKick")
+			attempt_action("SpinKick", 25)
 		elif controller.dir == Vector2.RIGHT:
-			attempt_action("Uppercut")
+			attempt_action("Uppercut", 25)
 		else:
-			attempt_action("Fireball")
+			attempt_action("Fireball", 25)
+	if controller.dir == DOWN_FORWARD and controller.button.b:
+		attempt_action("Overhead")
 	if controller.button.c:
 		attempt_normal("C")
 	if controller.button.b:
@@ -170,9 +186,10 @@ func attempt_normal(attack):
 		can_cancel = true
 		can_special_cancel = true
 
-func attempt_action(attack):
+func attempt_action(attack, cost=0):
 	if state == State.FREE or (can_cancel and attack_hit):
-		perform_action(attack)
+		if consume_special(cost):
+			perform_action(attack)
 
 func perform_action(new_action):
 	gravity_enabled = true
@@ -204,17 +221,22 @@ func perform_action(new_action):
 		state = State.HITSTUN
 	else:
 		state = State.ATTACK
-	var old = $Pivot.get_node(action)
-	old.hide()
-	for child in old.get_children():
-		if child is Area2D:
-			for col in child.get_children():
-				col.set_deferred("disabled", true)
+	if Action:
+		Action.hide()
+		for child in Action.get_children():
+			if child is Area2D:
+				for col in child.get_children():
+					col.set_deferred("disabled", true)
 	invul_off()
 	action = new_action
-	$Pivot.get_node(new_action).show()
+	Action = $Pivot.get_node(new_action)
+	Action.show()
+	if Action.has_method("start"):
+		Action.start()
 	$Actions.stop()
 	$Actions.play(new_action)
+	if special < 100 and $TimerSpecialRegen.is_stopped():
+		$TimerSpecialRegen.start()
 
 func on_hit(hitbox):
 	if !active:
@@ -222,14 +244,14 @@ func on_hit(hitbox):
 	if (invul_hit and !hitbox.is_projectile) or (invul_projectile and hitbox.is_projectile):
 		return
 	var blocked = false
-	if (state == State.FREE or in_blockstun) and controller.dir.x == -1:
+	if (state == State.FREE or in_blockstun):
 		match hitbox.guard:
 			Global.Guard.MID:
-				blocked = true
+				blocked = (controller.dir.x == -1)
 			Global.Guard.LOW:
-				blocked = (controller.dir.y == 1)
+				blocked = (controller.dir.x == -1 and controller.dir.y == 1)
 			Global.Guard.HIGH:
-				blocked = (controller.dir.y == 0)
+				blocked = (controller.dir.x == -1 and controller.dir.y == 0)
 			Global.Guard.UNBLOCKABLE:
 				if !on_ground:
 					return
@@ -248,6 +270,11 @@ func on_hit(hitbox):
 		damage *= hitbox.chip_mod
 		apply_pushback = true
 	else:
+		if combo_count > 0:
+			damage *= 0.3
+		combo_count += 1
+		combo_damage += damage
+		emit_signal("set_combo_count", self)
 		if pose == Pose.CROUCH and apply_pushback:
 			perform_action("CrouchHitstun")
 			set_pose(Pose.CROUCH)
@@ -267,11 +294,6 @@ func on_hit(hitbox):
 		vel.x = hitbox.pushback * x_mod
 		if !hitbox.is_projectile and (abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5):
 			other_player.vel.x = hitbox.pushback * x_mod * -1
-	if combo_count > 0:
-		damage *= 0.3
-	combo_count += 1
-	combo_damage += damage
-	emit_signal("set_combo_count", self)
 	hp -= damage
 	state = State.HITSTUN
 	$TimerStun.wait_time = hitbox.hitstun
@@ -284,8 +306,7 @@ func on_hit(hitbox):
 		hitbox.owner.add_hitstop(hitbox.hitstop)
 		hitbox.owner.attack_hit = true
 		hitbox.owner.cancel_array = hitbox.cancel_to.split(",", false)
-	else:
-		hitbox.queue_free()
+	hitbox.on_hit()
 	if hitbox.on_hit_action:
 		hitbox.owner.perform_action(hitbox.on_hit_action)
 
@@ -295,6 +316,15 @@ func set_pose(p):
 		$Pivot/Hurtbox.position.y = 70
 	else:
 		$Pivot/Hurtbox.position.y = 0
+
+func consume_special(cost):
+	if special >= cost:
+		if cost > 0:
+			special -= cost
+			emit_signal("update_special", index, special)
+			$TimerSpecialRegen.stop()
+			special_regen = false
+		return true
 
 func add_hitstop(time):
 	hitstop = true
@@ -336,3 +366,6 @@ func set_facing(f):
 func set_grabbed(grabbed):
 	$Collision.disabled = grabbed
 	gravity_enabled = !grabbed
+
+func special_regen_on():
+	special_regen = true

@@ -19,6 +19,8 @@ func set_combo_count(count, damage):
 			N1.hide()
 		N2.frame = int(n2)
 		$Numbers/Damage.text = str(damage * 10)
+		$AP.play("Add")
+		$Timer.stop()
 	elif count == 0:
 		$Timer.start()
 

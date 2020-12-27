@@ -1,0 +1,129 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://UI.gd" type="Script" id=3]
+[ext_resource path="res://icons/timer.png" type="Texture" id=4]
+[ext_resource path="res://ComboCount.tscn" type="PackedScene" id=5]
+[ext_resource path="res://HealthBar.tscn" type="PackedScene" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.164706, 0.392157, 0.780392, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxLine" id=3]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+anti_aliasing = false
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="Top" type="MarginContainer" parent="."]
+anchor_right = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bars" type="HBoxContainer" parent="Top"]
+margin_right = 1024.0
+margin_bottom = 49.0
+
+[node name="HealthBar" parent="Top/Bars" instance=ExtResource( 6 )]
+margin_right = 492.0
+rect_pivot_offset = Vector2( 246, 0 )
+size_flags_horizontal = 3
+
+[node name="Timer" type="MarginContainer" parent="Top/Bars"]
+margin_left = 496.0
+margin_right = 528.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 32, 32 )
+custom_constants/margin_top = 7
+
+[node name="TextureRect" type="TextureRect" parent="Top/Bars/Timer"]
+margin_top = 7.0
+margin_right = 32.0
+margin_bottom = 49.0
+texture = ExtResource( 4 )
+
+[node name="Number" type="Label" parent="Top/Bars/Timer"]
+margin_top = 21.0
+margin_right = 32.0
+margin_bottom = 35.0
+text = "99"
+align = 1
+valign = 1
+
+[node name="HealthBar2" parent="Top/Bars" instance=ExtResource( 6 )]
+margin_left = 532.0
+margin_right = 1024.0
+size_flags_horizontal = 3
+
+[node name="ComboCounts" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ComboCount" parent="ComboCounts" instance=ExtResource( 5 )]
+margin_left = 150.0
+margin_top = 120.0
+margin_right = 218.0
+margin_bottom = 170.0
+
+[node name="ComboCount2" parent="ComboCounts" instance=ExtResource( 5 )]
+margin_left = 874.0
+margin_top = 120.0
+margin_right = 942.0
+margin_bottom = 170.0
+
+[node name="SpecialBar" type="ProgressBar" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = -23.0
+margin_right = 208.0
+margin_bottom = -9.0
+rect_min_size = Vector2( 200, 0 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 3 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpecialBar2" type="ProgressBar" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -208.0
+margin_top = -22.0
+margin_right = -8.0
+margin_bottom = -8.0
+rect_min_size = Vector2( 200, 0 )
+rect_scale = Vector2( -1, 1 )
+rect_pivot_offset = Vector2( 100, 0 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}

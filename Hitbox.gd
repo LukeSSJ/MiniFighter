@@ -13,6 +13,7 @@ export var cancel_to = ""
 
 var player
 var facing
+var hits = 1
 
 var is_projectile = false
 
@@ -23,3 +24,6 @@ func _ready():
 		set_collision_mask_bit(1, true)
 	else:
 		set_collision_mask_bit(2, true)
+
+func on_hit():
+	pass

@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 onready var combo_count
+onready var SpecialBars = [$SpecialBar, $SpecialBar2]
 
 #func _ready():
 #	$Top/Bars/HealthBar.rect_scale.x = -1
@@ -13,6 +14,9 @@ func update_hp(index, hp):
 		$Top/Bars/HealthBar.update_hp(hp)
 	else:
 		$Top/Bars/HealthBar2.update_hp(hp)
+
+func update_special(index, special):
+	SpecialBars[index].value = special
 
 func set_wins(index, wins):
 	if index == 0:

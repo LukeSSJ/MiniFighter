@@ -2,20 +2,26 @@
 
 == Required ==
 
-Flip P1 healthbar
+Special bar [X]
+Charge fireball [X]
+Spin kick follow up [X]
+Overhead move [X]
 Make UI look better
+Flip P1 healthbar
 Air hitstun
 Start menu + rematch
 Sound effects
 Music - get from newgrounds
 Character colours
+KOed sprite
 
 == Luxury ==
 
+Hurtbox extension
 Pause
 VS CPU
 Training
 Remap controls
-More stage
+More stages
 EX moves
 Supers

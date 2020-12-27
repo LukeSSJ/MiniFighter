@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ComboCount.gd" type="Script" id=1]
 [ext_resource path="res://icons/numbers.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Add"
+length = 0.2
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Numbers/Count:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -20, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2 )
+}
 
 [node name="ComboCount" type="MarginContainer"]
 script = ExtResource( 1 )
@@ -49,4 +63,7 @@ align = 1
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
+
+[node name="AP" type="AnimationPlayer" parent="."]
+anims/Add = SubResource( 1 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
