@@ -7,7 +7,7 @@ Charge fireball [X]
 Spin kick follow up [X]
 Overhead move [X]
 Make UI look better
-Flip P1 healthbar
+Flip P1 healthbar [X]
 Air hitstun
 Start menu + rematch
 Sound effects

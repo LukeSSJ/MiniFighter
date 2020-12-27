@@ -1,5 +1,8 @@
 extends MarginContainer
 
+func _ready():
+	set_wins(0)
+
 func update_hp(amount):
 	$Bars/HealthBar.value = amount
 

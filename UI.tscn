@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI.gd" type="Script" id=3]
 [ext_resource path="res://icons/timer.png" type="Texture" id=4]
@@ -14,9 +14,7 @@ border_width_bottom = 1
 border_color = Color( 1, 1, 1, 0 )
 anti_aliasing = false
 
-[sub_resource type="StyleBoxLine" id=3]
-
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.156863, 0.156863, 0.156863, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -32,7 +30,42 @@ anti_aliasing = false
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 3 )
 
+[node name="HealthBar" parent="." instance=ExtResource( 6 )]
+
+[node name="HealthBar2" parent="." instance=ExtResource( 6 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -492.0
+margin_right = 0.0
+margin_bottom = 65.0
+rect_scale = Vector2( -1, 1 )
+rect_pivot_offset = Vector2( 246, 0 )
+
+[node name="Clock" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -16.0
+margin_top = 6.0
+margin_right = 16.0
+margin_bottom = 38.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Clock"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Clock"]
+margin_top = 9.0
+margin_right = 32.0
+margin_bottom = 23.0
+text = "99"
+align = 1
+
 [node name="Top" type="MarginContainer" parent="."]
+visible = false
 anchor_right = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,7 +73,7 @@ __meta__ = {
 
 [node name="Bars" type="HBoxContainer" parent="Top"]
 margin_right = 1024.0
-margin_bottom = 49.0
+margin_bottom = 65.0
 
 [node name="HealthBar" parent="Top/Bars" instance=ExtResource( 6 )]
 margin_right = 492.0
@@ -96,9 +129,9 @@ margin_bottom = 170.0
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
-margin_top = -23.0
+margin_top = -24.0
 margin_right = 208.0
-margin_bottom = -9.0
+margin_bottom = -10.0
 rect_min_size = Vector2( 200, 0 )
 custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 3 )
@@ -121,7 +154,7 @@ rect_min_size = Vector2( 200, 0 )
 rect_scale = Vector2( -1, 1 )
 rect_pivot_offset = Vector2( 100, 0 )
 custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
 value = 100.0
 percent_visible = false
 __meta__ = {

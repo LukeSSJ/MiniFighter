@@ -4,6 +4,7 @@ extends Node2D
 var p = [null, null]
 var wins
 var round_count
+var time_left
 
 onready var Player = preload("res://Player.tscn")
 onready var Controller = preload("res://Controller.tscn")
@@ -35,10 +36,17 @@ func round_start():
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]
 	$TimerRoundStart.start()
+	time_left = 60
+	$UI.update_timer(time_left)
 
 func fight():
 	p[0].active = true
 	p[1].active = true
+	$TimerRound.start()
+
+func timer_count_down():
+	time_left -= 1
+	$UI.update_timer(time_left)
 
 func round_over():
 	p[0].active = false

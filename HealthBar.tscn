@@ -28,6 +28,7 @@ anti_aliasing = false
 [node name="HealthBar" type="MarginContainer"]
 margin_right = 60.0
 margin_bottom = 49.0
+rect_min_size = Vector2( 492, 0 )
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -40,11 +41,11 @@ __meta__ = {
 [node name="Bars" type="VBoxContainer" parent="."]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 50.0
-margin_bottom = 39.0
+margin_right = 482.0
+margin_bottom = 55.0
 
 [node name="HealthBar" type="ProgressBar" parent="Bars"]
-margin_right = 40.0
+margin_right = 472.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 40, 25 )
 custom_styles/fg = SubResource( 1 )
@@ -54,17 +55,16 @@ percent_visible = false
 
 [node name="Wins" type="HBoxContainer" parent="Bars"]
 margin_top = 29.0
-margin_right = 40.0
-margin_bottom = 29.0
+margin_right = 472.0
+margin_bottom = 45.0
 
 [node name="Win" type="TextureRect" parent="Bars/Wins"]
-visible = false
 margin_right = 16.0
 margin_bottom = 16.0
 texture = ExtResource( 2 )
 
 [node name="Win2" type="TextureRect" parent="Bars/Wins"]
-visible = false
-margin_right = 16.0
+margin_left = 20.0
+margin_right = 36.0
 margin_bottom = 16.0
 texture = ExtResource( 2 )

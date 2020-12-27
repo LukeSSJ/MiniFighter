@@ -68,22 +68,22 @@ extents = Vector2( 78, 24 )
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 44, 73 )
 
-[sub_resource type="RectangleShape2D" id=40]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 62, 82 )
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 45, 55 )
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 29, 46 )
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 40, 70 )
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 91, 37 )
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 0.4
 step = 0.02
 tracks/0/type = "value"
@@ -111,7 +111,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=18]
 length = 0.333333
 step = 0.0166667
 tracks/0/type = "value"
@@ -139,7 +139,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=19]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -167,7 +167,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=20]
 length = 0.2
 step = 0.0166667
 tracks/0/type = "value"
@@ -195,7 +195,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=21]
 length = 0.3
 step = 0.0166667
 tracks/0/type = "value"
@@ -223,7 +223,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=22]
 length = 0.500001
 step = 0.0166667
 tracks/0/type = "value"
@@ -251,7 +251,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=23]
 loop = true
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -265,11 +265,11 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=24]
 length = 99999.0
 loop = true
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=25]
 length = 99999.0
 loop = true
 step = 0.02
@@ -286,16 +286,15 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=26]
 loop = true
 
-[sub_resource type="Animation" id=26]
-resource_name = "CrouchHitstun"
+[sub_resource type="Animation" id=27]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=28]
 length = 0.7
 step = 0.0166667
 tracks/0/type = "value"
@@ -340,7 +339,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=29]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -368,12 +367,12 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=30]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=31]
 length = 0.216667
 step = 0.0166667
 tracks/0/type = "value"
@@ -401,7 +400,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=32]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JB/Hitbox/CollisionShape2D:disabled")
@@ -416,7 +415,7 @@ tracks/0/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=33]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JC/Sprite:frame")
@@ -443,7 +442,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=33]
+[sub_resource type="Animation" id=34]
 length = 0.06
 step = 0.02
 tracks/0/type = "method"
@@ -461,7 +460,7 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=35]
 tracks/0/type = "method"
 tracks/0/path = NodePath("Pivot/Knockdown")
 tracks/0/interp = 1
@@ -506,7 +505,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=41]
+[sub_resource type="Animation" id=36]
 resource_name = "Overhead"
 length = 0.5
 step = 0.0166667
@@ -535,7 +534,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=37]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -578,7 +577,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -100 ) ]
 }
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=38]
 length = 0.6
 step = 0.0166667
 tracks/0/type = "value"
@@ -646,10 +645,10 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=39]
 loop = true
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=40]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Throw/Sprite:frame")
 tracks/0/interp = 1
@@ -704,7 +703,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=41]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -1081,7 +1080,7 @@ guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Overhead/Hitbox"]
 position = Vector2( 41, -47 )
-shape = SubResource( 40 )
+shape = SubResource( 12 )
 disabled = true
 
 [node name="Grab" type="Node2D" parent="Pivot"]
@@ -1101,7 +1100,7 @@ on_hit_action = "Throw"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Grab/Hitbox"]
 position = Vector2( 56, -18 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 disabled = true
 
 [node name="Throw" type="Node2D" parent="Pivot"]
@@ -1122,7 +1121,7 @@ guard = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Throw/Hitbox"]
 position = Vector2( 47, 15 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 disabled = true
 
 [node name="Point" type="Node2D" parent="Pivot/Throw"]
@@ -1169,7 +1168,7 @@ launch = Vector2( 300, -1800 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox"]
 position = Vector2( 29, -1 )
-shape = SubResource( 13 )
+shape = SubResource( 14 )
 disabled = true
 
 [node name="Hitbox2" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
@@ -1180,7 +1179,7 @@ hitstun = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox2"]
 position = Vector2( 22, -74 )
-shape = SubResource( 14 )
+shape = SubResource( 15 )
 disabled = true
 
 [node name="SpinKick" type="Node2D" parent="Pivot"]
@@ -1203,7 +1202,7 @@ hitstun = 0.6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SpinKick/Hitbox"]
 position = Vector2( 2, 31 )
-shape = SubResource( 15 )
+shape = SubResource( 16 )
 disabled = true
 
 [node name="TimerStun" type="Timer" parent="."]
@@ -1217,31 +1216,31 @@ wait_time = 0.5
 one_shot = true
 
 [node name="Actions" type="AnimationPlayer" parent="."]
-anims/2A = SubResource( 16 )
-anims/2B = SubResource( 17 )
-anims/2C = SubResource( 18 )
-anims/5A = SubResource( 19 )
-anims/5B = SubResource( 20 )
-anims/5C = SubResource( 21 )
-anims/Air = SubResource( 22 )
-anims/Block = SubResource( 23 )
-anims/Crouch = SubResource( 24 )
-anims/CrouchBlock = SubResource( 25 )
-anims/CrouchHitstun = SubResource( 26 )
-anims/Fireball = SubResource( 27 )
-anims/Grab = SubResource( 28 )
-anims/Hitstun = SubResource( 29 )
-anims/JA = SubResource( 30 )
-anims/JB = SubResource( 31 )
-anims/JC = SubResource( 32 )
-anims/Jump = SubResource( 33 )
-anims/Knockdown = SubResource( 34 )
-anims/Overhead = SubResource( 41 )
-anims/Recover = SubResource( 35 )
-anims/SpinKick = SubResource( 36 )
-anims/Stand = SubResource( 37 )
-anims/Throw = SubResource( 38 )
-anims/Uppercut = SubResource( 39 )
+anims/2A = SubResource( 17 )
+anims/2B = SubResource( 18 )
+anims/2C = SubResource( 19 )
+anims/5A = SubResource( 20 )
+anims/5B = SubResource( 21 )
+anims/5C = SubResource( 22 )
+anims/Air = SubResource( 23 )
+anims/Block = SubResource( 24 )
+anims/Crouch = SubResource( 25 )
+anims/CrouchBlock = SubResource( 26 )
+anims/CrouchHitstun = SubResource( 27 )
+anims/Fireball = SubResource( 28 )
+anims/Grab = SubResource( 29 )
+anims/Hitstun = SubResource( 30 )
+anims/JA = SubResource( 31 )
+anims/JB = SubResource( 32 )
+anims/JC = SubResource( 33 )
+anims/Jump = SubResource( 34 )
+anims/Knockdown = SubResource( 35 )
+anims/Overhead = SubResource( 36 )
+anims/Recover = SubResource( 37 )
+anims/SpinKick = SubResource( 38 )
+anims/Stand = SubResource( 39 )
+anims/Throw = SubResource( 40 )
+anims/Uppercut = SubResource( 41 )
 [connection signal="timeout" from="Pivot/Fireball/TimerPulse" to="Pivot/Fireball" method="_on_TimerPulse_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

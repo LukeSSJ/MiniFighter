@@ -14,6 +14,8 @@ centered = false
 
 [node name="Floor" type="Node2D" parent="."]
 
+[node name="TimerRound" type="Timer" parent="."]
+
 [node name="TimerRoundStart" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -22,5 +24,6 @@ one_shot = true
 one_shot = true
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
+[connection signal="timeout" from="TimerRound" to="." method="timer_count_down"]
 [connection signal="timeout" from="TimerRoundStart" to="." method="fight"]
 [connection signal="timeout" from="TimerNextRound" to="." method="next_round"]
