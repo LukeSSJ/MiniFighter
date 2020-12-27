@@ -1,17 +1,23 @@
 extends Node2D
 
-
 var p = [null, null]
 var wins
 var round_count
 var time_left
+var time_up
 
 onready var Player = preload("res://Player.tscn")
 onready var Controller = preload("res://Controller.tscn")
+onready var ControllerCPU = preload("res://ControllerCPU.tscn")
 onready var UI = $UI
 
 func _ready():
+	UI.connect("rematch", self, "game_start")
 	game_start()
+
+func _process(_delta):
+	if Input.is_action_just_pressed("pause"):
+		get_tree().change_scene("res://Menu.tscn")
 
 func game_start():
 	round_count = 1
@@ -19,9 +25,15 @@ func game_start():
 	round_start()
 
 func round_start():
+	if p[0]:
+		p[0].queue_free()
+		p[1].queue_free()
 	for i in range(0, 2):
 		p[i] = Player.instance()
-		p[i].controller = Controller.instance()
+		var ControllerType = Controller
+		if i == 1 and Global.game_mode == Global.VS_CPU:
+			ControllerType = ControllerCPU
+		p[i].controller = ControllerType.instance()
 		p[i].set_index(i)
 		p[i].position = Vector2(400, 580)
 		if i == 1:
@@ -37,48 +49,53 @@ func round_start():
 	p[1].other_player = p[0]
 	$TimerRoundStart.start()
 	time_left = 60
+	time_up = false
+	$UI.round_start(round_count)
 	$UI.update_timer(time_left)
 
 func fight():
 	p[0].active = true
 	p[1].active = true
-	$TimerRound.start()
+	if Global.game_mode != Global.TRAINING:
+		$TimerRound.start()
 
 func timer_count_down():
 	time_left -= 1
 	$UI.update_timer(time_left)
+	if time_left == 0:
+		time_up = true
+		round_over()
 
 func round_over():
 	p[0].active = false
 	p[1].active = false
+	$TimerRound.stop()
 	$TimerNextRound.start()
 
 func next_round():
+	var text = "KO"
 	var winner = -1
 	if p[0].hp <= 0:
 		if p[1].hp <= 0:
-			print("double KO")
+			text = "Double KO"
 		else:
-			print("player 2 wins")
 			winner = 1
 	elif p[1].hp <= 0:
-		print("player 1 wins")
 		winner = 0
 	elif p[0].hp > p[1].hp:
-		print("player 1 wins")
 		winner = 0
 	elif p[1].hp > p[0].hp:
-		print("player 2 wins")
 		winner = 1
 	else:
-		print("draw")
-	p[0].queue_free()
-	p[1].queue_free()
+		text = "Draw"
 	round_count += 1
 	if winner != -1:
 		wins[winner] += 1
+		UI.set_wins(winner, wins[winner])
 		if wins[winner] >= 2:
-			print("game won")
-			game_start()
+			text = "Player " + str(winner + 1) + " Wins"
+			$UI.show_result(text)
+			$UI.show_rematch()
 			return
+	$UI.show_result(text)
 	round_start()

@@ -66,6 +66,8 @@ var Action
 func _ready():
 	half_width = $Collision.shape.extents.x
 	perform_action("Stand")
+	emit_signal("set_combo_count", self)
+	emit_signal("update_special", index, special)
 
 func set_index(set_index):
 	index = set_index
@@ -214,9 +216,10 @@ func perform_action(new_action):
 		combo_count = 0
 		combo_damage = 0
 		emit_signal("set_combo_count", self)
-		# Refill health
-		hp = max_hp
-		emit_signal("take_damage", index, hp)
+		# Refill health (training mode)
+		if Global.game_mode == Global.TRAINING:
+			hp = max_hp
+			emit_signal("take_damage", index, hp)
 	elif new_action == "Knockdown":
 		state = State.HITSTUN
 	else:
@@ -275,7 +278,9 @@ func on_hit(hitbox):
 		combo_count += 1
 		combo_damage += damage
 		emit_signal("set_combo_count", self)
-		if pose == Pose.CROUCH and apply_pushback:
+		if !on_ground or hitbox.launch:
+			perform_action("AirHitstun")
+		elif pose == Pose.CROUCH and apply_pushback:
 			perform_action("CrouchHitstun")
 			set_pose(Pose.CROUCH)
 		else:

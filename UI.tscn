@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
+[ext_resource path="res://theme/Default.tres" type="Theme" id=1]
 [ext_resource path="res://UI.gd" type="Script" id=3]
 [ext_resource path="res://icons/timer.png" type="Texture" id=4]
 [ext_resource path="res://ComboCount.tscn" type="PackedScene" id=5]
@@ -14,7 +15,7 @@ border_width_bottom = 1
 border_color = Color( 1, 1, 1, 0 )
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.156863, 0.156863, 0.156863, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -27,10 +28,69 @@ corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 anti_aliasing = false
 
+[sub_resource type="Animation" id=3]
+resource_name = "RoundStart"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Round:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Fight:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Result:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "ShowResult"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Result:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 3 )
 
 [node name="HealthBar" parent="." instance=ExtResource( 6 )]
+margin_left = 492.0
+margin_right = 984.0
+margin_bottom = 65.0
+rect_scale = Vector2( -1, 1 )
 
 [node name="HealthBar2" parent="." instance=ExtResource( 6 )]
 anchor_left = 1.0
@@ -38,7 +98,6 @@ anchor_right = 1.0
 margin_left = -492.0
 margin_right = 0.0
 margin_bottom = 65.0
-rect_scale = Vector2( -1, 1 )
 rect_pivot_offset = Vector2( 246, 0 )
 
 [node name="Clock" type="MarginContainer" parent="."]
@@ -48,6 +107,7 @@ margin_left = -16.0
 margin_top = 6.0
 margin_right = 16.0
 margin_bottom = 38.0
+theme = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -58,72 +118,11 @@ margin_bottom = 32.0
 texture = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="Clock"]
-margin_top = 9.0
+margin_top = 4.0
 margin_right = 32.0
-margin_bottom = 23.0
+margin_bottom = 28.0
 text = "99"
 align = 1
-
-[node name="Top" type="MarginContainer" parent="."]
-visible = false
-anchor_right = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Bars" type="HBoxContainer" parent="Top"]
-margin_right = 1024.0
-margin_bottom = 65.0
-
-[node name="HealthBar" parent="Top/Bars" instance=ExtResource( 6 )]
-margin_right = 492.0
-rect_pivot_offset = Vector2( 246, 0 )
-size_flags_horizontal = 3
-
-[node name="Timer" type="MarginContainer" parent="Top/Bars"]
-margin_left = 496.0
-margin_right = 528.0
-margin_bottom = 49.0
-rect_min_size = Vector2( 32, 32 )
-custom_constants/margin_top = 7
-
-[node name="TextureRect" type="TextureRect" parent="Top/Bars/Timer"]
-margin_top = 7.0
-margin_right = 32.0
-margin_bottom = 49.0
-texture = ExtResource( 4 )
-
-[node name="Number" type="Label" parent="Top/Bars/Timer"]
-margin_top = 21.0
-margin_right = 32.0
-margin_bottom = 35.0
-text = "99"
-align = 1
-valign = 1
-
-[node name="HealthBar2" parent="Top/Bars" instance=ExtResource( 6 )]
-margin_left = 532.0
-margin_right = 1024.0
-size_flags_horizontal = 3
-
-[node name="ComboCounts" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ComboCount" parent="ComboCounts" instance=ExtResource( 5 )]
-margin_left = 150.0
-margin_top = 120.0
-margin_right = 218.0
-margin_bottom = 170.0
-
-[node name="ComboCount2" parent="ComboCounts" instance=ExtResource( 5 )]
-margin_left = 874.0
-margin_top = 120.0
-margin_right = 942.0
-margin_bottom = 170.0
 
 [node name="SpecialBar" type="ProgressBar" parent="."]
 anchor_top = 1.0
@@ -134,7 +133,7 @@ margin_right = 208.0
 margin_bottom = -10.0
 rect_min_size = Vector2( 200, 0 )
 custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 3 )
+custom_styles/bg = SubResource( 2 )
 value = 100.0
 percent_visible = false
 __meta__ = {
@@ -154,9 +153,105 @@ rect_min_size = Vector2( 200, 0 )
 rect_scale = Vector2( -1, 1 )
 rect_pivot_offset = Vector2( 100, 0 )
 custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 3 )
+custom_styles/bg = SubResource( 2 )
 value = 100.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ComboCount" parent="." instance=ExtResource( 5 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -34.0
+margin_top = -145.0
+margin_right = 34.0
+margin_bottom = -95.0
+
+[node name="Round" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.0
+margin_top = -12.0
+margin_right = 38.0
+margin_bottom = 12.0
+theme = ExtResource( 1 )
+text = "Round X"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fight" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -31.5
+margin_top = -12.0
+margin_right = 31.5
+margin_bottom = 12.0
+theme = ExtResource( 1 )
+text = "Fight"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Result" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -58.5
+margin_top = -12.0
+margin_right = 58.5
+margin_bottom = 12.0
+theme = ExtResource( 1 )
+text = "Player X Wins"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rematch" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -68.5
+margin_top = 32.0
+margin_right = 68.5
+margin_bottom = 112.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="List" type="VBoxContainer" parent="Rematch"]
+margin_right = 137.0
+margin_bottom = 80.0
+custom_constants/separation = 20
+
+[node name="Rematch" type="Button" parent="Rematch/List"]
+margin_right = 137.0
+margin_bottom = 26.0
+text = "Rematch"
+
+[node name="BackToMenu" type="Button" parent="Rematch/List"]
+margin_top = 46.0
+margin_right = 137.0
+margin_bottom = 72.0
+text = "Back to Menu"
+
+[node name="AP" type="AnimationPlayer" parent="."]
+anims/RoundStart = SubResource( 3 )
+anims/ShowResult = SubResource( 4 )
+[connection signal="pressed" from="Rematch/List/Rematch" to="." method="_on_Rematch_pressed"]
+[connection signal="pressed" from="Rematch/List/BackToMenu" to="." method="_on_BackToMenu_pressed"]

@@ -17,7 +17,7 @@ centered = false
 [node name="TimerRound" type="Timer" parent="."]
 
 [node name="TimerRoundStart" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.8
 one_shot = true
 
 [node name="TimerNextRound" type="Timer" parent="."]

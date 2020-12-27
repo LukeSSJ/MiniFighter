@@ -50,21 +50,23 @@ margin_bottom = 25.0
 rect_min_size = Vector2( 40, 25 )
 custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 2 )
-value = 50.0
+value = 100.0
 percent_visible = false
 
 [node name="Wins" type="HBoxContainer" parent="Bars"]
 margin_top = 29.0
 margin_right = 472.0
 margin_bottom = 45.0
+alignment = 2
 
 [node name="Win" type="TextureRect" parent="Bars/Wins"]
-margin_right = 16.0
+margin_left = 436.0
+margin_right = 452.0
 margin_bottom = 16.0
 texture = ExtResource( 2 )
 
 [node name="Win2" type="TextureRect" parent="Bars/Wins"]
-margin_left = 20.0
-margin_right = 36.0
+margin_left = 456.0
+margin_right = 472.0
 margin_bottom = 16.0
 texture = ExtResource( 2 )

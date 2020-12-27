@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player/stand.png" type="Texture" id=2]
@@ -34,6 +34,8 @@
 [ext_resource path="res://player/fireball.png" type="Texture" id=32]
 [ext_resource path="res://SpinKick.gd" type="Script" id=33]
 [ext_resource path="res://player/overhead.png" type="Texture" id=34]
+[ext_resource path="res://player/air_hitstun.png" type="Texture" id=35]
+[ext_resource path="res://AirHitstun.gd" type="Script" id=36]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 22, 100 )
@@ -264,6 +266,12 @@ tracks/0/keys = {
 "transitions": PoolRealArray(  ),
 "values": [  ]
 }
+
+[sub_resource type="Animation" id=42]
+resource_name = "AirHitstun"
+length = 99999.0
+loop = true
+step = 0.0166667
 
 [sub_resource type="Animation" id=24]
 length = 99999.0
@@ -798,7 +806,6 @@ position = Vector2( 0, 60 )
 shape = SubResource( 2 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
-visible = false
 
 [node name="Sprite" type="Sprite" parent="Pivot/Stand"]
 scale = Vector2( 2, 2 )
@@ -855,6 +862,15 @@ visible = false
 scale = Vector2( 2, 2 )
 texture = ExtResource( 31 )
 
+[node name="AirHitstun" type="Node2D" parent="Pivot"]
+visible = false
+script = ExtResource( 36 )
+
+[node name="Sprite" type="Sprite" parent="Pivot/AirHitstun"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 35 )
+hframes = 2
+
 [node name="Knockdown" type="Node2D" parent="Pivot"]
 visible = false
 script = ExtResource( 29 )
@@ -905,7 +921,7 @@ hframes = 3
 [node name="Hitbox" parent="Pivot/5B" instance=ExtResource( 4 )]
 chip_mod = 0.1
 pushback = 400
-hitstun = 0.5
+hitstun = 0.35
 hitstop = 0.15
 cancel_to = "2B,5C,2C"
 
@@ -1114,7 +1130,7 @@ offset = Vector2( 16, 0 )
 hframes = 3
 
 [node name="Hitbox" parent="Pivot/Throw" instance=ExtResource( 4 )]
-damage = 16
+damage = 64
 chip_mod = 0.1
 launch = Vector2( 1000, -200 )
 guard = 3
@@ -1223,6 +1239,7 @@ anims/5A = SubResource( 20 )
 anims/5B = SubResource( 21 )
 anims/5C = SubResource( 22 )
 anims/Air = SubResource( 23 )
+anims/AirHitstun = SubResource( 42 )
 anims/Block = SubResource( 24 )
 anims/Crouch = SubResource( 25 )
 anims/CrouchBlock = SubResource( 26 )

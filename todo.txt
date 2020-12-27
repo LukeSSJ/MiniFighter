@@ -6,14 +6,15 @@ Special bar [X]
 Charge fireball [X]
 Spin kick follow up [X]
 Overhead move [X]
-Make UI look better
+Make UI look better [X] Better buttons [X]
 Flip P1 healthbar [X]
-Air hitstun
-Start menu + rematch
-Sound effects
-Music - get from newgrounds
-Character colours
-KOed sprite
+Air hitstun [X]
+Round calls [X] Outline text [X]
+Start menu + rematch [X]
+Character colours []
+KOed sprite []
+Sound effects []
+Music - get from newgrounds []
 
 == Luxury ==
 
