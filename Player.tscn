@@ -469,13 +469,13 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=36]
 resource_name = "KO"
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=37]
 tracks/0/type = "method"
 tracks/0/path = NodePath("Pivot/Knockdown")
 tracks/0/interp = 1
@@ -520,7 +520,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=38]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -548,7 +548,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=39]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -591,7 +591,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -100 ) ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=40]
 length = 0.6
 step = 0.0166667
 tracks/0/type = "value"
@@ -659,10 +659,10 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=40]
+[sub_resource type="Animation" id=41]
 loop = true
 
-[sub_resource type="Animation" id=41]
+[sub_resource type="Animation" id=42]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Throw/Sprite:frame")
 tracks/0/interp = 1
@@ -717,7 +717,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=42]
+[sub_resource type="Animation" id=43]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -805,14 +805,11 @@ shape = SubResource( 1 )
 position = Vector2( 0, -128 )
 
 [node name="Hurtbox" parent="Pivot" instance=ExtResource( 5 )]
-visible = false
-position = Vector2( 0, 60 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hurtbox"]
 shape = SubResource( 2 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
-visible = false
 
 [node name="Sprite" type="Sprite" parent="Pivot/Stand"]
 scale = Vector2( 2, 2 )
@@ -1266,14 +1263,14 @@ anims/JA = SubResource( 32 )
 anims/JB = SubResource( 33 )
 anims/JC = SubResource( 34 )
 anims/Jump = SubResource( 35 )
-anims/KO = SubResource( 43 )
-anims/Knockdown = SubResource( 36 )
-anims/Overhead = SubResource( 37 )
-anims/Recover = SubResource( 38 )
-anims/SpinKick = SubResource( 39 )
-anims/Stand = SubResource( 40 )
-anims/Throw = SubResource( 41 )
-anims/Uppercut = SubResource( 42 )
+anims/KO = SubResource( 36 )
+anims/Knockdown = SubResource( 37 )
+anims/Overhead = SubResource( 38 )
+anims/Recover = SubResource( 39 )
+anims/SpinKick = SubResource( 40 )
+anims/Stand = SubResource( 41 )
+anims/Throw = SubResource( 42 )
+anims/Uppercut = SubResource( 43 )
 [connection signal="timeout" from="Pivot/Fireball/TimerPulse" to="Pivot/Fireball" method="_on_TimerPulse_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

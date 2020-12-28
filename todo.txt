@@ -15,12 +15,12 @@ Character colours []
 KOed sprite [X]
 Sound effects []
 Music - get from newgrounds []
+VS CPU []
 
 == Luxury ==
 
 Hurtbox extension
 Pause
-VS CPU
 Training
 Remap controls
 More stages
