@@ -12,7 +12,7 @@ Air hitstun [X]
 Round calls [X] Outline text [X]
 Start menu + rematch [X]
 Character colours []
-KOed sprite []
+KOed sprite [X]
 Sound effects []
 Music - get from newgrounds []
 
@@ -26,3 +26,4 @@ Remap controls
 More stages
 EX moves
 Supers
+

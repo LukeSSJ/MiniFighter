@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player/stand.png" type="Texture" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://player/overhead.png" type="Texture" id=34]
 [ext_resource path="res://player/air_hitstun.png" type="Texture" id=35]
 [ext_resource path="res://AirHitstun.gd" type="Script" id=36]
+[ext_resource path="res://player/ko.png" type="Texture" id=37]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 22, 100 )
@@ -267,17 +268,17 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=42]
+[sub_resource type="Animation" id=24]
 resource_name = "AirHitstun"
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=25]
 length = 99999.0
 loop = true
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=26]
 length = 99999.0
 loop = true
 step = 0.02
@@ -294,15 +295,15 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=27]
 loop = true
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=28]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=29]
 length = 0.7
 step = 0.0166667
 tracks/0/type = "value"
@@ -347,7 +348,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=30]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -375,12 +376,12 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=31]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=32]
 length = 0.216667
 step = 0.0166667
 tracks/0/type = "value"
@@ -408,7 +409,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=33]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JB/Hitbox/CollisionShape2D:disabled")
@@ -423,7 +424,7 @@ tracks/0/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=33]
+[sub_resource type="Animation" id=34]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JC/Sprite:frame")
@@ -450,7 +451,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=35]
 length = 0.06
 step = 0.02
 tracks/0/type = "method"
@@ -468,7 +469,13 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=43]
+resource_name = "KO"
+length = 99999.0
+loop = true
+step = 0.0166667
+
+[sub_resource type="Animation" id=36]
 tracks/0/type = "method"
 tracks/0/path = NodePath("Pivot/Knockdown")
 tracks/0/interp = 1
@@ -513,8 +520,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=36]
-resource_name = "Overhead"
+[sub_resource type="Animation" id=37]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -542,7 +548,7 @@ tracks/1/keys = {
 "values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=38]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -585,7 +591,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -100 ) ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=39]
 length = 0.6
 step = 0.0166667
 tracks/0/type = "value"
@@ -653,10 +659,10 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=40]
 loop = true
 
-[sub_resource type="Animation" id=40]
+[sub_resource type="Animation" id=41]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Throw/Sprite:frame")
 tracks/0/interp = 1
@@ -711,7 +717,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=41]
+[sub_resource type="Animation" id=42]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -806,6 +812,7 @@ position = Vector2( 0, 60 )
 shape = SubResource( 2 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
+visible = false
 
 [node name="Sprite" type="Sprite" parent="Pivot/Stand"]
 scale = Vector2( 2, 2 )
@@ -878,6 +885,14 @@ script = ExtResource( 29 )
 [node name="Sprite" type="Sprite" parent="Pivot/Knockdown"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 28 )
+offset = Vector2( 0, 32 )
+
+[node name="KO" type="Node2D" parent="Pivot"]
+visible = false
+
+[node name="Sprite" type="Sprite" parent="Pivot/KO"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 37 )
 offset = Vector2( 0, 32 )
 
 [node name="Recover" type="Node2D" parent="Pivot"]
@@ -1239,25 +1254,26 @@ anims/5A = SubResource( 20 )
 anims/5B = SubResource( 21 )
 anims/5C = SubResource( 22 )
 anims/Air = SubResource( 23 )
-anims/AirHitstun = SubResource( 42 )
-anims/Block = SubResource( 24 )
-anims/Crouch = SubResource( 25 )
-anims/CrouchBlock = SubResource( 26 )
-anims/CrouchHitstun = SubResource( 27 )
-anims/Fireball = SubResource( 28 )
-anims/Grab = SubResource( 29 )
-anims/Hitstun = SubResource( 30 )
-anims/JA = SubResource( 31 )
-anims/JB = SubResource( 32 )
-anims/JC = SubResource( 33 )
-anims/Jump = SubResource( 34 )
-anims/Knockdown = SubResource( 35 )
-anims/Overhead = SubResource( 36 )
-anims/Recover = SubResource( 37 )
-anims/SpinKick = SubResource( 38 )
-anims/Stand = SubResource( 39 )
-anims/Throw = SubResource( 40 )
-anims/Uppercut = SubResource( 41 )
+anims/AirHitstun = SubResource( 24 )
+anims/Block = SubResource( 25 )
+anims/Crouch = SubResource( 26 )
+anims/CrouchBlock = SubResource( 27 )
+anims/CrouchHitstun = SubResource( 28 )
+anims/Fireball = SubResource( 29 )
+anims/Grab = SubResource( 30 )
+anims/Hitstun = SubResource( 31 )
+anims/JA = SubResource( 32 )
+anims/JB = SubResource( 33 )
+anims/JC = SubResource( 34 )
+anims/Jump = SubResource( 35 )
+anims/KO = SubResource( 43 )
+anims/Knockdown = SubResource( 36 )
+anims/Overhead = SubResource( 37 )
+anims/Recover = SubResource( 38 )
+anims/SpinKick = SubResource( 39 )
+anims/Stand = SubResource( 40 )
+anims/Throw = SubResource( 41 )
+anims/Uppercut = SubResource( 42 )
 [connection signal="timeout" from="Pivot/Fireball/TimerPulse" to="Pivot/Fireball" method="_on_TimerPulse_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

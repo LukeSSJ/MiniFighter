@@ -82,6 +82,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show_rematch"
+} ]
+}
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 3 )

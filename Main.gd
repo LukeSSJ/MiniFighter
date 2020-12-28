@@ -3,6 +3,7 @@ extends Node2D
 var p = [null, null]
 var wins
 var round_count
+var round_is_over
 var time_left
 var time_up
 
@@ -48,6 +49,7 @@ func round_start():
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]
 	$TimerRoundStart.start()
+	round_is_over = false
 	time_left = 60
 	time_up = false
 	$UI.round_start(round_count)
@@ -64,9 +66,14 @@ func timer_count_down():
 	$UI.update_timer(time_left)
 	if time_left == 0:
 		time_up = true
+		p[0].active = false
+		p[1].active = false
 		round_over()
 
 func round_over():
+	if round_is_over:
+		return
+	round_is_over = true
 	p[0].active = false
 	p[1].active = false
 	$TimerRound.stop()
@@ -94,8 +101,8 @@ func next_round():
 		UI.set_wins(winner, wins[winner])
 		if wins[winner] >= 2:
 			text = "Player " + str(winner + 1) + " Wins"
+			$UI.round_is_over = true
 			$UI.show_result(text)
-			$UI.show_rematch()
 			return
 	$UI.show_result(text)
 	round_start()

@@ -124,6 +124,7 @@ func _process(delta):
 		if vel.y > 0:
 			if state == State.HITSTUN and knockdown:
 				perform_action("Knockdown")
+				state = State.HITSTUN
 				invul_on()
 				$TimerStun.stop()
 			elif air_action:
@@ -191,9 +192,9 @@ func attempt_normal(attack):
 func attempt_action(attack, cost=0):
 	if state == State.FREE or (can_cancel and attack_hit):
 		if consume_special(cost):
-			perform_action(attack)
+			perform_action(attack, cost)
 
-func perform_action(new_action):
+func perform_action(new_action, cost=0):
 	gravity_enabled = true
 	friction_enabled = true
 	knockdown = false
@@ -220,8 +221,6 @@ func perform_action(new_action):
 		if Global.game_mode == Global.TRAINING:
 			hp = max_hp
 			emit_signal("take_damage", index, hp)
-	elif new_action == "Knockdown":
-		state = State.HITSTUN
 	else:
 		state = State.ATTACK
 	if Action:
@@ -238,7 +237,7 @@ func perform_action(new_action):
 		Action.start()
 	$Actions.stop()
 	$Actions.play(new_action)
-	if special < 100 and $TimerSpecialRegen.is_stopped():
+	if cost == 0 and special < 100 and $TimerSpecialRegen.is_stopped():
 		$TimerSpecialRegen.start()
 
 func on_hit(hitbox):
@@ -301,11 +300,16 @@ func on_hit(hitbox):
 			other_player.vel.x = hitbox.pushback * x_mod * -1
 	hp -= damage
 	state = State.HITSTUN
-	$TimerStun.wait_time = hitbox.hitstun
-	$TimerStun.start()
 	emit_signal("take_damage", index, hp)
 	if hp <= 0:
+		perform_action("KO")
+		active = false
+		air_action = false
 		emit_signal("knocked_out")
+		$TimerStun.stop()
+	else:
+		$TimerStun.wait_time = hitbox.hitstun
+		$TimerStun.start()
 	add_hitstop(hitbox.hitstop)
 	if hitbox.owner:
 		hitbox.owner.add_hitstop(hitbox.hitstop)

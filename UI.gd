@@ -5,6 +5,8 @@ signal rematch
 onready var HealthBars = [$HealthBar, $HealthBar2]
 onready var SpecialBars = [$SpecialBar, $SpecialBar2]
 
+var round_is_over
+
 func _ready():
 	$Rematch.hide()
 
@@ -14,6 +16,7 @@ func round_start(number):
 	else:
 		$Round.text = "Round " + str(number)
 	$AP.play("RoundStart")
+	round_is_over = false
 
 func show_result(text):
 	print(text)
@@ -41,8 +44,9 @@ func update_special(index, special):
 	SpecialBars[index].value = special
 
 func show_rematch():
-	$Rematch.show()
-	$Rematch/List/Rematch.grab_focus()
+	if round_is_over:
+		$Rematch.show()
+		$Rematch/List/Rematch.grab_focus()
 
 func _on_Rematch_pressed():
 	$Rematch.hide()
