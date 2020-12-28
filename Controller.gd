@@ -1,6 +1,7 @@
 extends Node2D
 
 var dir = Vector2.ZERO
+var player
 
 var input = {
 	"left": "",
@@ -20,7 +21,8 @@ var button = {
 	"d_held": false,
 }
 
-func set_index(index):
+func set_index(index, set_player):
+	player = set_player
 	var prefix
 	if index == 0:
 		prefix = "p1_"
@@ -44,3 +46,6 @@ func update():
 	button.c = Input.is_action_just_pressed(input.c)
 	button.d = Input.is_action_just_pressed(input.d)
 	button.d_held = Input.is_action_pressed(input.d)
+
+func on_attack_hit():
+	pass

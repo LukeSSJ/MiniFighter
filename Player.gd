@@ -71,7 +71,7 @@ func _ready():
 
 func set_index(set_index):
 	index = set_index
-	controller.set_index(index)
+	controller.set_index(index, self)
 	if index == 0:
 		facing = 1
 	else:
@@ -315,6 +315,7 @@ func on_hit(hitbox):
 		hitbox.owner.add_hitstop(hitbox.hitstop)
 		hitbox.owner.attack_hit = true
 		hitbox.owner.cancel_array = hitbox.cancel_to.split(",", false)
+		hitbox.owner.controller.on_attack_hit()
 	hitbox.on_hit()
 	if hitbox.on_hit_action:
 		hitbox.owner.perform_action(hitbox.on_hit_action)
@@ -371,6 +372,11 @@ func invul_off():
 func set_facing(f):
 	facing = f
 	$Pivot.scale.x = f
+
+func set_color(c):
+	var mat = material.duplicate()
+	mat.set_shader_param("modulate", c)
+	material = mat
 
 func set_grabbed(grabbed):
 	$Collision.disabled = grabbed

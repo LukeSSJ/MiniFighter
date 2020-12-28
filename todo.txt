@@ -11,17 +11,18 @@ Flip P1 healthbar [X]
 Air hitstun [X]
 Round calls [X] Outline text [X]
 Start menu + rematch [X]
-Character colours []
+Character colours [X]
 KOed sprite [X]
 Sound effects []
 Music - get from newgrounds []
 VS CPU []
+Choose controller
 
 == Luxury ==
 
 Hurtbox extension
 Pause
-Training
+Training mode features
 Remap controls
 More stages
 EX moves

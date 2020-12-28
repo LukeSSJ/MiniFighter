@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player/stand.png" type="Texture" id=2]
@@ -37,6 +37,11 @@
 [ext_resource path="res://player/air_hitstun.png" type="Texture" id=35]
 [ext_resource path="res://AirHitstun.gd" type="Script" id=36]
 [ext_resource path="res://player/ko.png" type="Texture" id=37]
+[ext_resource path="res://shader/silouette.shader" type="Shader" id=38]
+
+[sub_resource type="ShaderMaterial" id=44]
+shader = ExtResource( 38 )
+shader_param/modulate = Color( 0, 0, 0, 1 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 22, 100 )
@@ -171,7 +176,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=20]
-length = 0.2
+length = 0.3
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/5A/Sprite:frame")
@@ -792,7 +797,7 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
-show_behind_parent = true
+material = SubResource( 44 )
 script = ExtResource( 1 )
 GRAVITY = 80
 
@@ -802,23 +807,29 @@ position = Vector2( 0, -100 )
 shape = SubResource( 1 )
 
 [node name="Pivot" type="Node2D" parent="."]
+use_parent_material = true
 position = Vector2( 0, -128 )
 
 [node name="Hurtbox" parent="Pivot" instance=ExtResource( 5 )]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hurtbox"]
 shape = SubResource( 2 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Stand"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
 [node name="Crouch" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Crouch"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 6 )
 hframes = 2
@@ -826,85 +837,107 @@ frame = 1
 
 [node name="Air" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Air"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 11 )
 
 [node name="Jump" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Jump"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 11 )
 
 [node name="Block" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Block"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 8 )
 
 [node name="CrouchBlock" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/CrouchBlock"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 10 )
 
 [node name="Hitstun" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Hitstun"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 9 )
 
 [node name="CrouchHitstun" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/CrouchHitstun"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 31 )
 
 [node name="AirHitstun" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 36 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/AirHitstun"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 35 )
 hframes = 2
 
 [node name="Knockdown" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 29 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/Knockdown"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 28 )
 offset = Vector2( 0, 32 )
 
 [node name="KO" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/KO"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 37 )
 offset = Vector2( 0, 32 )
 
 [node name="Recover" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 30 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/Recover"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 flip_v = true
 
 [node name="5A" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/5A"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 offset = Vector2( 16, 0 )
@@ -912,8 +945,9 @@ hframes = 3
 
 [node name="Hitbox" parent="Pivot/5A" instance=ExtResource( 4 )]
 damage = 4
-chip_mod = 0.1
+chip_mod = 0.0
 juggle = Vector2( 100, -400 )
+hitstun = 0.3
 cancel_to = "5A,2A,5B,2B,5C,2C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox"]
@@ -923,8 +957,10 @@ disabled = true
 
 [node name="5B" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/5B"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
 offset = Vector2( 16, 0 )
@@ -944,8 +980,10 @@ disabled = true
 
 [node name="5C" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/5C"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 17 )
 offset = Vector2( 32, 0 )
@@ -968,8 +1006,10 @@ disabled = true
 
 [node name="2A" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/2A"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 7 )
 offset = Vector2( 16, 0 )
@@ -977,7 +1017,7 @@ hframes = 3
 
 [node name="Hitbox" parent="Pivot/2A" instance=ExtResource( 4 )]
 damage = 3
-chip_mod = 0.1
+chip_mod = 0.0
 juggle = Vector2( 100, -200 )
 hitstun = 0.3
 guard = 1
@@ -990,8 +1030,10 @@ disabled = true
 
 [node name="2B" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/2B"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 18 )
 hframes = 3
@@ -1011,8 +1053,10 @@ disabled = true
 
 [node name="2C" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/2C"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 16 )
 offset = Vector2( 32, 0 )
@@ -1034,8 +1078,10 @@ disabled = true
 
 [node name="JA" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/JA"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 15 )
 offset = Vector2( 8, 0 )
@@ -1053,8 +1099,10 @@ disabled = true
 
 [node name="JB" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/JB"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 12 )
 offset = Vector2( 16, 0 )
@@ -1073,8 +1121,10 @@ disabled = true
 
 [node name="JC" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/JC"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 19 )
 hframes = 2
@@ -1091,8 +1141,10 @@ disabled = true
 
 [node name="Overhead" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Overhead"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 34 )
 offset = Vector2( 16, 0 )
@@ -1113,8 +1165,10 @@ disabled = true
 
 [node name="Grab" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 
 [node name="Sprite" type="Sprite" parent="Pivot/Grab"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 13 )
 hframes = 3
@@ -1133,9 +1187,11 @@ disabled = true
 
 [node name="Throw" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 21 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/Throw"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 20 )
 offset = Vector2( 16, 0 )
@@ -1157,10 +1213,12 @@ position = Vector2( 30, -20 )
 
 [node name="Fireball" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 23 )
 Projectile = ExtResource( 24 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/Fireball"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 22 )
 hframes = 3
@@ -1180,10 +1238,12 @@ wait_time = 0.05
 
 [node name="Uppercut" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 26 )
 run_speed = 400
 
 [node name="Sprite" type="Sprite" parent="Pivot/Uppercut"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 25 )
 hframes = 4
@@ -1212,11 +1272,13 @@ disabled = true
 
 [node name="SpinKick" type="Node2D" parent="Pivot"]
 visible = false
+use_parent_material = true
 script = ExtResource( 33 )
 run_speed = 600
 jump_speed = 0
 
 [node name="Sprite" type="Sprite" parent="Pivot/SpinKick"]
+use_parent_material = true
 scale = Vector2( 2, 2 )
 texture = ExtResource( 27 )
 hframes = 4

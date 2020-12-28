@@ -48,6 +48,7 @@ func round_start():
 		UI.set_wins(i, wins[i])
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]
+	p[1].set_color(Color8(255, 0, 0))
 	$TimerRoundStart.start()
 	round_is_over = false
 	time_left = 60
