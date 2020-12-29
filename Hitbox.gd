@@ -6,6 +6,7 @@ export var pushback = 300
 export var launch = Vector2.ZERO
 export var juggle = Vector2(100, -800)
 export var hitstun = 0.4
+export var blockstun_mod = 1.0
 export var hitstop = 0.1
 export (Global.Guard) var guard = Global.Guard.MID
 export var on_hit_action = ""

@@ -20,6 +20,8 @@ Choose controller
 
 == Luxury ==
 
+Walk animation
+Dash
 Hurtbox extension
 Pause
 Training mode features

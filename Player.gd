@@ -123,10 +123,11 @@ func _process(delta):
 			vel.x = lerp(vel.x, 0, 0.25)
 		if vel.y > 0:
 			if state == State.HITSTUN and knockdown:
+				$TimerStun.stop()
+				stun_end()
 				perform_action("Knockdown")
 				state = State.HITSTUN
 				invul_on()
-				$TimerStun.stop()
 			elif air_action:
 				perform_action("Stand")
 
@@ -205,7 +206,7 @@ func perform_action(new_action, cost=0):
 	attack_hit = false
 	grab_point = false
 	if on_ground:
-		vel.x = 0
+		#vel.x = 0
 		air_action = false
 		set_pose(Pose.STAND)
 	else:
@@ -213,10 +214,6 @@ func perform_action(new_action, cost=0):
 		set_pose(Pose.AIR)
 	if new_action in ["Stand", "Crouch", "Air"]:
 		state = State.FREE
-		in_blockstun = false
-		combo_count = 0
-		combo_damage = 0
-		emit_signal("set_combo_count", self)
 		# Refill health (training mode)
 		if Global.game_mode == Global.TRAINING:
 			hp = max_hp
@@ -263,15 +260,16 @@ func on_hit(hitbox):
 		x_mod = hitbox.owner.facing
 	var apply_pushback = false
 	if blocked:
+		in_blockstun = true
 		if controller.dir.y == 1:
 			perform_action("CrouchBlock")
 			set_pose(Pose.CROUCH)
 		else:
 			perform_action("Block")
-		in_blockstun = true
 		damage *= hitbox.chip_mod
 		apply_pushback = true
 	else:
+		in_blockstun = false
 		if combo_count > 0:
 			damage *= 0.3
 		combo_count += 1
@@ -309,6 +307,8 @@ func on_hit(hitbox):
 		$TimerStun.stop()
 	else:
 		$TimerStun.wait_time = hitbox.hitstun
+		if in_blockstun:
+			$TimerStun.wait_time *= hitbox.blockstun_mod
 		$TimerStun.start()
 	add_hitstop(hitbox.hitstop)
 	if hitbox.owner:
@@ -316,6 +316,8 @@ func on_hit(hitbox):
 		hitbox.owner.attack_hit = true
 		hitbox.owner.cancel_array = hitbox.cancel_to.split(",", false)
 		hitbox.owner.controller.on_attack_hit()
+		for col in hitbox.get_children():
+			col.set_deferred("disabled", true)
 	hitbox.on_hit()
 	if hitbox.on_hit_action:
 		hitbox.owner.perform_action(hitbox.on_hit_action)
@@ -350,6 +352,10 @@ func hitstop_end():
 
 func stun_end():
 	perform_action("Stand")
+	in_blockstun = false
+	combo_count = 0
+	combo_damage = 0
+	emit_signal("set_combo_count", self)
 
 func action_end(_anim_name):
 	perform_action("Stand")
