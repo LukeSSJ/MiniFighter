@@ -16,7 +16,7 @@ KOed sprite [X]
 Sound effects []
 Music - get from newgrounds []
 VS CPU []
-Choose controller
+Choose controller [X]
 
 == Luxury ==
 

@@ -14,3 +14,4 @@ enum Guard {
 }
 
 var game_mode
+var input_methods = []
