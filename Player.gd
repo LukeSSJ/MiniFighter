@@ -242,6 +242,8 @@ func on_hit(hitbox):
 		return
 	if (invul_hit and !hitbox.is_projectile) or (invul_projectile and hitbox.is_projectile):
 		return
+	if hitbox.guard == Global.Guard.UNBLOCKABLE and !on_ground:
+		return
 	var blocked = false
 	if (state == State.FREE or in_blockstun):
 		match hitbox.guard:
@@ -251,9 +253,6 @@ func on_hit(hitbox):
 				blocked = (controller.dir.x == -1 and controller.dir.y == 1)
 			Global.Guard.HIGH:
 				blocked = (controller.dir.x == -1 and controller.dir.y == 0)
-			Global.Guard.UNBLOCKABLE:
-				if !on_ground:
-					return
 	var damage = hitbox.damage
 	var x_mod = hitbox.facing
 	if !x_mod:

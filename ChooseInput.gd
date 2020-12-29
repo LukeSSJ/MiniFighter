@@ -74,7 +74,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		if (players[0] != null and players[1] != null) or (!requires_both_players and (players[0] != null or players[1] != null)):
 			emit_signal("input_choosen", players)
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and Input.is_action_just_pressed("ui_escape"):
 		emit_signal("cancel")
 		set_process(false)
 		hide()

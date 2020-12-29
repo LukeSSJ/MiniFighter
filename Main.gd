@@ -34,7 +34,9 @@ func round_start():
 		var ControllerType = Controller
 		if i == 1 and Global.game_mode == Global.VS_CPU:
 			ControllerType = ControllerCPU
-		p[i].controller = ControllerType.instance()
+		var controller = ControllerType.instance()
+		p[i].controller = controller
+		p[i].add_child(controller)
 		p[i].set_index(i)
 		p[i].position = Vector2(400, 580)
 		if i == 1:

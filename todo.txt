@@ -17,6 +17,7 @@ Sound effects []
 Music - get from newgrounds []
 VS CPU []
 Choose controller [X]
+KO
 
 == Luxury ==
 
