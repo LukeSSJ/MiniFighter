@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-onready var VsPlayer = $Buttons/List/VsPlayer
-onready var VsCPU = $Buttons/List/VsCPU
-onready var Training = $Buttons/List/Training
+onready var VsPlayer = $Main/Buttons/List/VsPlayer
+onready var VsCPU = $Main/Buttons/List/VsCPU
+onready var Training = $Main/Buttons/List/Training
 onready var ChooseInput = $ChooseInput
 
 func _ready():
@@ -15,7 +15,7 @@ func _ready():
 
 func vs_player():
 	Global.game_mode = Global.VS_PLAYER
-	$Buttons.hide()
+	$Main.hide()
 	ChooseInput.choose(true)
 
 func vs_cpu():
@@ -27,7 +27,7 @@ func vs_cpu():
 
 func training():
 	Global.game_mode = Global.TRAINING
-	$Buttons.hide()
+	$Main.hide()
 	ChooseInput.choose(false)
 
 func input_choosen(players):
@@ -41,7 +41,7 @@ func input_choosen(players):
 	get_tree().change_scene("res://Main.tscn")
 
 func input_choosen_cancelled():
-	$Buttons.show()
+	$Main.show()
 	VsPlayer.grab_focus()
 
 func clear_inputs(prefix):

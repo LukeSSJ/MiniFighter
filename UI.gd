@@ -18,8 +18,16 @@ func round_start(number):
 	$AP.play("RoundStart")
 	round_is_over = false
 
+func KO():
+	$Result.text = "KO"
+	$Result.show()
+
+func time_up():
+	$Result.text = "Time Up"
+	$Result.show()
+
 func show_result(text):
-	print(text)
+	$Result.hide()
 	$Result.text = text
 	$AP.play("ShowResult")
 

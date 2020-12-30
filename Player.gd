@@ -22,6 +22,7 @@ const FLOOR_Y = 580
 const DOWN_FORWARD = Vector2(1, 1)
 
 export var WALK_SPEED = 400
+export var WALK_BACK_SPEED = -400
 export var JUMP_VEL = Vector2(300, -1600)
 export var GRAVITY = 20
 
@@ -170,8 +171,20 @@ func attempt_all_actions():
 			if action != "Stand":
 				perform_action("Stand")
 				set_pose(Pose.STAND)
-			if controller.dir.x != 0:
-				vel.x = controller.dir.x * facing * WALK_SPEED
+			var animation
+			if controller.dir.x == 1:
+				vel.x = WALK_SPEED * facing
+				animation = "walk"
+			elif controller.dir.x == -1:
+				vel.x = WALK_BACK_SPEED * facing
+				animation = "walk_back"
+			else:
+				animation = "default"
+			var sprite = Action.get_node("Sprite")
+			if sprite.animation != animation:
+				sprite.animation = animation
+				sprite.frame = 0
+				sprite.play()
 	else: # Air actions
 		if action != "Air":
 			perform_action("Air")
@@ -232,6 +245,10 @@ func perform_action(new_action, cost=0):
 	Action.show()
 	if Action.has_method("start"):
 		Action.start()
+	var sprite = Action.get_node("Sprite")
+	if sprite is AnimatedSprite:
+		sprite.animation = "default"
+	$Pivot/Hurtbox2/HurtboxShape.set_deferred("disabled", true)
 	$Actions.stop()
 	$Actions.play(new_action)
 	if cost == 0 and special < 100 and $TimerSpecialRegen.is_stopped():
@@ -242,7 +259,7 @@ func on_hit(hitbox):
 		return
 	if (invul_hit and !hitbox.is_projectile) or (invul_projectile and hitbox.is_projectile):
 		return
-	if hitbox.guard == Global.Guard.UNBLOCKABLE and !on_ground:
+	if hitbox.guard == Global.Guard.UNBLOCKABLE and pose == Pose.AIR:
 		return
 	var blocked = false
 	if (state == State.FREE or in_blockstun):
@@ -293,7 +310,7 @@ func on_hit(hitbox):
 			apply_pushback = true
 	if apply_pushback:
 		vel.x = hitbox.pushback * x_mod
-		if !hitbox.is_projectile and (abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5):
+	if other_player.pose != Pose.AIR and !hitbox.is_projectile and (abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5):
 			other_player.vel.x = hitbox.pushback * x_mod * -1
 	hp -= damage
 	state = State.HITSTUN
@@ -359,6 +376,9 @@ func stun_end():
 func action_end(_anim_name):
 	perform_action("Stand")
 
+func in_air():
+	pose = Pose.AIR
+
 func jump():
 	vel = JUMP_VEL
 	vel.x *= controller.dir.x * facing
@@ -384,7 +404,7 @@ func set_color(c):
 	material = mat
 
 func set_grabbed(grabbed):
-	$Collision.disabled = grabbed
+	$Collision.set_deferred("disabled", grabbed)
 	gravity_enabled = !grabbed
 
 func special_regen_on():

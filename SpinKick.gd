@@ -10,6 +10,7 @@ func first_kick():
 	owner.vel.x = owner.facing * 600
 	if owner.on_ground:
 		owner.vel.y = -1000
+		owner.pose = owner.Pose.AIR
 	owner.friction_enabled = false
 
 func check_follow_up():

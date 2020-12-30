@@ -13,21 +13,25 @@ Round calls [X] Outline text [X]
 Start menu + rematch [X]
 Character colours [X]
 KOed sprite [X]
-Sound effects []
-Music - get from newgrounds []
 VS CPU [X] Make smarter
 Choose controller [X]
-KO
+KO [X]
+Sound effects []
+Music - get from newgrounds []
+Make menu look better [X]
 
 == Luxury ==
 
-Walk animation
+Walk animation [X]
+Walk back animation [X]
+Hurtbox extension [X]
+More stages []
+
+
 Dash
-Hurtbox extension
 Pause
 Training mode features
 Remap controls
-More stages
 EX moves
 Supers
 

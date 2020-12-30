@@ -1,9 +1,9 @@
-extends MarginContainer
+extends Control
 
 signal input_choosen
 signal cancel
 
-onready var List = $List
+onready var List = $Controllers/List
 
 var players
 var controller_button
@@ -16,8 +16,8 @@ func choose(both_players):
 	requires_both_players = both_players
 	players = [null, null]
 	controller_button = []
-	for child in $List.get_children():
-		$List.remove_child(child)
+	for child in List.get_children():
+		List.remove_child(child)
 	
 	var controllers = ["Keyboard"]
 	for joypad in Input.get_connected_joypads():
@@ -26,14 +26,14 @@ func choose(both_players):
 		var label = Label.new()
 		label.text = "< " + name + " >"
 		label.align = Label.ALIGN_CENTER
-		$List.add_child(label)
+		List.add_child(label)
 		controller_button.append([0, 0])
 	set_process(true)
 	show()
 
 func _process(_delta):
-	for i in $List.get_child_count():
-		var old_align = $List.get_child(i).align
+	for i in List.get_child_count():
+		var old_align = List.get_child(i).align
 		var align = old_align
 		if i == 0:
 			if Input.is_action_just_pressed("keyboard_left"):
@@ -69,12 +69,13 @@ func _process(_delta):
 			players[0] = null
 		elif old_align == 2:
 			players[1] = null
-		$List.get_child(i).align = align
+		List.get_child(i).align = align
 	
 	if Input.is_action_just_pressed("ui_accept"):
-		if (players[0] != null and players[1] != null) or (!requires_both_players and (players[0] != null or players[1] != null)):
+		#if (players[0] != null and players[1] != null) or (!requires_both_players and (players[0] != null or players[1] != null)):
+		if players[0] != null or players[1] != null:
 			emit_signal("input_choosen", players)
-	if Input.is_action_just_pressed("ui_cancel") and Input.is_action_just_pressed("ui_escape"):
+	if Input.is_action_just_pressed("ui_cancel") or Input.is_action_just_pressed("pause"):
 		emit_signal("cancel")
 		set_process(false)
 		hide()

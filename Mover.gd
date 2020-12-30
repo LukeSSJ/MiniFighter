@@ -8,6 +8,7 @@ func run():
 	
 func jump():
 	owner.vel.y = -jump_speed
+	owner.pose = owner.Pose.AIR
 
 func stop():
 	owner.vel = Vector2.ZERO
