@@ -15,7 +15,7 @@ Character colours [X]
 KOed sprite [X]
 Sound effects []
 Music - get from newgrounds []
-VS CPU []
+VS CPU [X] Make smarter
 Choose controller [X]
 KO
 
