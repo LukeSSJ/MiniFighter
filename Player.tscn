@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=2]
+[gd_scene load_steps=103 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player/stand.png" type="Texture" id=2]
@@ -40,6 +40,11 @@
 [ext_resource path="res://shader/silouette.shader" type="Shader" id=38]
 [ext_resource path="res://player/walk.png" type="Texture" id=39]
 [ext_resource path="res://player/walk_back.png" type="Texture" id=40]
+[ext_resource path="res://sfx/whiff_light.wav" type="AudioStream" id=41]
+[ext_resource path="res://sfx/grab.wav" type="AudioStream" id=42]
+[ext_resource path="res://sfx/block.wav" type="AudioStream" id=43]
+[ext_resource path="res://sfx/knockdown.wav" type="AudioStream" id=44]
+[ext_resource path="res://sfx/hit.wav" type="AudioStream" id=45]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 38 )
@@ -48,116 +53,116 @@ shader_param/modulate = Color( 0, 0, 0, 1 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 22, 100 )
 
-[sub_resource type="AtlasTexture" id=89]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=90]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 39 )
 region = Rect2( 0, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=91]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 39 )
 region = Rect2( 64, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=92]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 39 )
 region = Rect2( 128, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=93]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 39 )
 region = Rect2( 192, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=95]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 40 )
 region = Rect2( 0, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=96]
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 40 )
 region = Rect2( 64, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=97]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 40 )
 region = Rect2( 128, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=98]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 40 )
 region = Rect2( 192, 0, 64, 128 )
 
-[sub_resource type="AtlasTexture" id=99]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 40 )
 region = Rect2( 256, 0, 64, 128 )
 
-[sub_resource type="SpriteFrames" id=94]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
-"frames": [ SubResource( 89 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 12.0
 }, {
-"frames": [ SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": true,
 "name": "walk",
 "speed": 12.0
 }, {
-"frames": [ SubResource( 95 ), SubResource( 96 ), SubResource( 97 ), SubResource( 98 ), SubResource( 99 ) ],
+"frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "walk_back",
 "speed": 12.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=47]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 40, 13 )
 
-[sub_resource type="RectangleShape2D" id=48]
+[sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 58, 21 )
 
-[sub_resource type="RectangleShape2D" id=49]
+[sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 61, 61 )
 
-[sub_resource type="RectangleShape2D" id=50]
+[sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 54, 18 )
 
-[sub_resource type="RectangleShape2D" id=51]
+[sub_resource type="RectangleShape2D" id=18]
 extents = Vector2( 32, 79 )
 
-[sub_resource type="RectangleShape2D" id=52]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 69, 19 )
 
-[sub_resource type="RectangleShape2D" id=53]
+[sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 47, 23 )
 
-[sub_resource type="RectangleShape2D" id=54]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 78, 24 )
 
-[sub_resource type="RectangleShape2D" id=55]
+[sub_resource type="RectangleShape2D" id=22]
 extents = Vector2( 44, 73 )
 
-[sub_resource type="RectangleShape2D" id=56]
+[sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 62, 82 )
 
-[sub_resource type="RectangleShape2D" id=57]
+[sub_resource type="RectangleShape2D" id=24]
 extents = Vector2( 27, 57 )
 
-[sub_resource type="RectangleShape2D" id=58]
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 77, 61 )
 
-[sub_resource type="RectangleShape2D" id=59]
+[sub_resource type="RectangleShape2D" id=26]
 extents = Vector2( 29, 46 )
 
-[sub_resource type="RectangleShape2D" id=60]
+[sub_resource type="RectangleShape2D" id=27]
 extents = Vector2( 40, 70 )
 
-[sub_resource type="RectangleShape2D" id=61]
+[sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 91, 37 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=29]
 extents = Vector2( 30, 115 )
 
-[sub_resource type="RectangleShape2D" id=62]
-extents = Vector2( 31, 22 )
+[sub_resource type="RectangleShape2D" id=30]
+extents = Vector2( 30, 58 )
 
-[sub_resource type="Animation" id=63]
+[sub_resource type="Animation" id=31]
 length = 0.4
 step = 0.02
 tracks/0/type = "value"
@@ -220,8 +225,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ Vector2( 31, 22 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.06 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=64]
+[sub_resource type="Animation" id=32]
 length = 0.333333
 step = 0.0166667
 tracks/0/type = "value"
@@ -272,8 +291,22 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 31, -36 ) ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath("SFX/WhiffLight")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.0666667 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=65]
+[sub_resource type="Animation" id=33]
 length = 0.7
 step = 0.0166667
 tracks/0/type = "value"
@@ -336,8 +369,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ Vector2( 65, 25 ), Vector2( 30, 26 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.133333 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=66]
+[sub_resource type="Animation" id=34]
 length = 0.4
 step = 0.0166667
 tracks/0/type = "value"
@@ -400,8 +447,22 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 25, 18 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.0333333 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=67]
+[sub_resource type="Animation" id=35]
 length = 0.450001
 step = 0.0166667
 tracks/0/type = "value"
@@ -464,8 +525,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ Vector2( 39, 30 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.0833333 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=68]
+[sub_resource type="Animation" id=36]
 length = 0.52
 step = 0.0166667
 tracks/0/type = "value"
@@ -528,8 +603,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ Vector2( 47, 82 ), Vector2( 58, 68 ), Vector2( 34, 45 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.15 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=69]
+[sub_resource type="Animation" id=37]
 loop = true
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -543,16 +632,16 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=70]
+[sub_resource type="Animation" id=38]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=71]
+[sub_resource type="Animation" id=39]
 length = 99999.0
 loop = true
 
-[sub_resource type="Animation" id=72]
+[sub_resource type="Animation" id=40]
 length = 99999.0
 loop = true
 step = 0.02
@@ -569,15 +658,15 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=73]
+[sub_resource type="Animation" id=41]
 loop = true
 
-[sub_resource type="Animation" id=74]
+[sub_resource type="Animation" id=42]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=75]
+[sub_resource type="Animation" id=43]
 length = 0.7
 step = 0.0166667
 tracks/0/type = "value"
@@ -658,7 +747,7 @@ tracks/5/keys = {
 "values": [ Vector2( 43, 34 ) ]
 }
 
-[sub_resource type="Animation" id=76]
+[sub_resource type="Animation" id=44]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -722,12 +811,12 @@ tracks/4/keys = {
 "values": [ Vector2( 13, -17 ), Vector2( 35, -17 ) ]
 }
 
-[sub_resource type="Animation" id=77]
+[sub_resource type="Animation" id=45]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=78]
+[sub_resource type="Animation" id=46]
 length = 0.216667
 step = 0.0166667
 tracks/0/type = "value"
@@ -788,10 +877,24 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ SubResource( 62 ) ]
+"values": [ SubResource( 30 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.0666667 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
 }
 
-[sub_resource type="Animation" id=79]
+[sub_resource type="Animation" id=47]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JB/Hitbox/CollisionShape2D:disabled")
@@ -853,8 +956,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ Vector2( 52, 27 ), Vector2( 75, 27 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.0833333 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=80]
+[sub_resource type="Animation" id=48]
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/JC/Sprite:frame")
@@ -916,8 +1033,22 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 17, 67 ), Vector2( 29, 80 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("SFX/WhiffLight")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.183333 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=81]
+[sub_resource type="Animation" id=49]
 length = 0.06
 step = 0.02
 tracks/0/type = "method"
@@ -938,12 +1069,12 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=82]
+[sub_resource type="Animation" id=50]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=83]
+[sub_resource type="Animation" id=51]
 tracks/0/type = "method"
 tracks/0/path = NodePath("Pivot/Knockdown")
 tracks/0/interp = 1
@@ -987,8 +1118,22 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
+tracks/3/type = "method"
+tracks/3/path = NodePath("SFX/Knockdown")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=84]
+[sub_resource type="Animation" id=52]
 length = 0.5
 step = 0.0166667
 tracks/0/type = "value"
@@ -1052,7 +1197,7 @@ tracks/4/keys = {
 "values": [ Vector2( 45, -29 ) ]
 }
 
-[sub_resource type="Animation" id=85]
+[sub_resource type="Animation" id=53]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -1095,7 +1240,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -100 ) ]
 }
 
-[sub_resource type="Animation" id=86]
+[sub_resource type="Animation" id=54]
 length = 0.6
 step = 0.0166667
 tracks/0/type = "value"
@@ -1198,11 +1343,25 @@ tracks/6/keys = {
 "update": 1,
 "values": [ Vector2( 13, 23 ), Vector2( 3, 28 ) ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath("SFX/WhiffLight")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.0833333 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=87]
+[sub_resource type="Animation" id=55]
 loop = true
 
-[sub_resource type="Animation" id=88]
+[sub_resource type="Animation" id=56]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Throw/Sprite:frame")
 tracks/0/interp = 1
@@ -1256,8 +1415,22 @@ tracks/3/keys = {
 "method": "release"
 } ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath("SFX/Grab")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=57]
 length = 0.8
 step = 0.05
 tracks/0/type = "value"
@@ -1338,7 +1511,6 @@ GRAVITY = 80
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, -100 )
 shape = SubResource( 2 )
 
 [node name="Pivot" type="Node2D" parent="."]
@@ -1351,7 +1523,7 @@ use_parent_material = true
 [node name="Sprite" type="AnimatedSprite" parent="Pivot/Stand"]
 use_parent_material = true
 scale = Vector2( 2, 2 )
-frames = SubResource( 94 )
+frames = SubResource( 13 )
 
 [node name="Crouch" type="Node2D" parent="Pivot"]
 visible = false
@@ -1482,7 +1654,7 @@ cancel_to = "5A,2A,5B,2B,5C,2C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox"]
 position = Vector2( 40, -34 )
-shape = SubResource( 47 )
+shape = SubResource( 14 )
 disabled = true
 
 [node name="5B" type="Node2D" parent="Pivot"]
@@ -1506,7 +1678,7 @@ cancel_to = "2B,5C,2C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5B/Hitbox"]
 position = Vector2( 54, 41 )
-shape = SubResource( 48 )
+shape = SubResource( 15 )
 disabled = true
 
 [node name="5C" type="Node2D" parent="Pivot"]
@@ -1533,7 +1705,7 @@ cancel_to = "2C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5C/Hitbox"]
 position = Vector2( 102, -13 )
-shape = SubResource( 49 )
+shape = SubResource( 16 )
 disabled = true
 
 [node name="2A" type="Node2D" parent="Pivot"]
@@ -1558,7 +1730,7 @@ cancel_to = "5A,2A,5B,2B,5C,2C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2A/Hitbox"]
 position = Vector2( 30, 102 )
-shape = SubResource( 50 )
+shape = SubResource( 17 )
 disabled = true
 
 [node name="2B" type="Node2D" parent="Pivot"]
@@ -1582,7 +1754,7 @@ cancel_to = "5B,5C,2C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2B/Hitbox"]
 position = Vector2( 22, -59 )
-shape = SubResource( 51 )
+shape = SubResource( 18 )
 disabled = true
 
 [node name="2C" type="Node2D" parent="Pivot"]
@@ -1608,7 +1780,7 @@ cancel_to = "5C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2C/Hitbox"]
 position = Vector2( 70, 99 )
-shape = SubResource( 52 )
+shape = SubResource( 19 )
 disabled = true
 
 [node name="JA" type="Node2D" parent="Pivot"]
@@ -1629,7 +1801,7 @@ cancel_to = "JA,JB,JC"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JA/Hitbox"]
 position = Vector2( 55, -14 )
-shape = SubResource( 53 )
+shape = SubResource( 20 )
 disabled = true
 
 [node name="JB" type="Node2D" parent="Pivot"]
@@ -1652,7 +1824,7 @@ cancel_to = "JC"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JB/Hitbox"]
 position = Vector2( 40, 60 )
-shape = SubResource( 54 )
+shape = SubResource( 21 )
 disabled = true
 
 [node name="JC" type="Node2D" parent="Pivot"]
@@ -1672,7 +1844,7 @@ guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/JC/Hitbox"]
 position = Vector2( 51, 76 )
-shape = SubResource( 55 )
+shape = SubResource( 22 )
 disabled = true
 
 [node name="Overhead" type="Node2D" parent="Pivot"]
@@ -1696,7 +1868,7 @@ guard = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Overhead/Hitbox"]
 position = Vector2( 41, -47 )
-shape = SubResource( 56 )
+shape = SubResource( 23 )
 disabled = true
 
 [node name="Grab" type="Node2D" parent="Pivot"]
@@ -1718,7 +1890,7 @@ on_hit_action = "Throw"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Grab/Hitbox"]
 position = Vector2( 46, -18 )
-shape = SubResource( 57 )
+shape = SubResource( 24 )
 disabled = true
 
 [node name="Throw" type="Node2D" parent="Pivot"]
@@ -1741,7 +1913,7 @@ guard = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Throw/Hitbox"]
 position = Vector2( 79, 6 )
-shape = SubResource( 58 )
+shape = SubResource( 25 )
 disabled = true
 
 [node name="Point" type="Node2D" parent="Pivot/Throw"]
@@ -1794,7 +1966,7 @@ hitstop = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox"]
 position = Vector2( 29, -1 )
-shape = SubResource( 59 )
+shape = SubResource( 26 )
 disabled = true
 
 [node name="Hitbox2" parent="Pivot/Uppercut" instance=ExtResource( 4 )]
@@ -1805,7 +1977,7 @@ blockstun_mod = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox2"]
 position = Vector2( 22, -74 )
-shape = SubResource( 60 )
+shape = SubResource( 27 )
 disabled = true
 
 [node name="SpinKick" type="Node2D" parent="Pivot"]
@@ -1831,21 +2003,21 @@ blockstun_mod = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SpinKick/Hitbox"]
 position = Vector2( 2, 31 )
-shape = SubResource( 61 )
+shape = SubResource( 28 )
 disabled = true
 
 [node name="Hurtbox" parent="Pivot" instance=ExtResource( 5 )]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hurtbox"]
-shape = SubResource( 3 )
+shape = SubResource( 29 )
 
 [node name="Hurtbox2" parent="Pivot" instance=ExtResource( 5 )]
 visible = false
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Pivot/Hurtbox2"]
-position = Vector2( 9, 99 )
-shape = SubResource( 62 )
+position = Vector2( 13, 23 )
+shape = SubResource( 30 )
 
 [node name="TimerStun" type="Timer" parent="."]
 one_shot = true
@@ -1858,33 +2030,55 @@ wait_time = 0.5
 one_shot = true
 
 [node name="Actions" type="AnimationPlayer" parent="."]
-anims/2A = SubResource( 63 )
-anims/2B = SubResource( 64 )
-anims/2C = SubResource( 65 )
-anims/5A = SubResource( 66 )
-anims/5B = SubResource( 67 )
-anims/5C = SubResource( 68 )
-anims/Air = SubResource( 69 )
-anims/AirHitstun = SubResource( 70 )
-anims/Block = SubResource( 71 )
-anims/Crouch = SubResource( 72 )
-anims/CrouchBlock = SubResource( 73 )
-anims/CrouchHitstun = SubResource( 74 )
-anims/Fireball = SubResource( 75 )
-anims/Grab = SubResource( 76 )
-anims/Hitstun = SubResource( 77 )
-anims/JA = SubResource( 78 )
-anims/JB = SubResource( 79 )
-anims/JC = SubResource( 80 )
-anims/Jump = SubResource( 81 )
-anims/KO = SubResource( 82 )
-anims/Knockdown = SubResource( 83 )
-anims/Overhead = SubResource( 84 )
-anims/Recover = SubResource( 85 )
-anims/SpinKick = SubResource( 86 )
-anims/Stand = SubResource( 87 )
-anims/Throw = SubResource( 88 )
-anims/Uppercut = SubResource( 46 )
+anims/2A = SubResource( 31 )
+anims/2B = SubResource( 32 )
+anims/2C = SubResource( 33 )
+anims/5A = SubResource( 34 )
+anims/5B = SubResource( 35 )
+anims/5C = SubResource( 36 )
+anims/Air = SubResource( 37 )
+anims/AirHitstun = SubResource( 38 )
+anims/Block = SubResource( 39 )
+anims/Crouch = SubResource( 40 )
+anims/CrouchBlock = SubResource( 41 )
+anims/CrouchHitstun = SubResource( 42 )
+anims/Fireball = SubResource( 43 )
+anims/Grab = SubResource( 44 )
+anims/Hitstun = SubResource( 45 )
+anims/JA = SubResource( 46 )
+anims/JB = SubResource( 47 )
+anims/JC = SubResource( 48 )
+anims/Jump = SubResource( 49 )
+anims/KO = SubResource( 50 )
+anims/Knockdown = SubResource( 51 )
+anims/Overhead = SubResource( 52 )
+anims/Recover = SubResource( 53 )
+anims/SpinKick = SubResource( 54 )
+anims/Stand = SubResource( 55 )
+anims/Throw = SubResource( 56 )
+anims/Uppercut = SubResource( 57 )
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="WhiffLight" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2( 0, -128 )
+stream = ExtResource( 41 )
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2( 0, -128 )
+stream = ExtResource( 45 )
+
+[node name="Block" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2( 0, -128 )
+stream = ExtResource( 43 )
+
+[node name="Knockdown" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2( 0, -128 )
+stream = ExtResource( 44 )
+
+[node name="Grab" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2( 0, -128 )
+stream = ExtResource( 42 )
 [connection signal="timeout" from="Pivot/Fireball/TimerPulse" to="Pivot/Fireball" method="_on_TimerPulse_timeout"]
 [connection signal="timeout" from="TimerStun" to="." method="stun_end"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

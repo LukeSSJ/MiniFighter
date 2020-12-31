@@ -219,7 +219,6 @@ func perform_action(new_action, cost=0):
 	attack_hit = false
 	grab_point = false
 	if on_ground:
-		#vel.x = 0
 		air_action = false
 		set_pose(Pose.STAND)
 	else:
@@ -277,6 +276,7 @@ func on_hit(hitbox):
 	var apply_pushback = false
 	if blocked:
 		in_blockstun = true
+		$SFX/Block.play()
 		if controller.dir.y == 1:
 			perform_action("CrouchBlock")
 			set_pose(Pose.CROUCH)
@@ -286,6 +286,7 @@ func on_hit(hitbox):
 		apply_pushback = true
 	else:
 		in_blockstun = false
+		$SFX/Hit.play()
 		if combo_count > 0:
 			damage *= 0.3
 		combo_count += 1

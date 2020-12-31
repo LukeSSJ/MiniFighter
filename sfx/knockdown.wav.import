@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/knockdown.wav-08811a566523c09ccb8a7503115041fe.sample"
+
+[deps]
+
+source_file="res://sfx/knockdown.wav"
+dest_files=[ "res://.import/knockdown.wav-08811a566523c09ccb8a7503115041fe.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
