@@ -16,9 +16,11 @@ KOed sprite [X]
 VS CPU [X] Make smarter
 Choose controller [X]
 KO [X]
-Sound effects []
-Music - get from newgrounds []
+Sound effects [X]
+Music - get from newgrounds [X]
 Make menu look better [X]
+Controller bug [X]
+Block SFX []
 
 == Luxury ==
 
@@ -35,3 +37,6 @@ Remap controls
 EX moves
 Supers
 
+== Credits ==
+
+Summon the Rawk - Kevin MacLeod

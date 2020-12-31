@@ -11,6 +11,8 @@ export var hitstop = 0.1
 export (Global.Guard) var guard = Global.Guard.MID
 export var on_hit_action = ""
 export var cancel_to = ""
+export var hit_sfx = "Hit"
+export var pitch_mod = 1.0
 
 var player
 var facing

@@ -13,5 +13,7 @@ enum Guard {
 	UNBLOCKABLE,
 }
 
+var music = true
+
 var game_mode
 var input_methods = []

@@ -67,8 +67,6 @@ var Action
 func _ready():
 	half_width = $Collision.shape.extents.x
 	perform_action("Stand")
-	emit_signal("set_combo_count", self)
-	emit_signal("update_special", index, special)
 
 func set_index(set_index):
 	index = set_index
@@ -82,7 +80,7 @@ func set_index(set_index):
 func _process(delta):
 	controller.update()
 	controller.dir.x *= facing
-	if hitstop:
+	if hitstop or is_queued_for_deletion():
 		return
 	
 	if special_regen:
@@ -274,9 +272,10 @@ func on_hit(hitbox):
 	if !x_mod:
 		x_mod = hitbox.owner.facing
 	var apply_pushback = false
+	var sfx
 	if blocked:
 		in_blockstun = true
-		$SFX/Block.play()
+		sfx = $SFX/Block
 		if controller.dir.y == 1:
 			perform_action("CrouchBlock")
 			set_pose(Pose.CROUCH)
@@ -286,7 +285,7 @@ func on_hit(hitbox):
 		apply_pushback = true
 	else:
 		in_blockstun = false
-		$SFX/Hit.play()
+		sfx = $SFX.get_node(hitbox.hit_sfx)
 		if combo_count > 0:
 			damage *= 0.3
 		combo_count += 1
@@ -316,6 +315,8 @@ func on_hit(hitbox):
 	hp -= damage
 	state = State.HITSTUN
 	emit_signal("take_damage", index, hp)
+	sfx.pitch_scale = hitbox.pitch_mod
+	sfx.play()
 	if hp <= 0:
 		perform_action("KO")
 		active = false

@@ -15,6 +15,8 @@ onready var UI = $UI
 func _ready():
 	UI.connect("rematch", self, "game_start")
 	game_start()
+	if Global.music:
+		$Music.play()
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
@@ -46,7 +48,9 @@ func round_start():
 		p[i].connect("set_combo_count", UI, "set_combo_count")
 		p[i].connect("knocked_out", self, "knocked_out")
 		$Floor.add_child(p[i])
-		UI.update_hp(i, 100)
+		UI.update_hp(i, p[i].hp)
+		UI.update_special(i, p[i].special)
+		UI.set_combo_count(p[i])
 		UI.set_wins(i, wins[i])
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]

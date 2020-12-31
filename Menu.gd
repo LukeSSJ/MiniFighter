@@ -3,14 +3,20 @@ extends CanvasLayer
 onready var VsPlayer = $Main/Buttons/List/VsPlayer
 onready var VsCPU = $Main/Buttons/List/VsCPU
 onready var Training = $Main/Buttons/List/Training
+onready var Music = $Main/Options/Music
 onready var ChooseInput = $ChooseInput
 
 func _ready():
 	VsPlayer.connect("pressed", self, "vs_player")
 	VsCPU.connect("pressed", self, "vs_cpu")
 	Training.connect("pressed", self, "training")
+	
+	Music.connect("toggled", self, "toggle_music")
+	Music.pressed = Global.music
+	
 	ChooseInput.connect("input_choosen", self, "input_choosen")
 	ChooseInput.connect("cancel", self, "input_choosen_cancelled")
+	
 	VsPlayer.grab_focus()
 
 func vs_player():
@@ -30,14 +36,21 @@ func training():
 	$Main.hide()
 	ChooseInput.choose(false)
 
+func toggle_music(on):
+	Global.music = on
+
 func input_choosen(players):
 	Global.input_methods = players
 	clear_inputs("p1_")
 	if players[0] != null:
 		map_inputs("p1_", players[0])
+	else:
+		map_inputs("p1_", players[1] + 1)
 	clear_inputs("p2_")
 	if players[1] != null:
 		map_inputs("p2_", players[1])
+	else:
+		map_inputs("p2_", players[0] + 1)
 	get_tree().change_scene("res://Main.tscn")
 
 func input_choosen_cancelled():

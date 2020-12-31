@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/whiff_light2.wav-485353a55ec8709ec97961025be772d1.sample"
+
+[deps]
+
+source_file="res://sfx/whiff_light2.wav"
+dest_files=[ "res://.import/whiff_light2.wav-485353a55ec8709ec97961025be772d1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

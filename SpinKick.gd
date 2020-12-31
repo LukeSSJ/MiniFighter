@@ -16,7 +16,7 @@ func first_kick():
 func check_follow_up():
 	if owner.controller.button.d_held and follow_up_count < 2:
 		if owner.consume_special(5):
-			$Hitbox.juggle.y = -450
+			$Hitbox.juggle.y = -400
 			owner.get_node("Actions").seek(0.1)
 			owner.vel.y = -800
 			follow_up_count += 1
