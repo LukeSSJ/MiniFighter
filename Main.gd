@@ -10,6 +10,7 @@ var time_up
 onready var Player = preload("res://Player.tscn")
 onready var Controller = preload("res://Controller.tscn")
 onready var ControllerCPU = preload("res://ControllerCPU.tscn")
+onready var ControllerDummy = preload("res://ControllerDummy.tscn")
 onready var UI = $UI
 
 func _ready():
@@ -34,8 +35,11 @@ func round_start():
 	for i in range(0, 2):
 		p[i] = Player.instance()
 		var ControllerType = Controller
-		if i == 1 and Global.game_mode == Global.VS_CPU:
-			ControllerType = ControllerCPU
+		if Global.game_mode == Global.VS_CPU:
+			if i == 1:
+				ControllerType = ControllerCPU
+		elif Global.input_methods[i] == null:
+			ControllerType = ControllerDummy
 		var controller = ControllerType.instance()
 		p[i].controller = controller
 		p[i].add_child(controller)
