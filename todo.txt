@@ -20,16 +20,16 @@ Sound effects [X]
 Music - get from newgrounds [X]
 Make menu look better [X]
 Controller bug [X]
-Block SFX []
+Block SFX [X]
 
 == Luxury ==
 
 Walk animation [X]
 Walk back animation [X]
 Hurtbox extension [X]
-More stages []
+Improved stage [X]
 
-
+More stages
 Dash
 Pause
 Training mode features

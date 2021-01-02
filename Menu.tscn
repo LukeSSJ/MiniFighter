@@ -27,9 +27,9 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Main/Title"]
 margin_top = 8.0
-margin_right = 116.0
+margin_right = 158.0
 margin_bottom = 32.0
-text = "Proto Fighter"
+text = "Prototype Fighter"
 
 [node name="Buttons" type="MarginContainer" parent="Main"]
 anchor_left = 0.5

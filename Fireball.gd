@@ -30,3 +30,7 @@ func off_screen():
 func hitstop_end():
 	in_hitstop = false
 	$CollisionShape2D.set_deferred("disabled", false)
+
+func _on_Fireball_area_entered(area):
+	if area.get("is_projectile"):
+		on_hit()
