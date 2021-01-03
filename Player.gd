@@ -256,8 +256,9 @@ func on_hit(hitbox):
 		return
 	if (invul_hit and !hitbox.is_projectile) or (invul_projectile and hitbox.is_projectile):
 		return
-	if hitbox.guard == Global.Guard.UNBLOCKABLE and pose == Pose.AIR:
-		return
+	if hitbox.guard == Global.Guard.UNBLOCKABLE:
+		if pose == Pose.AIR or in_blockstun:
+			return
 	var blocked = false
 	if (state == State.FREE or in_blockstun):
 		match hitbox.guard:
