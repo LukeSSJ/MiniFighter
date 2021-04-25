@@ -1548,7 +1548,7 @@ tracks/5/keys = {
 } ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="CharacterBase" type="KinematicBody2D"]
 material = SubResource( 1 )
 script = ExtResource( 1 )
 GRAVITY = 80
