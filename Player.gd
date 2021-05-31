@@ -100,7 +100,7 @@ func _process(delta):
 		other_player.position = grab_point.global_position - Vector2(0,-120)
 		if other_player.position.x < WALL_LEFT_X or other_player.position.x > WALL_RIGHT_X:
 			other_player.position.x = clamp(other_player.position.x, WALL_LEFT_X, WALL_RIGHT_X)
-			position.x = other_player.position.x - grab_point.position.x
+			position.x = other_player.position.x - grab_point.position.x * facing
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
 	move_and_slide(vel, Vector2.UP)
