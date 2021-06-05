@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/ComboCount.gd" type="Script" id=1]
+[ext_resource path="res://icons/numbers.png" type="Texture" id=2]
+[ext_resource path="res://theme/Default.tres" type="Theme" id=3]
+
+
+[sub_resource type="Animation" id=1]
+resource_name = "Add"
+length = 0.2
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Numbers/Count:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -20, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2 )
+}
+
+[node name="ComboCount" type="MarginContainer"]
+theme = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Numbers" type="VBoxContainer" parent="."]
+margin_right = 68.0
+margin_bottom = 60.0
+
+[node name="Count" type="HBoxContainer" parent="Numbers"]
+margin_right = 68.0
+margin_bottom = 32.0
+
+[node name="MC" type="MarginContainer" parent="Numbers/Count"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="Number" type="Sprite" parent="Numbers/Count/MC"]
+texture = ExtResource( 2 )
+centered = false
+hframes = 10
+
+[node name="MC2" type="MarginContainer" parent="Numbers/Count"]
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+
+[node name="Number" type="Sprite" parent="Numbers/Count/MC2"]
+position = Vector2( -4, 0 )
+texture = ExtResource( 2 )
+centered = false
+hframes = 10
+
+[node name="Damage" type="Label" parent="Numbers"]
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 60.0
+text = "100"
+align = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[node name="AP" type="AnimationPlayer" parent="."]
+anims/Add = SubResource( 1 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

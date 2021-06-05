@@ -7,10 +7,10 @@ var round_is_over
 var time_left
 var time_up
 
-onready var Player = preload("res://Player.tscn")
-onready var Controller = preload("res://Controller.tscn")
-onready var ControllerCPU = preload("res://ControllerCPU.tscn")
-onready var ControllerDummy = preload("res://ControllerDummy.tscn")
+onready var Player = preload("res://character/Character.tscn")
+onready var Controller = preload("res://controller/Controller.tscn")
+onready var ControllerCPU = preload("res://controller/ControllerCPU.tscn")
+onready var ControllerDummy = preload("res://controller/ControllerDummy.tscn")
 onready var UI = $UI
 
 func _ready():
@@ -21,7 +21,7 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
-		get_tree().change_scene("res://Menu.tscn")
+		get_tree().change_scene("res://menu/Menu.tscn")
 
 func game_start():
 	round_count = 1
@@ -35,9 +35,8 @@ func round_start():
 	for i in range(0, 2):
 		p[i] = Player.instance()
 		var ControllerType = Controller
-		if Global.game_mode == Global.VS_CPU:
-			if i == 1:
-				ControllerType = ControllerCPU
+		if Global.game_mode == Global.VS_CPU and i == 1:
+			ControllerType = ControllerCPU
 		elif Global.input_methods[i] == null:
 			ControllerType = ControllerDummy
 		var controller = ControllerType.instance()

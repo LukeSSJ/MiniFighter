@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://UI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://stage/beach.png" type="Texture" id=3]
-[ext_resource path="res://music/summon-the-rawk_kevin-macleod.wav" type="AudioStream" id=4]
 
 [node name="Main" type="Node2D"]
 position = Vector2( -1, 0 )
@@ -28,7 +27,6 @@ one_shot = true
 [node name="UI" parent="." instance=ExtResource( 2 )]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
 volume_db = -6.0
 [connection signal="timeout" from="TimerRound" to="." method="timer_count_down"]
 [connection signal="timeout" from="TimerRoundStart" to="." method="fight"]

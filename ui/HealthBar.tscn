@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/HealthBar.gd" type="Script" id=1]
+[ext_resource path="res://icons/win.png" type="Texture" id=2]
+
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.654902, 0.0980392, 0.0980392, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+anti_aliasing = false
+
+[node name="HealthBar" type="MarginContainer"]
+margin_right = 60.0
+margin_bottom = 49.0
+rect_min_size = Vector2( 492, 0 )
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bars" type="VBoxContainer" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 482.0
+margin_bottom = 55.0
+
+[node name="HealthBar" type="ProgressBar" parent="Bars"]
+margin_right = 472.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 40, 25 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 100.0
+percent_visible = false
+
+[node name="Wins" type="HBoxContainer" parent="Bars"]
+margin_top = 29.0
+margin_right = 472.0
+margin_bottom = 45.0
+alignment = 2
+
+[node name="Win" type="TextureRect" parent="Bars/Wins"]
+margin_left = 436.0
+margin_right = 452.0
+margin_bottom = 16.0
+texture = ExtResource( 2 )
+
+[node name="Win2" type="TextureRect" parent="Bars/Wins"]
+margin_left = 456.0
+margin_right = 472.0
+margin_bottom = 16.0
+texture = ExtResource( 2 )

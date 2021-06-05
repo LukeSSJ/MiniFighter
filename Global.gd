@@ -16,4 +16,4 @@ enum Guard {
 var music = false
 
 var game_mode
-var input_methods = []
+var input_methods = [0, null]
