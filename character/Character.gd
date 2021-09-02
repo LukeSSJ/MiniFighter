@@ -53,20 +53,26 @@ var can_special_cancel = false
 var cancel_array = []
 var attack_hit = false
 var grab_point = false
-var normal = {
-	"A": ["JA", "5A", "2A"],
-	"B": ["JB", "5B", "2B"],
-	"C": ["JC", "5C", "2C"],
-}
 var combo_count = 0
 var combo_damage = 0
 var special = 100
 var special_regen = false
 var Action
+var normal = {
+	"A": ["JA", "5A", "2A"],
+	"B": ["JB", "5B", "2B"],
+	"C": ["JC", "5C", "2C"],
+}
 
 func _ready():
 	half_width = $Collision.shape.extents.x
 	perform_action("Stand")
+#	if Global.game_mode == Global.ONLINE:
+#		Online.connect("reset_state", self, "reset_state")
+#		Online.connect("frame_start", self, "frame_start")
+#		Online.connect("input_update", self, "input_update")
+#		Online.connect("execute", self, "execute")
+#		Online.connect("get_state", self, "get_state")
 
 func set_index(set_index):
 	index = set_index
@@ -79,6 +85,10 @@ func set_index(set_index):
 
 func _process(delta):
 	controller.update()
+	process(delta)
+
+func process(delta):
+#	var delta = 1.6
 	controller.dir.x *= facing
 	if hitstop or is_queued_for_deletion():
 		return
@@ -416,3 +426,37 @@ func set_grabbed(grabbed):
 
 func special_regen_on():
 	special_regen = true
+
+# Rollback stuff
+
+func reset_state(game_state):
+	if !game_state.has(name):
+		return
+	
+	position = game_state[name].pos
+	pass
+
+func frame_start():
+	pass
+
+#func input_update(input, _game_state):
+#	controller.dir.x = 0
+#	controller.dir.y = 0
+##	if Online.IsDir(input.Player, Online.InputType.LEFT):
+##		controller.dir.x -= 1
+##	if Online.IsDir(input.Player, Online.InputType.RIGHT):
+##		controller.dir.x += 1
+##	if Online.IsDir(input.Player, Online.InputType.UP):
+##		controller.dir.y -= 1
+##	if Online.IsDir(input.Player, Online.InputType.DOWN):
+##		controller.dir.y += 1
+##	process()
+#	pass
+
+func execute():
+	pass
+
+func get_state():
+	return {
+		"pos": position,
+	}

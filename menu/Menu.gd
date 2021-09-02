@@ -3,6 +3,8 @@ extends CanvasLayer
 onready var VsPlayer = $Main/Buttons/List/VsPlayer
 onready var VsCPU = $Main/Buttons/List/VsCPU
 onready var Training = $Main/Buttons/List/Training
+onready var Trials = $Main/Buttons/List/Trials
+#onready var Online = $Main/Buttons/List/Online
 onready var Music = $Main/Options/Music
 onready var ChooseInput = $ChooseInput
 
@@ -10,6 +12,8 @@ func _ready():
 	VsPlayer.connect("pressed", self, "vs_player")
 	VsCPU.connect("pressed", self, "vs_cpu")
 	Training.connect("pressed", self, "training")
+	Trials.connect("pressed", self, "trials")
+#	Online.connect("pressed", self, "online")
 	
 	Music.connect("toggled", self, "toggle_music")
 	Music.pressed = Global.music
@@ -35,6 +39,15 @@ func training():
 	Global.game_mode = Global.TRAINING
 	$Main.hide()
 	ChooseInput.choose(false)
+
+func trials():
+	Global.game_mode = Global.TRIALS
+	$Main.hide()
+	ChooseInput.choose(false)
+
+func online():
+	Global.game_mode = Global.ONLINE
+	get_tree().change_scene("res://menu/MenuOnline.tscn")
 
 func toggle_music(on):
 	Global.music = on
