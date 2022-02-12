@@ -2,6 +2,8 @@ extends CanvasLayer
 
 onready var Play = $MarginContainer/Play
 
+var Online = {}
+
 func _ready():
 	Online.connect("game_start", self, "game_start")
 	Play.connect("pressed", self, "play")

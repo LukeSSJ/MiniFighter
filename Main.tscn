@@ -28,6 +28,7 @@ one_shot = true
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 volume_db = -6.0
+
 [connection signal="timeout" from="TimerRound" to="." method="timer_count_down"]
 [connection signal="timeout" from="TimerRoundStart" to="." method="fight"]
 [connection signal="timeout" from="TimerNextRound" to="." method="next_round"]

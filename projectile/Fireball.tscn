@@ -3,11 +3,6 @@
 [ext_resource path="res://projectile/fireball.png" type="Texture" id=1]
 [ext_resource path="res://projectile/Fireball.gd" type="Script" id=2]
 
-
-
-
-
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 24.0
 
@@ -32,6 +27,7 @@ scale = Vector2( 2.2, 2.2 )
 
 [node name="TimerHitstop" type="Timer" parent="."]
 one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_Fireball_area_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="off_screen"]
 [connection signal="timeout" from="TimerHitstop" to="." method="hitstop_end"]

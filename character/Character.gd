@@ -24,7 +24,7 @@ const DOWN_FORWARD = Vector2(1, 1)
 export var WALK_SPEED = 400
 export var WALK_BACK_SPEED = -400
 export var JUMP_VEL = Vector2(300, -1600)
-export var GRAVITY = 20
+export var GRAVITY = 80
 
 var active = false
 var index
@@ -65,14 +65,12 @@ var normal = {
 }
 
 func _ready():
+	# Hide actions
+	for node in $Pivot.get_children():
+		node.hide()
+	
 	half_width = $Collision.shape.extents.x
 	perform_action("Stand")
-#	if Global.game_mode == Global.ONLINE:
-#		Online.connect("reset_state", self, "reset_state")
-#		Online.connect("frame_start", self, "frame_start")
-#		Online.connect("input_update", self, "input_update")
-#		Online.connect("execute", self, "execute")
-#		Online.connect("get_state", self, "get_state")
 
 func set_index(set_index):
 	index = set_index
@@ -88,7 +86,6 @@ func _process(delta):
 	process(delta)
 
 func process(delta):
-#	var delta = 1.6
 	controller.dir.x *= facing
 	if hitstop or is_queued_for_deletion():
 		return
@@ -106,13 +103,16 @@ func process(delta):
 		attempt_all_actions()
 	if can_recover and controller.button.a:
 		perform_action("Recover")
+	
 	if grab_point:
 		other_player.position = grab_point.global_position - Vector2(0,-120)
 		if other_player.position.x < WALL_LEFT_X or other_player.position.x > WALL_RIGHT_X:
 			other_player.position.x = clamp(other_player.position.x, WALL_LEFT_X, WALL_RIGHT_X)
 			position.x = other_player.position.x - grab_point.position.x * facing
+	
 	if !on_ground and gravity_enabled:
 		vel.y += GRAVITY
+	
 	move_and_slide(vel, Vector2.UP)
 	if get_slide_count() > 0:
 		if !on_ground:
@@ -154,15 +154,9 @@ func attempt_all_actions():
 					set_facing(-1)
 			elif other_player.position.x > position.x:
 					set_facing(1)
-	if controller.button.d and (state == State.FREE or can_special_cancel):
-		if controller.dir.y == 1:
-			attempt_action("SpinKick", 25)
-		elif controller.dir == Vector2.RIGHT:
-			attempt_action("Uppercut", 25)
-		else:
-			attempt_action("Fireball", 25)
-	if controller.dir == DOWN_FORWARD and controller.button.b:
-		attempt_action("Overhead")
+	
+	attempt_character_actions()
+	
 	if controller.button.c:
 		attempt_normal("C")
 	if controller.button.b:
@@ -171,6 +165,7 @@ func attempt_all_actions():
 		attempt_normal("A")
 	if state != State.FREE:
 		return
+	
 	if on_ground: # Ground actions
 		if controller.dir.y == -1:
 				perform_action("Jump")
@@ -201,6 +196,18 @@ func attempt_all_actions():
 		if action != "Air":
 			perform_action("Air")
 
+func attempt_character_actions():
+	if controller.button.d and (state == State.FREE or can_special_cancel):
+		if controller.dir.y == 1:
+			attempt_action("SpinKick", 25)
+		elif controller.dir == Vector2.RIGHT:
+			attempt_action("Uppercut", 25)
+		else:
+			attempt_action("Fireball", 25)
+	
+	if controller.dir == DOWN_FORWARD and controller.button.b:
+		attempt_action("Overhead")
+
 func attempt_normal(attack):
 	if !on_ground:
 		attack = normal[attack][0]
@@ -215,12 +222,16 @@ func attempt_normal(attack):
 		can_cancel = true
 		can_special_cancel = true
 
-func attempt_action(attack, cost=0):
+func attempt_action(new_action, cost=0):
 	if state == State.FREE or (can_cancel and attack_hit):
 		if consume_special(cost):
-			perform_action(attack, cost)
+			perform_action(new_action, cost)
 
 func perform_action(new_action, cost=0):
+	if not $Actions.has_animation(new_action):
+		print("No action for: %s" % new_action)
+		return
+	
 	gravity_enabled = true
 	friction_enabled = true
 	knockdown = false
@@ -230,12 +241,14 @@ func perform_action(new_action, cost=0):
 	cancel_array = []
 	attack_hit = false
 	grab_point = false
+	
 	if on_ground:
 		air_action = false
 		set_pose(Pose.STAND)
 	else:
 		air_action = true
 		set_pose(Pose.AIR)
+	
 	if new_action in ["Stand", "Crouch", "Air"]:
 		state = State.FREE
 		# Refill health (training mode)
@@ -244,6 +257,7 @@ func perform_action(new_action, cost=0):
 			emit_signal("take_damage", index, hp)
 	else:
 		state = State.ATTACK
+	
 	if Action:
 		Action.hide()
 		for child in Action.get_children():
@@ -325,7 +339,8 @@ func on_hit(hitbox):
 			apply_pushback = true
 	if apply_pushback:
 		vel.x = hitbox.pushback * x_mod
-	if other_player.pose != Pose.AIR and !hitbox.is_projectile and (abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5):
+	if other_player.pose != Pose.AIR and !hitbox.is_projectile:
+		if abs(position.x - WALL_LEFT_X) < 5 or abs(position.x - WALL_RIGHT_X) < 5:
 			other_player.vel.x = hitbox.pushback * x_mod * -1
 	hp -= damage
 	state = State.HITSTUN
@@ -426,37 +441,3 @@ func set_grabbed(grabbed):
 
 func special_regen_on():
 	special_regen = true
-
-# Rollback stuff
-
-func reset_state(game_state):
-	if !game_state.has(name):
-		return
-	
-	position = game_state[name].pos
-	pass
-
-func frame_start():
-	pass
-
-#func input_update(input, _game_state):
-#	controller.dir.x = 0
-#	controller.dir.y = 0
-##	if Online.IsDir(input.Player, Online.InputType.LEFT):
-##		controller.dir.x -= 1
-##	if Online.IsDir(input.Player, Online.InputType.RIGHT):
-##		controller.dir.x += 1
-##	if Online.IsDir(input.Player, Online.InputType.UP):
-##		controller.dir.y -= 1
-##	if Online.IsDir(input.Player, Online.InputType.DOWN):
-##		controller.dir.y += 1
-##	process()
-#	pass
-
-func execute():
-	pass
-
-func get_state():
-	return {
-		"pos": position,
-	}

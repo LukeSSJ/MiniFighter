@@ -7,7 +7,7 @@ var round_is_over
 var time_left
 var time_up
 
-onready var Player = preload("res://character/Character.tscn")
+onready var Player = preload("res://character/EyePatch.tscn")
 onready var Controller = preload("res://controller/Controller.tscn")
 onready var ControllerCPU = preload("res://controller/ControllerCPU.tscn")
 onready var ControllerDummy = preload("res://controller/ControllerDummy.tscn")
@@ -58,12 +58,15 @@ func round_start():
 	p[0].other_player = p[1]
 	p[1].other_player = p[0]
 	p[1].set_color(Color8(255, 0, 0))
-	$TimerRoundStart.start()
 	round_is_over = false
 	time_left = 60
 	time_up = false
-	UI.round_start(round_count)
-	UI.update_timer(time_left)
+	if Global.game_mode == Global.TRAINING:
+		fight()
+	else:
+		$TimerRoundStart.start()
+		UI.round_start(round_count)
+		UI.update_timer(time_left)
 
 func fight():
 	p[0].active = true
