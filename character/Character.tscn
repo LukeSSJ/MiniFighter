@@ -59,7 +59,7 @@ extents = Vector2( 22, 100 )
 extents = Vector2( 30, 115 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 43, 34 )
+extents = Vector2( 31, 22 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 12 )
@@ -636,11 +636,13 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=38]
+resource_name = "AirHitstun"
 length = 99999.0
 loop = true
 step = 0.0166667
 
 [sub_resource type="Animation" id=39]
+resource_name = "Block"
 length = 99999.0
 loop = true
 
@@ -663,9 +665,11 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=41]
+resource_name = "CrouchBlock"
 loop = true
 
 [sub_resource type="Animation" id=42]
+resource_name = "CrouchHitstun"
 length = 99999.0
 loop = true
 step = 0.0166667
@@ -830,6 +834,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=45]
+resource_name = "Hitstun"
 length = 99999.0
 loop = true
 step = 0.0166667
@@ -1089,11 +1094,13 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=50]
+resource_name = "KO"
 length = 99999.0
 loop = true
 step = 0.0166667
 
 [sub_resource type="Animation" id=51]
+resource_name = "Knockdown"
 tracks/0/type = "method"
 tracks/0/path = NodePath("Pivot/Knockdown")
 tracks/0/interp = 1
@@ -1231,6 +1238,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=53]
+resource_name = "Recover"
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -1574,7 +1582,7 @@ shape = SubResource( 3 )
 visible = false
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Pivot/Hurtbox2"]
-position = Vector2( 40, -30 )
+position = Vector2( 9, 99 )
 shape = SubResource( 4 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
@@ -1781,7 +1789,6 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 36 )
 offset = Vector2( 16, 0 )
 hframes = 3
-frame = 2
 
 [node name="Hitbox" parent="Pivot/2A" instance=ExtResource( 7 )]
 damage = 3

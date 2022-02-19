@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://character/CharacterBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://action/ThrowFireball.gd" type="Script" id=2]
@@ -9,79 +9,14 @@
 [ext_resource path="res://character/base/jump.png" type="Texture" id=7]
 [ext_resource path="res://Hitbox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://action/Mover.gd" type="Script" id=9]
-[ext_resource path="res://character/base/stand.png" type="Texture" id=10]
-[ext_resource path="res://character/base/walk.png" type="Texture" id=11]
-[ext_resource path="res://character/base/walk_back.png" type="Texture" id=12]
-[ext_resource path="res://character/base/air_hitstun.png" type="Texture" id=13]
 [ext_resource path="res://character/eyepatch/roundhouse.png" type="Texture" id=14]
 [ext_resource path="res://character/base/sweep.png" type="Texture" id=15]
 [ext_resource path="res://character/base/jump_jab.png" type="Texture" id=16]
-[ext_resource path="res://character/base/crouch_block.png" type="Texture" id=17]
 [ext_resource path="res://character/base/jump_kick.png" type="Texture" id=18]
 [ext_resource path="res://character/base/jab.png" type="Texture" id=19]
-[ext_resource path="res://character/base/ko.png" type="Texture" id=20]
 [ext_resource path="res://character/base/crouch_kick.png" type="Texture" id=21]
-[ext_resource path="res://character/base/crouch_hitstun.png" type="Texture" id=22]
-[ext_resource path="res://character/base/knockdown.png" type="Texture" id=24]
 [ext_resource path="res://character/base/jump_kick2.png" type="Texture" id=25]
-[ext_resource path="res://character/base/block.png" type="Texture" id=26]
-[ext_resource path="res://character/base/hitstun.png" type="Texture" id=27]
 [ext_resource path="res://character/base/aa_punch.png" type="Texture" id=28]
-[ext_resource path="res://character/base/crouch.png" type="Texture" id=29]
-
-[sub_resource type="AtlasTexture" id=65]
-atlas = ExtResource( 12 )
-region = Rect2( 0, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=66]
-atlas = ExtResource( 12 )
-region = Rect2( 64, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=67]
-atlas = ExtResource( 12 )
-region = Rect2( 128, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=68]
-atlas = ExtResource( 12 )
-region = Rect2( 192, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=69]
-atlas = ExtResource( 12 )
-region = Rect2( 256, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=61]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=62]
-atlas = ExtResource( 11 )
-region = Rect2( 64, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 11 )
-region = Rect2( 128, 0, 64, 128 )
-
-[sub_resource type="AtlasTexture" id=64]
-atlas = ExtResource( 11 )
-region = Rect2( 192, 0, 64, 128 )
-
-[sub_resource type="SpriteFrames" id=70]
-animations = [ {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ) ],
-"loop": true,
-"name": "walk_back",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=71]
 extents = Vector2( 21.25, 56.25 )
@@ -97,6 +32,9 @@ extents = Vector2( 32, 48 )
 
 [sub_resource type="RectangleShape2D" id=76]
 extents = Vector2( 36.5312, 72.1562 )
+
+[sub_resource type="RectangleShape2D" id=78]
+extents = Vector2( 56.5, 28.5 )
 
 [sub_resource type="RectangleShape2D" id=59]
 extents = Vector2( 15.5, 18.5 )
@@ -220,18 +158,6 @@ resource_name = "Crouch"
 length = 99999.0
 loop = true
 step = 0.02
-tracks/0/type = "value"
-tracks/0/path = NodePath("Pivot/Crouch/Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
 
 [sub_resource type="Animation" id=56]
 resource_name = "FireballHigh"
@@ -458,56 +384,6 @@ script = ExtResource( 5 )
 [node name="Stand" parent="Pivot" index="2"]
 visible = false
 
-[node name="Sprite" type="AnimatedSprite" parent="Pivot/Stand" index="0"]
-scale = Vector2( 2, 2 )
-frames = SubResource( 70 )
-animation = "walk"
-
-[node name="Sprite" type="Sprite" parent="Pivot/Crouch" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 29 )
-hframes = 2
-
-[node name="Sprite" type="Sprite" parent="Pivot/Air" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 7 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Jump" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 7 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Block" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 26 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/CrouchBlock" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 17 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Hitstun" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 27 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/CrouchHitstun" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 22 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/AirHitstun" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 13 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Knockdown" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 24 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/KO" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 20 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Recover" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 24 )
-
 [node name="Sprite" type="Sprite" parent="Pivot/5A" index="0"]
 position = Vector2( 32, 0 )
 scale = Vector2( 2, 2 )
@@ -540,15 +416,13 @@ position = Vector2( 64, -16 )
 shape = SubResource( 73 )
 disabled = true
 
-[node name="5C" parent="Pivot" index="16"]
-visible = true
-
 [node name="Sprite" type="Sprite" parent="Pivot/5C" index="0"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
 hframes = 2
 
 [node name="Hitbox" parent="Pivot/5C" index="1" instance=ExtResource( 8 )]
+hitstop = 0.12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5C/Hitbox" index="0"]
 position = Vector2( 40, 32 )
@@ -560,10 +434,20 @@ position = Vector2( 75.4688, -7.84375 )
 shape = SubResource( 76 )
 disabled = true
 
+[node name="2A" parent="Pivot" index="17"]
+visible = true
+
 [node name="Sprite" type="Sprite" parent="Pivot/2A" index="0"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 21 )
+offset = Vector2( 16, 0 )
 hframes = 3
+
+[node name="Hitbox" parent="Pivot/2A" index="1" instance=ExtResource( 8 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2A/Hitbox" index="0"]
+position = Vector2( 79.5, 27.5 )
+shape = SubResource( 78 )
 
 [node name="Sprite" type="Sprite" parent="Pivot/2B" index="0"]
 scale = Vector2( 2, 2 )
