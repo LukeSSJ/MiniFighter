@@ -1,6 +1,6 @@
 extends Node2D
 
-var p = [null, null]
+var players = [null, null]
 var wins
 var round_count
 var round_is_over
@@ -29,38 +29,49 @@ func game_start():
 	round_start()
 
 func round_start():
-	if p[0]:
-		p[0].queue_free()
-		p[1].queue_free()
-	for i in range(0, 2):
-		p[i] = Player.instance()
+	if players[0]:
+		players[0].queue_free()
+		players[1].queue_free()
+	
+	for i in 2:
+		var player = Player.instance()
+		players[i] = player
+		
 		var ControllerType = Controller
 		if Global.game_mode == Global.VS_CPU and i == 1:
 			ControllerType = ControllerCPU
 		elif Global.input_methods[i] == null:
 			ControllerType = ControllerDummy
 		var controller = ControllerType.instance()
-		p[i].controller = controller
-		p[i].add_child(controller)
-		p[i].set_index(i)
-		p[i].position = Vector2(400, 580)
+		
+		player.controller = controller
+		player.add_child(controller)
+		player.set_index(i)
+		player.position = Vector2(400, 580)
 		if i == 1:
-			p[i].position.x = 1024 - 400
-		p[i].connect("take_damage", UI, "update_hp")
-		p[i].connect("update_special", UI, "update_special")
-		p[i].connect("set_combo_count", UI, "set_combo_count")
-		p[i].connect("knocked_out", self, "knocked_out")
-		$Floor.add_child(p[i])
-		UI.update_hp(i, p[i].hp)
-		UI.update_special(i, p[i].special)
-		UI.set_combo_count(p[i])
+			player.position.x = 1024 - 400
+		
+		player.connect("take_damage", UI, "update_hp")
+		player.connect("update_special", UI, "update_special")
+		player.connect("set_combo_count", UI, "set_combo_count")
+		player.connect("knocked_out", self, "knocked_out")
+		
+		$Floor.add_child(player)
+		
+		UI.update_hp(i, player.hp)
+		UI.update_special(i, player.special)
+		UI.set_combo_count(player)
 		UI.set_wins(i, wins[i])
-	p[0].other_player = p[1]
-	p[1].other_player = p[0]
-	p[1].set_color(Color8(255, 0, 0))
+	
+	players[0].other_player = players[1]
+	players[1].other_player = players[0]
+	
+	players[1].set_color(Color8(255, 0, 0))
+	
 	round_is_over = false
 	time_left = 60
 	time_up = false
+	
 	if Global.game_mode == Global.TRAINING:
 		fight()
 	else:
@@ -69,8 +80,8 @@ func round_start():
 		UI.update_timer(time_left)
 
 func fight():
-	p[0].active = true
-	p[1].active = true
+	players[0].active = true
+	players[1].active = true
 	if Global.game_mode != Global.TRAINING:
 		$TimerRound.start()
 
@@ -79,8 +90,8 @@ func timer_count_down():
 	UI.update_timer(time_left)
 	if time_left == 0:
 		time_up = true
-		p[0].active = false
-		p[1].active = false
+		players[0].active = false
+		players[1].active = false
 		UI.time_up()
 		round_over()
 
@@ -92,35 +103,37 @@ func round_over():
 	if round_is_over:
 		return
 	round_is_over = true
-	p[0].active = false
-	p[1].active = false
+	players[0].active = false
+	players[1].active = false
 	$TimerRound.stop()
 	$TimerNextRound.start()
 
 func next_round():
 	var text = "KO"
 	var winner = -1
-	if p[0].hp <= 0:
-		if p[1].hp <= 0:
+	
+	if players[0].hp <= 0:
+		if players[1].hp <= 0:
 			text = "Double KO"
 		else:
 			winner = 1
-	elif p[1].hp <= 0:
+	elif players[1].hp <= 0:
 		winner = 0
-	elif p[0].hp > p[1].hp:
+	elif players[0].hp > players[1].hp:
 		winner = 0
-	elif p[1].hp > p[0].hp:
+	elif players[1].hp > players[0].hp:
 		winner = 1
 	else:
 		text = "Draw"
+	
 	round_count += 1
 	if winner != -1:
 		wins[winner] += 1
 		UI.set_wins(winner, wins[winner])
 		if wins[winner] >= 2:
-			text = "Player " + str(winner + 1) + " Wins"
-			$UI.round_is_over = true
-			$UI.show_result(text)
+			text = "Player %d Wins" % (winner + 1)
+			UI.round_is_over = true
+			UI.show_result(text)
 			return
-	$UI.show_result(text)
+	UI.show_result(text)
 	round_start()

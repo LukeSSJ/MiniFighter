@@ -1,4 +1,4 @@
-extends "res://Hitbox.gd"
+extends "res://hitbox/Hitbox.gd"
 
 export var speed = 600
 

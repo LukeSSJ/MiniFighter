@@ -11,6 +11,7 @@ script = ExtResource( 2 )
 chip_mod = 0.3
 hitstun = 0.5
 blockstun_mod = 0.5
+speed = 800
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )

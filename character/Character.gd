@@ -31,7 +31,7 @@ var index
 var controller
 var other_player
 var on_ground = true
-var gravity_enabled = true
+var is_grabbed = false
 var friction_enabled = true
 var max_hp = 100
 var hp = max_hp
@@ -71,6 +71,11 @@ func _ready():
 	
 	half_width = $Collision.shape.extents.x
 	perform_action("Stand")
+	
+	if not controller:
+		var Controller = preload("res://controller/Controller.tscn")
+		controller = Controller.instance()
+		set_index(0)
 
 func set_index(set_index):
 	index = set_index
@@ -110,7 +115,10 @@ func process(delta):
 			other_player.position.x = clamp(other_player.position.x, WALL_LEFT_X, WALL_RIGHT_X)
 			position.x = other_player.position.x - grab_point.position.x * facing
 	
-	if !on_ground and gravity_enabled:
+	if is_grabbed:
+		return
+	
+	if !on_ground:
 		vel.y += GRAVITY
 	
 	move_and_slide(vel, Vector2.UP)
@@ -232,7 +240,6 @@ func perform_action(new_action, cost=0):
 		print("No action for: %s" % new_action)
 		return
 	
-	gravity_enabled = true
 	friction_enabled = true
 	knockdown = false
 	can_recover = false
@@ -436,8 +443,8 @@ func set_color(c):
 	material = mat
 
 func set_grabbed(grabbed):
+	is_grabbed = grabbed
 	$Collision.set_deferred("disabled", grabbed)
-	gravity_enabled = !grabbed
 
 func special_regen_on():
 	special_regen = true
