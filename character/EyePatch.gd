@@ -15,7 +15,8 @@ func attempt_character_actions():
 			attempt_action("FireballHigh", 20)
 	
 	# Command normals
-	if controller.button.c and controller.dir.x == 1:
-		attempt_action("6C")
-	if controller.button.a and controller.dir.x == 1:
-		attempt_action("6A")
+	if on_ground:
+		if controller.button.c and controller.dir.x == 1:
+			attempt_action("6C")
+		if controller.button.a and controller.dir.x == 1:
+			attempt_action("6A")

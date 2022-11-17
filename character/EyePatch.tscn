@@ -887,7 +887,7 @@ offset = Vector2( -12, 0 )
 hframes = 3
 
 [node name="Hitbox" parent="Pivot/5A" index="1" instance=ExtResource( 8 )]
-cancel_to = "5B"
+cancel_to = "5B,5C"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox" index="0"]
 position = Vector2( 42.75, 72.25 )
@@ -919,6 +919,7 @@ texture = ExtResource( 14 )
 hframes = 2
 
 [node name="Hitbox" parent="Pivot/5C" index="1" instance=ExtResource( 8 )]
+pushback = 400
 hitstop = 0.12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5C/Hitbox" index="0"]
