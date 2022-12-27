@@ -3,11 +3,11 @@ extends Control
 signal input_choosen
 signal cancel
 
-onready var List = $Controllers/List
+onready var List := $Controllers/List
 
-var players
-var controller_button
-var requires_both_players
+var players := [null, null]
+var controller_button := []
+var requires_both_players := false
 
 func _ready():
 	set_process(false)

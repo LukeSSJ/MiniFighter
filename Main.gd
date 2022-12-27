@@ -1,11 +1,11 @@
 extends Node2D
 
 var players = [null, null]
-var wins
-var round_count
-var round_is_over
-var time_left
-var time_up
+var wins := [0, 0]
+var round_count := 0
+var round_is_over := false
+var time_left := 0
+var time_up := false
 
 onready var Player = preload("res://character/EyePatch.tscn")
 onready var Controller = preload("res://controller/Controller.tscn")

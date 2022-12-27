@@ -15,4 +15,4 @@ func player_selected(player_index, character):
 	
 	players_ready += 1
 	if players_ready == player_count:
-		print("All players ready!")
+		get_tree().change_scene("res://Main.tscn")
