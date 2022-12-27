@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://theme/Default.tres" type="Theme" id=1]
+[ext_resource path="res://menu/CharacterSlot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://menu/CharacterSelection.tscn" type="PackedScene" id=3]
+[ext_resource path="res://menu/CharacterSelect.gd" type="Script" id=4]
+
+[node name="CharacterSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="Title" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_top = 100.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="Title"]
+margin_right = 1024.0
+margin_bottom = 24.0
+text = "Choose your fighter"
+align = 1
+
+[node name="Characters" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -32.0
+margin_right = 74.0
+margin_bottom = 32.0
+
+[node name="Grid" type="GridContainer" parent="Characters"]
+margin_right = 148.0
+margin_bottom = 64.0
+custom_constants/vseparation = 20
+custom_constants/hseparation = 20
+columns = 2
+
+[node name="CharacterSlot" parent="Characters/Grid" instance=ExtResource( 2 )]
+character_name = "char1"
+
+[node name="CharacterSlot2" parent="Characters/Grid" instance=ExtResource( 2 )]
+margin_left = 84.0
+margin_right = 148.0
+character_name = "char2"
+
+[node name="CharacterSelection" parent="Characters" instance=ExtResource( 3 )]
+modulate = Color( 0, 0.109804, 1, 1 )
+margin_right = 148.0
+
+[node name="CharacterSelection2" parent="Characters" instance=ExtResource( 3 )]
+modulate = Color( 1, 0, 0, 1 )
+margin_right = 148.0
+player_index = 1
+
+[connection signal="selected" from="Characters/CharacterSelection" to="." method="player_selected"]
+[connection signal="selected" from="Characters/CharacterSelection2" to="." method="player_selected"]

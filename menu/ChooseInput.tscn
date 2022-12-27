@@ -11,9 +11,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Title" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -22,9 +19,6 @@ margin_left = -512.0
 margin_top = 100.0
 margin_right = 512.0
 margin_bottom = 124.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="Title"]
 margin_right = 1024.0

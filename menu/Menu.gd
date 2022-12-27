@@ -25,11 +25,13 @@ func _ready():
 
 func vs_player():
 	Global.game_mode = Global.VS_PLAYER
+	Global.single_player = false
 	$Main.hide()
 	ChooseInput.choose(true)
 
 func vs_cpu():
 	Global.game_mode = Global.VS_CPU
+	Global.single_player = true
 	clear_inputs("p1_")
 	map_inputs("p1_", 0) # Keyboard
 	map_inputs("p1_", 1) # Controller 1
@@ -37,16 +39,19 @@ func vs_cpu():
 
 func training():
 	Global.game_mode = Global.TRAINING
+	Global.single_player = true
 	$Main.hide()
 	ChooseInput.choose(false)
 
 func trials():
 	Global.game_mode = Global.TRIALS
+	Global.single_player = true
 	$Main.hide()
 	ChooseInput.choose(false)
 
 func online():
 	Global.game_mode = Global.ONLINE
+	Global.single_player = true
 	get_tree().change_scene("res://menu/MenuOnline.tscn")
 
 func toggle_music(on):
