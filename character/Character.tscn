@@ -1,19 +1,9 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://action/Knockdown.gd" type="Script" id=1]
-[ext_resource path="res://character/base/stand.png" type="Texture" id=3]
 [ext_resource path="res://sfx/grab.wav" type="AudioStream" id=4]
 [ext_resource path="res://shader/silouette.shader" type="Shader" id=5]
 [ext_resource path="res://sfx/whiff_light2.wav" type="AudioStream" id=6]
-[ext_resource path="res://character/base/crouch.png" type="Texture" id=8]
-[ext_resource path="res://character/base/jump.png" type="Texture" id=9]
-[ext_resource path="res://character/base/block.png" type="Texture" id=10]
-[ext_resource path="res://character/base/crouch_hitstun.png" type="Texture" id=11]
-[ext_resource path="res://character/base/air_hitstun.png" type="Texture" id=12]
-[ext_resource path="res://character/base/knockdown.png" type="Texture" id=13]
-[ext_resource path="res://character/base/ko.png" type="Texture" id=14]
-[ext_resource path="res://character/base/crouch_block.png" type="Texture" id=15]
-[ext_resource path="res://character/base/hitstun.png" type="Texture" id=16]
 [ext_resource path="res://sfx/thud.wav" type="AudioStream" id=18]
 [ext_resource path="res://sfx/slap.wav" type="AudioStream" id=19]
 [ext_resource path="res://action/Recover.gd" type="Script" id=20]
@@ -37,26 +27,7 @@ extents = Vector2( 30, 115 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 31, 22 )
 
-[sub_resource type="SpriteFrames" id=70]
-animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "walk_back",
-"speed": 5.0
-} ]
-
-[sub_resource type="Animation" id=37]
-resource_name = "Air"
+[sub_resource type="Animation" id=73]
 loop = true
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -70,59 +41,61 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=38]
-resource_name = "AirHitstun"
+[sub_resource type="Animation" id=91]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=39]
-resource_name = "Block"
+[sub_resource type="Animation" id=75]
 length = 99999.0
 loop = true
 
-[sub_resource type="Animation" id=40]
-resource_name = "Crouch"
+[sub_resource type="Animation" id=76]
 length = 99999.0
 loop = true
 step = 0.02
-tracks/0/type = "value"
-tracks/0/path = NodePath("Pivot/Crouch/Sprite:frame")
+
+[sub_resource type="Animation" id=92]
+loop = true
+
+[sub_resource type="Animation" id=78]
+length = 99999.0
+loop = true
+step = 0.0166667
+
+[sub_resource type="Animation" id=93]
+length = 99999.0
+loop = true
+step = 0.0166667
+
+[sub_resource type="Animation" id=71]
+resource_name = "Jump"
+length = 0.06
+step = 0.02
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
+"times": PoolRealArray( 0, 0.02 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "in_air"
+}, {
+"args": [  ],
+"method": "jump"
+} ]
 }
 
-[sub_resource type="Animation" id=41]
-resource_name = "CrouchBlock"
-loop = true
-
-[sub_resource type="Animation" id=42]
-resource_name = "CrouchHitstun"
+[sub_resource type="Animation" id=94]
 length = 99999.0
 loop = true
 step = 0.0166667
 
-[sub_resource type="Animation" id=45]
-resource_name = "Hitstun"
-length = 99999.0
-loop = true
-step = 0.0166667
-
-[sub_resource type="Animation" id=50]
-resource_name = "KO"
-length = 99999.0
-loop = true
-step = 0.0166667
-
-[sub_resource type="Animation" id=51]
-resource_name = "Knockdown"
+[sub_resource type="Animation" id=81]
 tracks/0/type = "method"
 tracks/0/path = NodePath("Pivot/Knockdown")
 tracks/0/interp = 1
@@ -181,8 +154,7 @@ tracks/3/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=53]
-resource_name = "Recover"
+[sub_resource type="Animation" id=95]
 length = 0.3
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -225,11 +197,10 @@ tracks/2/keys = {
 "values": [ Vector2( 0, -100 ) ]
 }
 
-[sub_resource type="Animation" id=55]
-resource_name = "Stand"
+[sub_resource type="Animation" id=83]
 loop = true
 
-[node name="CharacterBase" type="KinematicBody2D" groups=["rollback"]]
+[node name="Character" type="KinematicBody2D" groups=["rollback"]]
 material = SubResource( 1 )
 script = ExtResource( 47 )
 
@@ -257,107 +228,52 @@ shape = SubResource( 4 )
 [node name="Stand" type="Node2D" parent="Pivot"]
 use_parent_material = true
 
-[node name="Sprite" type="AnimatedSprite" parent="Pivot/Stand"]
-scale = Vector2( 2, 2 )
-frames = SubResource( 70 )
-animation = "walk"
-
 [node name="Crouch" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
-
-[node name="Sprite" type="Sprite" parent="Pivot/Crouch"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 8 )
-hframes = 2
-frame = 1
 
 [node name="Air" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/Air"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 9 )
-
 [node name="Jump" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
-
-[node name="Sprite" type="Sprite" parent="Pivot/Jump"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 9 )
 
 [node name="Block" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/Block"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 10 )
-
 [node name="CrouchBlock" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
-
-[node name="Sprite" type="Sprite" parent="Pivot/CrouchBlock"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 15 )
 
 [node name="Hitstun" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/Hitstun"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 16 )
-
 [node name="CrouchHitstun" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
-
-[node name="Sprite2" type="Sprite" parent="Pivot/CrouchHitstun"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 11 )
 
 [node name="AirHitstun" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
 script = ExtResource( 35 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/AirHitstun"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 12 )
-hframes = 2
-
 [node name="Knockdown" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/Knockdown"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 13 )
-offset = Vector2( 0, 32 )
-
 [node name="KO" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
-
-[node name="Sprite" type="Sprite" parent="Pivot/KO"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 14 )
-offset = Vector2( 0, 32 )
 
 [node name="Recover" type="Node2D" parent="Pivot"]
 visible = false
 use_parent_material = true
 script = ExtResource( 20 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Recover"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 13 )
-offset = Vector2( 0, 32 )
 
 [node name="5A" type="Node2D" parent="Pivot"]
 visible = false
@@ -406,17 +322,18 @@ wait_time = 0.5
 one_shot = true
 
 [node name="Actions" type="AnimationPlayer" parent="."]
-anims/Air = SubResource( 37 )
-anims/AirHitstun = SubResource( 38 )
-anims/Block = SubResource( 39 )
-anims/Crouch = SubResource( 40 )
-anims/CrouchBlock = SubResource( 41 )
-anims/CrouchHitstun = SubResource( 42 )
-anims/Hitstun = SubResource( 45 )
-anims/KO = SubResource( 50 )
-anims/Knockdown = SubResource( 51 )
-anims/Recover = SubResource( 53 )
-anims/Stand = SubResource( 55 )
+anims/Air = SubResource( 73 )
+anims/AirHitstun = SubResource( 91 )
+anims/Block = SubResource( 75 )
+anims/Crouch = SubResource( 76 )
+anims/CrouchBlock = SubResource( 92 )
+anims/CrouchHitstun = SubResource( 78 )
+anims/Hitstun = SubResource( 93 )
+anims/Jump = SubResource( 71 )
+anims/KO = SubResource( 94 )
+anims/Knockdown = SubResource( 81 )
+anims/Recover = SubResource( 95 )
+anims/Stand = SubResource( 83 )
 
 [node name="SFX" type="Node2D" parent="."]
 

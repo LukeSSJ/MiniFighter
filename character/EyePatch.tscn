@@ -1,6 +1,6 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=57 format=2]
 
-[ext_resource path="res://character/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://action/AirHitstun.gd" type="Script" id=1]
 [ext_resource path="res://action/ThrowFireball.gd" type="Script" id=2]
 [ext_resource path="res://character/base/throw_fireball.png" type="Texture" id=3]
 [ext_resource path="res://projectile/Fireball.tscn" type="PackedScene" id=4]
@@ -9,38 +9,32 @@
 [ext_resource path="res://character/base/jump.png" type="Texture" id=7]
 [ext_resource path="res://hitbox/Hitbox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://action/Mover.gd" type="Script" id=9]
-[ext_resource path="res://character/eyepatch/crouch_punch.png" type="Texture" id=10]
-[ext_resource path="res://character/base/grab.png" type="Texture" id=11]
-[ext_resource path="res://character/eyepatch/throw.png" type="Texture" id=12]
-[ext_resource path="res://action/Throw.gd" type="Script" id=13]
+[ext_resource path="res://action/Recover.gd" type="Script" id=10]
+[ext_resource path="res://action/Knockdown.gd" type="Script" id=11]
+[ext_resource path="res://hitbox/Hurtbox.tscn" type="PackedScene" id=12]
+[ext_resource path="res://shader/silouette.shader" type="Shader" id=13]
 [ext_resource path="res://character/eyepatch/roundhouse.png" type="Texture" id=14]
-[ext_resource path="res://character/base/sweep.png" type="Texture" id=15]
-[ext_resource path="res://character/base/jump_jab.png" type="Texture" id=16]
+[ext_resource path="res://sfx/thud.wav" type="AudioStream" id=15]
+[ext_resource path="res://sfx/slap.wav" type="AudioStream" id=16]
 [ext_resource path="res://character/eyepatch/5A.png" type="Texture" id=17]
-[ext_resource path="res://character/base/jump_kick.png" type="Texture" id=18]
-[ext_resource path="res://character/base/jab.png" type="Texture" id=19]
-[ext_resource path="res://character/base/uppercut.png" type="Texture" id=20]
-[ext_resource path="res://character/base/crouch_kick.png" type="Texture" id=21]
-[ext_resource path="res://character/eyepatch/stand.png" type="Texture" id=22]
-[ext_resource path="res://character/base/jump_kick2.png" type="Texture" id=25]
+[ext_resource path="res://sfx/hit_heavy3.wav" type="AudioStream" id=18]
+[ext_resource path="res://sfx/block_metal.wav" type="AudioStream" id=19]
+[ext_resource path="res://sfx/grab.wav" type="AudioStream" id=20]
+[ext_resource path="res://sfx/whiff_light2.wav" type="AudioStream" id=21]
+[ext_resource path="res://sfx/whiff_heavy.wav" type="AudioStream" id=22]
 
-[sub_resource type="SpriteFrames" id=90]
-animations = [ {
-"frames": [ ExtResource( 22 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 22 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 22 ) ],
-"loop": true,
-"name": "walk_back",
-"speed": 5.0
-} ]
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 13 )
+shader_param/modulate = Color( 0, 0, 0, 1 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 22, 100 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 30, 115 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 31, 22 )
 
 [sub_resource type="RectangleShape2D" id=71]
 extents = Vector2( 21.25, 56.25 )
@@ -48,35 +42,11 @@ extents = Vector2( 21.25, 56.25 )
 [sub_resource type="RectangleShape2D" id=72]
 extents = Vector2( 21.25, 32.25 )
 
-[sub_resource type="RectangleShape2D" id=73]
-extents = Vector2( 45, 17 )
-
-[sub_resource type="RectangleShape2D" id=75]
-extents = Vector2( 32, 48 )
-
-[sub_resource type="RectangleShape2D" id=76]
-extents = Vector2( 36.5312, 72.1562 )
-
-[sub_resource type="RectangleShape2D" id=78]
-extents = Vector2( 52.25, 18.25 )
-
-[sub_resource type="RectangleShape2D" id=81]
-extents = Vector2( 39.5312, 25.125 )
-
 [sub_resource type="RectangleShape2D" id=86]
 extents = Vector2( 44, 64 )
 
-[sub_resource type="RectangleShape2D" id=26]
-extents = Vector2( 27, 57 )
-
-[sub_resource type="RectangleShape2D" id=83]
-extents = Vector2( 27, 57 )
-
 [sub_resource type="RectangleShape2D" id=59]
 extents = Vector2( 15.5, 18.5 )
-
-[sub_resource type="RectangleShape2D" id=88]
-extents = Vector2( 24, 98 )
 
 [sub_resource type="Animation" id=79]
 resource_name = "2A"
@@ -136,8 +106,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "5A"
+[sub_resource type="Animation" id=90]
 length = 0.266667
 step = 0.0166667
 tracks/0/type = "value"
@@ -366,11 +335,28 @@ tracks/0/keys = {
 "values": [  ]
 }
 
+[sub_resource type="Animation" id=91]
+length = 99999.0
+loop = true
+step = 0.0166667
+
+[sub_resource type="Animation" id=75]
+length = 99999.0
+loop = true
+
 [sub_resource type="Animation" id=40]
 resource_name = "Crouch"
 length = 99999.0
 loop = true
 step = 0.02
+
+[sub_resource type="Animation" id=92]
+loop = true
+
+[sub_resource type="Animation" id=78]
+length = 99999.0
+loop = true
+step = 0.0166667
 
 [sub_resource type="Animation" id=56]
 resource_name = "FireballHigh"
@@ -449,6 +435,11 @@ tracks/1/keys = {
 "values": [ 0, 1, 2 ]
 }
 
+[sub_resource type="Animation" id=93]
+length = 99999.0
+loop = true
+step = 0.0166667
+
 [sub_resource type="Animation" id=49]
 resource_name = "Jump"
 length = 0.06
@@ -470,6 +461,11 @@ tracks/0/keys = {
 "method": "jump"
 } ]
 }
+
+[sub_resource type="Animation" id=94]
+length = 99999.0
+loop = true
+step = 0.0166667
 
 [sub_resource type="Animation" id=60]
 resource_name = "Knee"
@@ -502,6 +498,65 @@ tracks/1/keys = {
 }, {
 "args": [  ],
 "method": "stop"
+} ]
+}
+
+[sub_resource type="Animation" id=81]
+tracks/0/type = "method"
+tracks/0/path = NodePath("Pivot/Knockdown")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "can_recover"
+}, {
+"args": [  ],
+"method": "recover"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_on"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Collision:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("SFX/Knockdown")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
 } ]
 }
 
@@ -784,6 +839,49 @@ tracks/22/keys = {
 "values": [ true ]
 }
 
+[sub_resource type="Animation" id=95]
+length = 0.3
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "invul_on"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Pivot/Recover")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hop"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Collision:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -100 ) ]
+}
+
 [sub_resource type="Animation" id=55]
 resource_name = "Stand"
 loop = true
@@ -889,269 +987,254 @@ tracks/2/keys = {
 } ]
 }
 
-[node name="EyePatch" instance=ExtResource( 1 )]
+[node name="EyePatch" type="KinematicBody2D" groups=["rollback"]]
+material = SubResource( 1 )
 script = ExtResource( 5 )
 
-[node name="Sprite" parent="Pivot/Stand" index="0"]
-frames = SubResource( 90 )
-animation = "default"
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -100 )
+shape = SubResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/5A" index="0"]
-position = Vector2( 32, 0 )
-scale = Vector2( 2, 2 )
-texture = ExtResource( 17 )
-offset = Vector2( -12, 0 )
-hframes = 3
+[node name="Pivot" type="Node2D" parent="."]
+use_parent_material = true
+position = Vector2( 0, -128 )
 
-[node name="Hitbox" parent="Pivot/5A" index="1" instance=ExtResource( 8 )]
-cancel_to = "5B,5C"
+[node name="Hurtbox" parent="Pivot" instance=ExtResource( 12 )]
+visible = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5A/Hitbox" index="0"]
-position = Vector2( 42.75, 72.25 )
-shape = SubResource( 71 )
-disabled = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hurtbox"]
+shape = SubResource( 3 )
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pivot/5A/Hitbox" index="1"]
-position = Vector2( 80, 96 )
-shape = SubResource( 72 )
-disabled = true
+[node name="Hurtbox2" parent="Pivot" instance=ExtResource( 12 )]
+visible = false
 
-[node name="Sprite" type="Sprite" parent="Pivot/5B" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 19 )
-offset = Vector2( 16, 0 )
-hframes = 3
+[node name="HurtboxShape" type="CollisionShape2D" parent="Pivot/Hurtbox2"]
+position = Vector2( 9, 99 )
+shape = SubResource( 4 )
 
-[node name="Hitbox" parent="Pivot/5B" index="1" instance=ExtResource( 8 )]
-cancel_to = "5C,6A"
+[node name="Stand" type="Node2D" parent="Pivot"]
+use_parent_material = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5B/Hitbox" index="0"]
-position = Vector2( 64, -16 )
-shape = SubResource( 73 )
-disabled = true
+[node name="Crouch" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/5C" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 14 )
-hframes = 2
+[node name="Air" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Hitbox" parent="Pivot/5C" index="1" instance=ExtResource( 8 )]
-pushback = 400
-hitstop = 0.12
+[node name="Jump" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/5C/Hitbox" index="0"]
-position = Vector2( 40, 32 )
-shape = SubResource( 75 )
-disabled = true
+[node name="Block" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pivot/5C/Hitbox" index="1"]
-position = Vector2( 75.4688, -7.84375 )
-shape = SubResource( 76 )
-disabled = true
+[node name="CrouchBlock" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/2A" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 21 )
-offset = Vector2( 16, 0 )
-hframes = 3
+[node name="Hitstun" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Hitbox" parent="Pivot/2A" index="1" instance=ExtResource( 8 )]
+[node name="CrouchHitstun" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2A/Hitbox" index="0"]
-position = Vector2( 72, 112 )
-shape = SubResource( 78 )
-disabled = true
+[node name="AirHitstun" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/2B" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 10 )
-offset = Vector2( 9, 19 )
-hframes = 3
+[node name="Knockdown" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+script = ExtResource( 11 )
 
-[node name="Hitbox" parent="Pivot/2B" index="1" instance=ExtResource( 8 )]
+[node name="KO" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/2B/Hitbox" index="0"]
-position = Vector2( 40.4688, 16 )
-shape = SubResource( 81 )
-disabled = true
+[node name="Recover" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+script = ExtResource( 10 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/2C" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 15 )
-hframes = 3
+[node name="5A" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/JA" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 16 )
-hframes = 2
+[node name="5B" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/JB" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 18 )
-hframes = 2
+[node name="5C" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="Sprite" type="Sprite" parent="Pivot/JC" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 25 )
-hframes = 2
+[node name="2A" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
 
-[node name="6A" type="Node2D" parent="Pivot" index="23"]
+[node name="2B" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+
+[node name="2C" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+
+[node name="JA" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+
+[node name="JB" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+
+[node name="JC" type="Node2D" parent="Pivot"]
+visible = false
+use_parent_material = true
+
+[node name="6A" type="Node2D" parent="Pivot"]
 visible = false
 script = ExtResource( 9 )
 run_speed = 1000
 
-[node name="Sprite" type="Sprite" parent="Pivot/6A" index="0"]
+[node name="Sprite" type="Sprite" parent="Pivot/6A"]
 position = Vector2( 32, 0 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 17 )
 offset = Vector2( -12, 0 )
 hframes = 3
 
-[node name="Hitbox" parent="Pivot/6A" index="1" instance=ExtResource( 8 )]
+[node name="Hitbox" parent="Pivot/6A" instance=ExtResource( 8 )]
 cancel_to = "5B"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/6A/Hitbox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/6A/Hitbox"]
 position = Vector2( 42.75, 72.25 )
 shape = SubResource( 71 )
 disabled = true
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pivot/6A/Hitbox" index="1"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pivot/6A/Hitbox"]
 position = Vector2( 80, 96 )
 shape = SubResource( 72 )
 disabled = true
 
-[node name="6C" type="Node2D" parent="Pivot" index="24"]
+[node name="6C" type="Node2D" parent="Pivot"]
 visible = false
 script = ExtResource( 9 )
 run_speed = 1100
 
-[node name="Sprite" type="Sprite" parent="Pivot/6C" index="0"]
+[node name="Sprite" type="Sprite" parent="Pivot/6C"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
 hframes = 2
 
-[node name="Hitbox" parent="Pivot/6C" index="1" instance=ExtResource( 8 )]
+[node name="Hitbox" parent="Pivot/6C" instance=ExtResource( 8 )]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/6C/Hitbox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/6C/Hitbox"]
 position = Vector2( 48, -8 )
 shape = SubResource( 86 )
 disabled = true
 
-[node name="Grab" type="Node2D" parent="Pivot" index="25"]
-visible = false
-
-[node name="Sprite" type="Sprite" parent="Pivot/Grab" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 11 )
-hframes = 3
-
-[node name="Hitbox" parent="Pivot/Grab" index="1" instance=ExtResource( 8 )]
-damage = 2
-guard = 3
-on_hit_action = "Throw"
-cancel_to = "5C"
-hit_sfx = "Grab"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Grab/Hitbox" index="0"]
-position = Vector2( 46, -18 )
-shape = SubResource( 26 )
-disabled = true
-
-[node name="Throw" type="Node2D" parent="Pivot" index="26"]
-visible = false
-script = ExtResource( 13 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Throw" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 12 )
-hframes = 2
-
-[node name="Hitbox" parent="Pivot/Throw" index="1" instance=ExtResource( 8 )]
-juggle = Vector2( 300, -500 )
-cancel_to = "5C"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Throw/Hitbox" index="0"]
-position = Vector2( 46, -18 )
-shape = SubResource( 83 )
-disabled = true
-
-[node name="Point" type="Node2D" parent="Pivot/Throw" index="2"]
-position = Vector2( 64, -48 )
-
-[node name="FireballHigh" type="Node2D" parent="Pivot" index="27"]
+[node name="FireballHigh" type="Node2D" parent="Pivot"]
 visible = false
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/FireballHigh" index="0"]
+[node name="Sprite" type="Sprite" parent="Pivot/FireballHigh"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 hframes = 3
 
-[node name="Point" type="Node2D" parent="Pivot/FireballHigh" index="1"]
+[node name="Point" type="Node2D" parent="Pivot/FireballHigh"]
 position = Vector2( 56, -48 )
 
-[node name="FireballLow" type="Node2D" parent="Pivot" index="28"]
+[node name="FireballLow" type="Node2D" parent="Pivot"]
 visible = false
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="Pivot/FireballLow" index="0"]
+[node name="Sprite" type="Sprite" parent="Pivot/FireballLow"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 6 )
 
-[node name="Point" type="Node2D" parent="Pivot/FireballLow" index="1"]
+[node name="Point" type="Node2D" parent="Pivot/FireballLow"]
 position = Vector2( 56, 24 )
 
-[node name="Knee" type="Node2D" parent="Pivot" index="29"]
+[node name="Knee" type="Node2D" parent="Pivot"]
 visible = false
 position = Vector2( 0, -32 )
 scale = Vector2( 2, 2 )
 script = ExtResource( 9 )
 run_speed = 800
 
-[node name="Sprite" type="Sprite" parent="Pivot/Knee" index="0"]
+[node name="Sprite" type="Sprite" parent="Pivot/Knee"]
 texture = ExtResource( 7 )
 
-[node name="Hitbox" parent="Pivot/Knee" index="1" instance=ExtResource( 8 )]
+[node name="Hitbox" parent="Pivot/Knee" instance=ExtResource( 8 )]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Knee/Hitbox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Knee/Hitbox"]
 position = Vector2( 16, 28 )
 shape = SubResource( 59 )
 disabled = true
 
-[node name="Uppercut" type="Node2D" parent="Pivot" index="30"]
-visible = false
-script = ExtResource( 9 )
-
-[node name="Sprite" type="Sprite" parent="Pivot/Uppercut" index="0"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 20 )
-hframes = 4
-
-[node name="Hitbox" parent="Pivot/Uppercut" index="1" instance=ExtResource( 8 )]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Uppercut/Hitbox" index="0"]
-position = Vector2( 24, -34 )
-shape = SubResource( 88 )
-disabled = true
-
-[node name="Actions" parent="." index="5"]
+[node name="Actions" type="AnimationPlayer" parent="."]
 anims/2A = SubResource( 79 )
 anims/2B = SubResource( 80 )
-anims/5A = SubResource( 1 )
+anims/5A = SubResource( 90 )
 anims/5B = SubResource( 74 )
 anims/5C = SubResource( 77 )
 anims/6A = SubResource( 85 )
 anims/6C = SubResource( 87 )
 anims/Air = SubResource( 37 )
+anims/AirHitstun = SubResource( 91 )
+anims/Block = SubResource( 75 )
 anims/Crouch = SubResource( 40 )
+anims/CrouchBlock = SubResource( 92 )
+anims/CrouchHitstun = SubResource( 78 )
 anims/FireballHigh = SubResource( 56 )
 anims/FireballLow = SubResource( 58 )
 anims/Grab = SubResource( 82 )
+anims/Hitstun = SubResource( 93 )
 anims/Jump = SubResource( 49 )
+anims/KO = SubResource( 94 )
 anims/Knee = SubResource( 60 )
+anims/Knockdown = SubResource( 81 )
 anims/RESET = SubResource( 57 )
+anims/Recover = SubResource( 95 )
 anims/Stand = SubResource( 55 )
 anims/Throw = SubResource( 84 )
 anims/Uppercut = SubResource( 89 )
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="WhiffLight" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 21 )
+pitch_scale = 1.1
+
+[node name="WhiffMed" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 22 )
+pitch_scale = 0.8
+
+[node name="WhiffHeavy" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 22 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 16 )
+volume_db = -1.0
+
+[node name="HitHeavy" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 18 )
+
+[node name="Block" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 19 )
+
+[node name="Knockdown" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 15 )
+
+[node name="Grab" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 20 )

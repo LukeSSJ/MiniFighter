@@ -20,4 +20,4 @@ var music := false
 var game_mode := TRAINING
 var single_player := true
 var input_methods := [0, null]
-var player_character := ["Character", "Character"]
+var player_character := ["Shoto", "Shoto"]

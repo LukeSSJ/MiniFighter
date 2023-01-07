@@ -64,7 +64,29 @@ var normal = {
 	"C": ["JC", "5C", "2C"],
 }
 
+var timerStun
+var timerHitstop
+var timerSpecialRegen
+
 func _ready():
+	timerStun = Timer.new()
+	timerStun.one_shot = true
+	timerHitstop = Timer.new()
+	timerHitstop.one_shot = true
+	timerSpecialRegen = Timer.new()
+	timerSpecialRegen.one_shot = true
+	timerSpecialRegen.wait_time = 0.5
+	
+	add_child(timerStun)
+	add_child(timerHitstop)
+	add_child(timerSpecialRegen)
+	
+	timerStun.connect("timeout", self, "stun_end")
+	timerHitstop.connect("timeout", self, "hitstop_end")
+	timerSpecialRegen.connect("timeout", self, "special_regen_on")
+	
+	$Actions.connect("animation_finished", self, "action_end")
+	
 	# Hide actions
 	for node in $Pivot.get_children():
 		node.hide()
@@ -144,7 +166,7 @@ func process(delta):
 		if vel.y > 0:
 			vel.y = 0
 			if state == State.HITSTUN and knockdown:
-				$TimerStun.stop()
+				timerStun.stop()
 				stun_end()
 				perform_action("Knockdown")
 				state = State.HITSTUN
@@ -283,8 +305,8 @@ func perform_action(new_action, cost=0):
 	$Pivot/Hurtbox2/HurtboxShape.set_deferred("disabled", true)
 	$Actions.stop()
 	$Actions.play(new_action)
-	if cost == 0 and special < 100 and $TimerSpecialRegen.is_stopped():
-		$TimerSpecialRegen.start()
+	if cost == 0 and special < 100 and timerSpecialRegen.is_stopped():
+		timerSpecialRegen.start()
 
 func on_hit(hitbox):
 	if !active:
@@ -359,12 +381,12 @@ func on_hit(hitbox):
 		active = false
 		air_action = false
 		emit_signal("knocked_out")
-		$TimerStun.stop()
+		timerStun.stop()
 	else:
-		$TimerStun.wait_time = hitbox.hitstun
+		timerStun.wait_time = hitbox.hitstun
 		if in_blockstun:
-			$TimerStun.wait_time *= hitbox.blockstun_mod
-		$TimerStun.start()
+			timerStun.wait_time *= hitbox.blockstun_mod
+		timerStun.start()
 	add_hitstop(hitbox.hitstop)
 	if hitbox.owner:
 		hitbox.owner.add_hitstop(hitbox.hitstop)
@@ -389,21 +411,21 @@ func consume_special(cost):
 		if cost > 0:
 			special -= cost
 			emit_signal("update_special", index, special)
-			$TimerSpecialRegen.stop()
+			timerSpecialRegen.stop()
 			special_regen = false
 		return true
 
 func add_hitstop(time):
 	hitstop = true
-	$TimerHitstop.wait_time = time
-	$TimerHitstop.start()
+	timerHitstop.wait_time = time
+	timerHitstop.start()
 	$Actions.stop(false)
-	$TimerStun.paused = true
+	timerStun.paused = true
 
 func hitstop_end():
 	hitstop = false
 	$Actions.play(action)
-	$TimerStun.paused = false
+	timerStun.paused = false
 
 func stun_end():
 	perform_action("Stand")
