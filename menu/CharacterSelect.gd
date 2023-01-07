@@ -11,7 +11,7 @@ func _ready():
 		p2_selection.queue_free()
 
 func player_selected(player_index, character):
-	print("player %d has selected character %s" % [player_index, character])
+	Global.player_character[player_index] = character
 	
 	players_ready += 1
 	if players_ready == player_count:

@@ -34,7 +34,8 @@ func round_start():
 		players[1].queue_free()
 	
 	for i in 2:
-		var player = Player.instance()
+		var Character = load("res://character/%s.tscn" % Global.player_character[i])
+		var player = Character.instance()
 		players[i] = player
 		
 		var ControllerType = Controller
@@ -73,7 +74,8 @@ func round_start():
 	time_up = false
 	
 	if Global.game_mode == Global.TRAINING:
-		fight()
+		$TimerRoundStart.wait_time = 0.5
+		$TimerRoundStart.start()
 	else:
 		$TimerRoundStart.start()
 		UI.round_start(round_count)
