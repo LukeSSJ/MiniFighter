@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://theme/Default.tres" type="Theme" id=1]
 [ext_resource path="res://menu/CharacterSlot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://menu/CharacterSelection.tscn" type="PackedScene" id=3]
 [ext_resource path="res://menu/CharacterSelect.gd" type="Script" id=4]
+[ext_resource path="res://ui/portrait2.png" type="Texture" id=5]
+[ext_resource path="res://ui/portrait1.png" type="Texture" id=6]
 
 [node name="CharacterSelect" type="Control"]
 anchor_right = 1.0
@@ -40,12 +42,14 @@ custom_constants/hseparation = 20
 columns = 2
 
 [node name="CharacterSlot" parent="Characters/Grid" instance=ExtResource( 2 )]
-character_name = "Character"
+character_name = "Shoto"
+portrait = ExtResource( 6 )
 
 [node name="CharacterSlot2" parent="Characters/Grid" instance=ExtResource( 2 )]
 margin_left = 84.0
 margin_right = 148.0
 character_name = "EyePatch"
+portrait = ExtResource( 5 )
 
 [node name="CharacterSelection" parent="Characters" instance=ExtResource( 3 )]
 modulate = Color( 0, 0.109804, 1, 1 )
