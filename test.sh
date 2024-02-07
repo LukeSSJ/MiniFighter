@@ -1,2 +1,0 @@
-godot &
-godot 1 &

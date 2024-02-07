@@ -1,12 +1,12 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://action/AirHitstun.gd" type="Script" id=1]
 [ext_resource path="res://action/ThrowFireball.gd" type="Script" id=2]
-[ext_resource path="res://character/base/throw_fireball.png" type="Texture" id=3]
+[ext_resource path="res://character/shoto/throw_fireball.png" type="Texture" id=3]
 [ext_resource path="res://projectile/Fireball.tscn" type="PackedScene" id=4]
 [ext_resource path="res://character/EyePatch.gd" type="Script" id=5]
-[ext_resource path="res://character/base/crouch_single.png" type="Texture" id=6]
-[ext_resource path="res://character/base/jump.png" type="Texture" id=7]
+[ext_resource path="res://character/shoto/crouch_single.png" type="Texture" id=6]
+[ext_resource path="res://character/shoto/jump.png" type="Texture" id=7]
 [ext_resource path="res://hitbox/Hitbox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://action/Mover.gd" type="Script" id=9]
 [ext_resource path="res://action/Recover.gd" type="Script" id=10]
@@ -22,6 +22,7 @@
 [ext_resource path="res://sfx/grab.wav" type="AudioStream" id=20]
 [ext_resource path="res://sfx/whiff_light2.wav" type="AudioStream" id=21]
 [ext_resource path="res://sfx/whiff_heavy.wav" type="AudioStream" id=22]
+[ext_resource path="res://character/eyepatch/stand.png" type="Texture" id=23]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 13 )
@@ -35,6 +36,24 @@ extents = Vector2( 30, 115 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 31, 22 )
+
+[sub_resource type="SpriteFrames" id=96]
+animations = [ {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "default",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "walk",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "walk_back",
+"speed": 12.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=71]
 extents = Vector2( 21.25, 56.25 )
@@ -1014,6 +1033,11 @@ shape = SubResource( 4 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
 use_parent_material = true
+
+[node name="Sprite" type="AnimatedSprite" parent="Pivot/Stand"]
+scale = Vector2( 2, 2 )
+frames = SubResource( 96 )
+animation = "walk_back"
 
 [node name="Crouch" type="Node2D" parent="Pivot"]
 visible = false
