@@ -140,10 +140,8 @@ func process(delta):
 	if is_grabbed:
 		return
 	
-	if !on_ground:
-		vel.y += GRAVITY
-	
 	move_and_slide(vel, Vector2.UP)
+	
 	if get_slide_count() > 0:
 		if !on_ground:
 			if position.x < other_player.position.x:
@@ -174,6 +172,12 @@ func process(delta):
 			elif air_action:
 				perform_action("Stand")
 
+func _physics_process(_delta):
+	if hitstop or is_grabbed or on_ground:
+		return
+	
+	vel.y += GRAVITY
+
 func attempt_all_actions():
 	if on_ground:
 		if (controller.button.a and controller.button.b) or (controller.button.c and controller.button.d):
@@ -196,7 +200,8 @@ func attempt_all_actions():
 	if state != State.FREE:
 		return
 	
-	if on_ground: # Ground actions
+	if on_ground:
+		# Ground actions
 		if controller.dir.y == -1:
 				perform_action("Jump")
 		elif controller.dir.y == 1:
@@ -222,7 +227,8 @@ func attempt_all_actions():
 				sprite.animation = animation
 				sprite.frame = 0
 				sprite.play()
-	else: # Air actions
+	else:
+		# Air actions
 		if action != "Air":
 			perform_action("Air")
 
