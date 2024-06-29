@@ -41,6 +41,7 @@ func throw_fireball():
 	projectile.hits = level
 	get_tree().current_scene.add_child(projectile)
 	$TimerPulse.stop()
+	$Throw.play()
 
 func _on_TimerPulse_timeout():
 	pulse = 1 - pulse

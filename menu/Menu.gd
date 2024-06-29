@@ -3,8 +3,7 @@ extends CanvasLayer
 onready var VsPlayer = $Main/Buttons/List/VsPlayer
 onready var VsCPU = $Main/Buttons/List/VsCPU
 onready var Training = $Main/Buttons/List/Training
-onready var Trials = $Main/Buttons/List/Trials
-#onready var Online = $Main/Buttons/List/Online
+#onready var Trials = $Main/Buttons/List/Trials
 onready var Music = $Main/Options/Music
 onready var ChooseInput = $ChooseInput
 
@@ -12,8 +11,7 @@ func _ready():
 	VsPlayer.connect("pressed", self, "vs_player")
 	VsCPU.connect("pressed", self, "vs_cpu")
 	Training.connect("pressed", self, "training")
-	Trials.connect("pressed", self, "trials")
-#	Online.connect("pressed", self, "online")
+	#Trials.connect("pressed", self, "trials")
 	
 	Music.connect("toggled", self, "toggle_music")
 	Music.pressed = Global.music
@@ -35,7 +33,8 @@ func vs_cpu():
 	clear_inputs("p1_")
 	map_inputs("p1_", 0) # Keyboard
 	map_inputs("p1_", 1) # Controller 1
-	get_tree().change_scene("res://menu/CharacterSelect.tscn")
+	#get_tree().change_scene("res://menu/CharacterSelect.tscn")
+	get_tree().change_scene("res://Main.tscn")
 
 func training():
 	Global.game_mode = Global.TRAINING
@@ -48,11 +47,6 @@ func trials():
 	Global.single_player = true
 	$Main.hide()
 	ChooseInput.choose(false)
-
-func online():
-	Global.game_mode = Global.ONLINE
-	Global.single_player = true
-	get_tree().change_scene("res://menu/MenuOnline.tscn")
 
 func toggle_music(on):
 	Global.music = on
@@ -69,7 +63,9 @@ func input_choosen(players):
 		map_inputs("p2_", players[1])
 	else:
 		map_inputs("p2_", players[0] + 1)
-	get_tree().change_scene("res://menu/CharacterSelect.tscn")
+	
+	#get_tree().change_scene("res://menu/CharacterSelect.tscn")
+	get_tree().change_scene("res://Main.tscn")
 
 func input_choosen_cancelled():
 	$Main.show()

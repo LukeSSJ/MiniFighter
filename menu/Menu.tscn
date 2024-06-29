@@ -44,7 +44,7 @@ __meta__ = {
 
 [node name="List" type="VBoxContainer" parent="Main/Buttons"]
 margin_right = 157.0
-margin_bottom = 164.0
+margin_bottom = 118.0
 custom_constants/separation = 20
 
 [node name="VsPlayer" type="Button" parent="Main/Buttons/List"]
@@ -65,17 +65,11 @@ margin_bottom = 118.0
 text = "Training"
 
 [node name="Trials" type="Button" parent="Main/Buttons/List"]
-margin_top = 138.0
-margin_right = 157.0
-margin_bottom = 164.0
-text = "Trials"
-
-[node name="Online" type="Button" parent="Main/Buttons/List"]
 visible = false
 margin_top = 138.0
 margin_right = 157.0
 margin_bottom = 164.0
-text = "Online"
+text = "Trials"
 
 [node name="Options" type="MarginContainer" parent="Main"]
 anchor_left = 0.5

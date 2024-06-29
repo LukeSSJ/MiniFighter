@@ -37,7 +37,7 @@
 [ext_resource path="res://sfx/whiff_heavy.wav" type="AudioStream" id=35]
 [ext_resource path="res://character/shoto/spin_kick.png" type="Texture" id=36]
 [ext_resource path="res://projectile/fireball_blue.png" type="Texture" id=37]
-[ext_resource path="res://projectile/Fireball.tscn" type="PackedScene" id=38]
+[ext_resource path="res://projectile/FireballBlue.tscn" type="PackedScene" id=38]
 [ext_resource path="res://character/shoto/throw_fireball.png" type="Texture" id=39]
 [ext_resource path="res://action/Mover.gd" type="Script" id=41]
 [ext_resource path="res://action/ThrowFireballCharge.gd" type="Script" id=42]
@@ -59,7 +59,7 @@ extents = Vector2( 22, 100 )
 extents = Vector2( 30, 115 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 31, 22 )
+extents = Vector2( 43, 34 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 5 )
@@ -753,20 +753,6 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 43, 34 ) ]
-}
-tracks/6/type = "method"
-tracks/6/path = NodePath("SFX/WhiffLight")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0.187 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ 0.0 ],
-"method": "play"
-} ]
 }
 
 [sub_resource type="Animation" id=44]
@@ -1585,7 +1571,7 @@ shape = SubResource( 3 )
 visible = false
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Pivot/Hurtbox2"]
-position = Vector2( 9, 99 )
+position = Vector2( 40, -30 )
 shape = SubResource( 4 )
 
 [node name="Stand" type="Node2D" parent="Pivot"]
@@ -2023,6 +2009,10 @@ position = Vector2( 72, -32 )
 
 [node name="TimerPulse" type="Timer" parent="Pivot/Fireball"]
 wait_time = 0.05
+
+[node name="Throw" type="AudioStreamPlayer" parent="Pivot/Fireball"]
+stream = ExtResource( 34 )
+pitch_scale = 1.1
 
 [node name="Uppercut" type="Node2D" parent="Pivot"]
 visible = false
